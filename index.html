@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luz, Câmera e Boleto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --color-bg:           #F4EFE6;
+      --color-surface:      #FFFFFF;
+      --color-surface-2:    #EDE8DC;
+      --color-border:       #D6CFC3;
+      --color-border-dark:  #B0A898;
+
+      --color-text-primary:   #1C1917;
+      --color-text-secondary: #78716C;
+      --color-text-muted:     #A8A29E;
+      --color-text-inverse:   #F4EFE6;
+
+      --color-accent:         #A31F34;
+      --color-accent-hover:   #871929;
+      --color-accent-soft:    #F4E0E4;
+
+      --color-highlight:      #EAD84B;
+      --color-highlight-hover:#D4C43A;
+
+      --color-dark:           #1C1917;
+      --color-dark-hover:     #2E2A27;
+
+      --font-heading: 'Fraunces', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-logo:    'Bebas Neue', 'Impact', sans-serif;
+
+      --text-xs:   0.75rem;
+      --text-sm:   0.875rem;
+      --text-base: 1rem;
+      --text-lg:   1.125rem;
+      --text-xl:   1.25rem;
+      --text-2xl:  1.5rem;
+      --text-3xl:  1.875rem;
+      --text-4xl:  2.25rem;
+      --text-5xl:  3rem;
+      --text-6xl:  3.75rem;
+
+      --font-light:   300;
+      --font-regular: 400;
+      --font-medium:  500;
+      --font-semibold:600;
+      --font-bold:    700;
+
+      --leading-tight:  1.2;
+      --leading-snug:   1.375;
+      --leading-normal: 1.5;
+      --leading-relaxed:1.625;
+      --leading-loose:  2;
+
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  20px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   16px;
+      --radius-2xl:  20px;
+      --radius-full: 9999px;
+
+      --shadow-sm:  0 1px 2px rgba(28,25,23,0.06);
+      --shadow-md:  0 4px 12px rgba(28,25,23,0.08);
+      --shadow-lg:  0 8px 24px rgba(28,25,23,0.10);
+      --shadow-xl:  0 16px 40px rgba(28,25,23,0.12);
+    }
+
+    [data-theme="dark"] {
+      --color-bg:           #0F0E0D;
+      --color-surface:      #1C1917;
+      --color-surface-2:    #252220;
+      --color-border:       #3C3735;
+      --color-border-dark:  #57534E;
+      --color-text-primary:   #F4EFE6;
+      --color-text-secondary: #A8A29E;
+      --color-text-muted:     #57534E;
+      --color-text-inverse:   #1C1917;
+      --color-accent:         #D93054;
+      --color-accent-hover:   #B8264A;
+      --color-accent-soft:    #3A0C18;
+      --color-highlight:      #EAD84B;
+      --color-highlight-hover:#D4C43A;
+      --color-dark:           #F4EFE6;
+      --color-dark-hover:     #EDE8DC;
+      --shadow-sm:  0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md:  0 4px 12px rgba(0,0,0,0.35);
+      --shadow-lg:  0 8px 24px rgba(0,0,0,0.40);
+      --shadow-xl:  0 16px 40px rgba(0,0,0,0.45);
+    }
+
+    /* ═══════════════════════════════════════
+       ANIMAÇÕES
+    ═══════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes cursorBlink {
+      0%   { opacity: 1; }
+      40%  { opacity: 0; }
+      80%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes filmStrip {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .anim { opacity: 0; }
+    .anim.in {
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      animation-duration: 0.75s;
+    }
+    .anim-up.in   { animation-name: fadeInUp; }
+    .anim-down.in { animation-name: fadeInDown; }
+    .anim-scale.in{ animation-name: scaleIn; }
+
+    .anim-d1 { animation-delay: 0.08s; }
+    .anim-d2 { animation-delay: 0.18s; }
+    .anim-d3 { animation-delay: 0.28s; }
+    .anim-d4 { animation-delay: 0.38s; }
+    .anim-d5 { animation-delay: 0.50s; }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      line-height: var(--leading-normal);
+      transition: background 0.3s, color 0.3s;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════
+       LOGO
+    ═══════════════════════════════════════ */
+    .logo-type {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      user-select: none;
+    }
+    .logo-type__line1,
+    .logo-type__line2 {
+      font-family: var(--font-logo);
+      letter-spacing: 0.02em;
+      color: var(--color-text-primary);
+      line-height: 0.92;
+    }
+    .logo-type__line3 {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-top: -0.22em;
+      display: block;
+    }
+    .logo-type--sm .logo-type__line1,
+    .logo-type--sm .logo-type__line2 { font-size: 1.05rem; }
+    .logo-type--sm .logo-type__line3  { font-size: 0.9rem; }
+
+    .logo-type--lg .logo-type__line1,
+    .logo-type--lg .logo-type__line2 { font-size: 3.2rem; }
+    .logo-type--lg .logo-type__line3  { font-size: 2.6rem; }
+
+    /* Hero — logo grande no lado esquerdo */
+    .logo-type--hero .logo-type__line1,
+    .logo-type--hero .logo-type__line2 { font-size: clamp(4.5rem, 9vw, 8rem); }
+    .logo-type--hero .logo-type__line3  { font-size: clamp(3.6rem, 7.2vw, 6.6rem); }
+
+    /* Footer — logo display gigante */
+    .logo-type--display .logo-type__line1,
+    .logo-type--display .logo-type__line2 {
+      font-size: clamp(5rem, 13vw, 13rem);
+      line-height: 0.88;
+      color: #F4EFE6;
+    }
+    .logo-type--display .logo-type__line3 {
+      font-size: clamp(4rem, 10.5vw, 10.5rem);
+      color: #D93054;
+    }
+
+    .logo-cursor {
+      display: inline-block;
+      width: 0.06em;
+      height: 0.82em;
+      background: var(--color-accent);
+      margin-left: 0.06em;
+      vertical-align: middle;
+      border-radius: 1px;
+      animation: cursorBlink 0.55s ease-in-out 4;
+      animation-fill-mode: forwards;
+    }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .nav__link {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-secondary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .nav__link:hover {
+      background: var(--color-surface-2);
+      color: var(--color-text-primary);
+    }
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* Dark mode toggle button */
+    .theme-btn {
+      background: transparent;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-size: 1rem;
+    }
+    .theme-btn:hover {
+      background: var(--color-surface-2);
+      color: var(--color-text-primary);
+      border-color: var(--color-border-dark);
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6) var(--space-12);
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .hero__left {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero__eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-3);
+    }
+    .hero__tagline {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-style: italic;
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-top: var(--space-5);
+      max-width: 480px;
+    }
+    .hero__cta {
+      margin-top: var(--space-8);
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .hero__featured {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero__featured:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+    .hero__featured-img {
+      height: 240px;
+      background: var(--color-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__featured-img-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      color: rgba(244,239,230,0.3);
+    }
+    .hero__featured-img-placeholder svg {
+      opacity: 0.4;
+    }
+    .hero__featured-img-placeholder span {
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .hero__featured-badge {
+      position: absolute;
+      top: var(--space-4);
+      left: var(--space-4);
+    }
+    .hero__featured-body {
+      padding: var(--space-6);
+    }
+    .hero__featured-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-3);
+    }
+    .hero__featured-excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    .hero__featured-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* ═══════════════════════════════════════
+       FILM STRIP TICKER
+    ═══════════════════════════════════════ */
+    .ticker-wrap {
+      background: var(--color-dark);
+      padding: var(--space-3) 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ticker-track {
+      display: flex;
+      gap: var(--space-10);
+      animation: filmStrip 28s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-logo);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      color: rgba(244,239,230,0.5);
+      white-space: nowrap;
+    }
+    .ticker-item strong {
+      color: var(--color-highlight);
+    }
+    .ticker-sep {
+      color: var(--color-accent);
+      font-size: 1.1rem;
+    }
+
+    /* ═══════════════════════════════════════
+       SEÇÃO PRINCIPAL
+    ═══════════════════════════════════════ */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6);
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .section-header__eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-2);
+    }
+    .section-header__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-tight);
+    }
+
+    /* ═══════════════════════════════════════
+       POST PRINCIPAL (ARTIGO COMPLETO)
+    ═══════════════════════════════════════ */
+    .post-full {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      margin-bottom: var(--space-16);
+      box-shadow: var(--shadow-md);
+    }
+    .post-full__cover {
+      height: 380px;
+      background: var(--color-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .post-full__cover-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+    .post-full__cover-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: var(--space-8);
+    }
+    .post-full__cover-icon {
+      font-size: 4rem;
+      margin-bottom: var(--space-4);
+      opacity: 0.6;
+    }
+    .post-full__cover-label {
+      font-family: var(--font-logo);
+      font-size: var(--text-sm);
+      letter-spacing: 0.15em;
+      color: rgba(244,239,230,0.3);
+      text-transform: uppercase;
+    }
+    .post-full__header {
+      padding: var(--space-10) var(--space-12) var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-full__meta-top {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+    }
+    .post-full__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      line-height: var(--leading-tight);
+      margin-bottom: var(--space-4);
+    }
+    .post-full__lead {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-style: italic;
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    .post-full__info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      flex-wrap: wrap;
+    }
+    .post-full__body {
+      padding: var(--space-10) var(--space-12) var(--space-12);
+      max-width: 720px;
+    }
+    .post-full__body p {
+      font-size: var(--text-lg);
+      line-height: var(--leading-relaxed);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-6);
+    }
+    .post-full__body h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      color: var(--color-text-primary);
+      margin-top: var(--space-10);
+      margin-bottom: var(--space-4);
+    }
+    .post-full__body .highlight-box {
+      background: var(--color-highlight);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6) var(--space-8);
+      margin: var(--space-8) 0;
+    }
+    .post-full__body .highlight-box p {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-style: italic;
+      font-weight: var(--font-semibold);
+      color: var(--color-dark);
+      margin: 0;
+    }
+    .post-full__body .aside-note {
+      border-left: 3px solid var(--color-accent);
+      padding-left: var(--space-6);
+      margin: var(--space-8) 0;
+    }
+    .post-full__body .aside-note p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       GRID DE POSTS
+    ═══════════════════════════════════════ */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-bottom: var(--space-16);
+    }
+
+    /* Card de post */
+    .card-post {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .card-post:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .card-post__thumb {
+      height: 190px;
+      background: var(--color-surface-2);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-post__thumb--dark { background: var(--color-dark); }
+    .card-post__thumb--accent { background: var(--color-accent); }
+    .card-post__thumb--highlight { background: var(--color-highlight); }
+    .card-post__thumb-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      color: rgba(28,25,23,0.2);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .card-post__thumb--dark .card-post__thumb-placeholder {
+      color: rgba(244,239,230,0.25);
+    }
+    .card-post__thumb--accent .card-post__thumb-placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+    .card-post__thumb--highlight .card-post__thumb-placeholder {
+      color: rgba(28,25,23,0.35);
+    }
+    .card-post__category {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+    }
+    .card-post__body {
+      padding: var(--space-5);
+    }
+    .card-post__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-2);
+    }
+    .card-post__excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-post__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-post__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .card-post__dot {
+      width: 3px; height: 3px;
+      background: var(--color-border-dark);
+      border-radius: var(--radius-full);
+    }
+
+    /* ═══════════════════════════════════════
+       BOTÕES
+    ═══════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: var(--font-medium);
+      line-height: 1;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn--sm  { font-size: var(--text-sm);  padding: 8px 14px;  border-radius: var(--radius-md); }
+    .btn--md  { font-size: var(--text-sm);  padding: 10px 18px; border-radius: var(--radius-lg); }
+    .btn--lg  { font-size: var(--text-base); padding: 13px 24px; border-radius: var(--radius-xl); }
+
+    .btn--primary {
+      background: var(--color-dark);
+      color: var(--color-text-inverse);
+    }
+    .btn--primary:hover { background: var(--color-dark-hover); }
+    .btn--accent {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn--accent:hover { background: var(--color-accent-hover); }
+    .btn--highlight {
+      background: var(--color-highlight);
+      color: var(--color-dark);
+    }
+    .btn--highlight:hover { background: var(--color-highlight-hover); }
+    .btn--outline {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1.5px solid var(--color-border-dark);
+    }
+    .btn--outline:hover { background: var(--color-surface-2); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+    .btn--ghost:hover { background: var(--color-surface-2); color: var(--color-text-primary); }
+    .btn--pill { border-radius: var(--radius-full); }
+
+    /* ═══════════════════════════════════════
+       TAGS
+    ═══════════════════════════════════════ */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .tag--default {
+      background: var(--color-surface-2);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+    }
+    .tag--accent {
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+    }
+    .tag--dark {
+      background: var(--color-dark);
+      color: var(--color-text-inverse);
+    }
+    .tag--highlight {
+      background: var(--color-highlight);
+      color: var(--color-dark);
+    }
+
+    /* ═══════════════════════════════════════
+       BANNER CTA
+    ═══════════════════════════════════════ */
+    .cta-banner {
+      background: linear-gradient(135deg, #1C1917 0%, #2a1a1f 60%, #1C1917 100%);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12) var(--space-12);
+      margin-bottom: var(--space-16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(163, 31, 52, 0.25);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,0.04) inset,
+        0 -1px 0 rgba(0,0,0,0.4) inset,
+        0 20px 60px rgba(0,0,0,0.45),
+        0 6px 20px rgba(163, 31, 52, 0.12);
+    }
+    .cta-banner::before { display: none; }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(163,31,52,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cta-banner__eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-highlight);
+      margin-bottom: var(--space-2);
+    }
+    .cta-banner__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-inverse);
+      line-height: var(--leading-snug);
+      max-width: 440px;
+    }
+    .cta-banner__sub {
+      font-size: var(--text-sm);
+      color: rgba(244,239,230,0.55);
+      margin-top: var(--space-2);
+    }
+
+    /* ═══════════════════════════════════════
+       SOBRE O BLOG
+    ═══════════════════════════════════════ */
+    .about-section {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10) var(--space-12);
+      margin-bottom: var(--space-16);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .about-section__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-4);
+    }
+    .about-section__title em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+    .about-section__text {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+    .about-section__visual {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .stat-item:last-child { border-bottom: none; }
+    .stat-item__num {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--color-accent);
+      min-width: 60px;
+      line-height: 1;
+    }
+    .stat-item__label {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-snug);
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      background: var(--color-dark);
+      margin-top: var(--space-8);
+      overflow: hidden;
+    }
+    /* Logo masthead gigante */
+    .footer__masthead {
+      padding: var(--space-16) var(--space-6) 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding-bottom: var(--space-8);
+    }
+    .footer__masthead-logo {
+      line-height: 0.9;
+    }
+    /* Grid info abaixo da logo */
+    .footer__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-10);
+      flex-wrap: wrap;
+      padding: var(--space-8) var(--space-6) var(--space-10);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer__tagline {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-style: italic;
+      color: rgba(244,239,230,0.45);
+      margin-top: var(--space-2);
+      max-width: 300px;
+      line-height: var(--leading-relaxed);
+    }
+    .footer__col-title {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(244,239,230,0.35);
+      margin-bottom: var(--space-4);
+    }
+    .footer__link {
+      display: block;
+      font-size: var(--text-sm);
+      color: rgba(244,239,230,0.55);
+      padding: var(--space-1) 0;
+      transition: color 0.15s;
+      cursor: pointer;
+    }
+    .footer__link:hover { color: rgba(244,239,230,0.9); }
+    .footer__bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    .footer__credit {
+      font-size: var(--text-xs);
+      color: rgba(244,239,230,0.3);
+      line-height: var(--leading-relaxed);
+    }
+    .footer__credit strong {
+      color: rgba(244,239,230,0.55);
+      font-weight: var(--font-medium);
+    }
+    .footer__puc {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: rgba(244,239,230,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVO
+    ═══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: var(--space-10) var(--space-6) var(--space-8);
+      }
+      .posts-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .about-section {
+        grid-template-columns: 1fr;
+      }
+      .post-full__header,
+      .post-full__body {
+        padding-left: var(--space-8);
+        padding-right: var(--space-8);
+      }
+      .post-full__title {
+        font-size: var(--text-3xl);
+      }
+      .cta-banner {
+        flex-direction: column;
+        padding: var(--space-8);
+      }
+      .footer__masthead { padding-top: var(--space-10); }
+    }
+    @media (max-width: 600px) {
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav__links { display: none; }
+      .post-full__cover { height: 240px; }
+      .post-full__header,
+      .post-full__body {
+        padding-left: var(--space-5);
+        padding-right: var(--space-5);
+      }
+      .post-full__title {
+        font-size: var(--text-2xl);
+      }
+      .hero__featured-img { height: 180px; }
+      .footer__masthead { padding: var(--space-8) var(--space-4) 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <div class="nav-wrapper">
+    <nav class="nav">
+      <a href="#">
+        <div class="logo-type logo-type--sm">
+          <span class="logo-type__line1">Luz,</span>
+          <span class="logo-type__line2">Câmera</span>
+          <span class="logo-type__line3">e Boleto<span class="logo-cursor"></span></span>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="#posts">Posts</a>
+        <a class="nav__link" href="#sobre">Sobre</a>
+        <a class="nav__link" href="#contato">Contato</a>
+      </div>
+      <div class="nav__actions">
+        <button class="theme-btn" id="themeToggle" title="Alternar tema" aria-label="Alternar modo escuro">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══════ HERO ═══════ -->
+  <section>
+    <div class="hero">
+      <div class="hero__left">
+        <p class="hero__eyebrow anim anim-up anim-d1">🎬 Um blog sobre audiovisual no Brasil</p>
+        <div class="logo-type logo-type--hero anim anim-up anim-d2">
+          <span class="logo-type__line1">Luz,</span>
+          <span class="logo-type__line2">Câmera</span>
+          <span class="logo-type__line3">e Boleto<span class="logo-cursor"></span></span>
+        </div>
+        <p class="hero__tagline anim anim-up anim-d3">
+          Porque alguém precisava falar sobre cinema sem mentir que é fácil, mas também sem exagerar que é impossível.
+        </p>
+        <div class="hero__cta anim anim-up anim-d4">
+          <a href="#post01" class="btn btn--primary btn--lg">Ler o primeiro post</a>
+          <a href="#sobre" class="btn btn--outline btn--lg">Sobre o blog</a>
+        </div>
+      </div>
+      <div class="hero__featured anim anim-scale anim-d3">
+        <div class="hero__featured-img">
+          <div class="hero__featured-img-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4"/><path d="M10 17H14"/>
+            </svg>
+            <span>imagem do post em breve</span>
+          </div>
+          <div class="hero__featured-badge">
+            <span class="tag tag--highlight">✦ Post em destaque</span>
+          </div>
+        </div>
+        <div class="hero__featured-body">
+          <div class="hero__featured-title">Quero trabalhar com cinema. Vou morrer de fome?</div>
+          <p class="hero__featured-excerpt">Spoiler: não. Mas calma, ainda dá pra passar muito sufoco no caminho. A boa notícia é que a gente explica tudo.</p>
+          <div class="hero__featured-meta">
+            <span>Abr 2026</span>
+            <span class="card-post__dot"></span>
+            <span>7 min de leitura</span>
+            <span class="card-post__dot"></span>
+            <span class="tag tag--accent" style="margin-left: 2px;">Carreira</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ TICKER / FILM STRIP ═══════ -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item">🎬 <span>AUDIOVISUAL</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>CINEMA</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">🎥 <span>DOCUMENTÁRIO</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>VIDEOCLIPE</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">📺 <span>STREAMING</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>ROTEIRO</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">🎞️ <span>SET DE FILMAGEM</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>PRODUÇÃO</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">🎬 <span>AUDIOVISUAL</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>CINEMA</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">🎥 <span>DOCUMENTÁRIO</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>VIDEOCLIPE</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">📺 <span>STREAMING</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>ROTEIRO</strong></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item">🎞️ <span>SET DE FILMAGEM</span></div>
+      <div class="ticker-sep">✦</div>
+      <div class="ticker-item"><strong>PRODUÇÃO</strong></div>
+      <div class="ticker-sep">✦</div>
+    </div>
+  </div>
+
+  <!-- ═══════ POST 01 (COMPLETO) ═══════ -->
+  <section id="post01">
+    <div class="section-wrap" style="padding-bottom: 0;">
+      <div class="section-header">
+        <div>
+          <div class="section-header__eyebrow">Post #01</div>
+          <h2 class="section-header__title">O começo de tudo</h2>
+        </div>
+        <span class="tag tag--default">Abr • 2026</span>
+      </div>
+
+      <article class="post-full anim anim-up">
+        <div class="post-full__cover">
+          <div class="post-full__cover-noise"></div>
+          <div class="post-full__cover-content">
+            <div class="post-full__cover-icon">🎬</div>
+            <div class="post-full__cover-label">Luz, Câmera e Boleto: Post #01</div>
+          </div>
+        </div>
+
+        <div class="post-full__header">
+          <div class="post-full__meta-top">
+            <span class="tag tag--accent">Carreira</span>
+            <span class="tag tag--default">Audiovisual</span>
+            <span class="tag tag--default">Brasil</span>
+          </div>
+          <h1 class="post-full__title">Quero trabalhar com cinema. Vou morrer de fome?</h1>
+          <p class="post-full__lead">Acho que todo artista, quando assume o risco de viver da arte, já ouviu alguma piadinha infeliz, né?</p>
+          <div class="post-full__info">
+            <span>📅 Abril de 2026</span>
+            <span>·</span>
+            <span>⏱️ 7 min de leitura</span>
+            <span>·</span>
+            <span>✍️ Luz, Câmera e Boleto</span>
+          </div>
+        </div>
+
+        <div class="post-full__body">
+          <p>
+            "Vai morrer de fome", "vai morar na rua" ou o equivalente da nossa geração: "vai virar Uber". (O que, sinceramente, nem deveria ser usado como piada, porque é uma profissão digna e importante pra caramba.)
+          </p>
+
+          <p>
+            Mas enfim. Acho que o que eu tô tentando ilustrar aqui é que, quando você é artista e decide seguir esse caminho, geralmente acaba sendo desencorajado. E essa é uma realidade. Acontece com muito mais frequência do que deveria.
+          </p>
+
+          <div class="highlight-box">
+            <p>
+              Se você quiser trabalhar com cinema no Brasil, você não vai passar fome. Mas calma, não é só querer.
+            </p>
+          </div>
+
+          <p>
+            Não é só querer trabalhar com isso. Você vai ter que correr atrás e se dedicar, como em qualquer outra profissão. Que loucura, né?
+          </p>
+
+          <p>
+            E é justamente isso que a gente vai conversar aqui nesse blog: como entrar nessa área, dicas reais, relatos sinceros e depoimentos de pessoas que trabalham com audiovisual e já passaram exatamente por esse momento de início que talvez você esteja vivendo agora.
+          </p>
+
+          <h2>Tá, mas o que significa "trabalhar com cinema"?</h2>
+
+          <p>
+            Pra começar, quando a gente fala sobre trabalhar com cinema, a gente acaba generalizando muita coisa. O termo mais correto, na verdade, seria <strong>audiovisual</strong>, porque ele é bem mais amplo e engloba vários formatos além dos filmes tradicionais.
+          </p>
+
+          <p>
+            Afinal, também existe cinema em: videoclipes, documentários, videoartes, comerciais e como a gente fala hoje em dia… "publis". E aí você já começa a perceber uma coisa importante: existem várias frentes de trabalho dentro do audiovisual. São áreas diferentes, oportunidades diferentes e funções completamente diferentes, mas todas fazem parte do mesmo universo criativo.
+          </p>
+
+          <div class="aside-note">
+            <p>
+              Você não precisa necessariamente dirigir um longa-metragem da Netflix pra viver de audiovisual. Tem espaço pra muita gente, de muitos estilos e em muitos formatos diferentes.
+            </p>
+          </div>
+
+          <p>
+            E talvez essa seja uma das melhores notícias pra quem quer entrar nessa área: você não precisa necessariamente dirigir um longa-metragem da Netflix pra viver de audiovisual. Tem espaço pra muita gente, de muitos estilos e em muitos formatos diferentes.
+          </p>
+
+          <p>
+            Nos próximos posts, a gente vai destrinchar cada um desses formatos, falar sobre quanto se ganha (sim, de verdade), quais funções existem dentro de um set, e como você começa do zero sem precisar conhecer ninguém famoso, ou pelo menos sem precisar <em>só</em> disso.
+          </p>
+
+          <p>
+            Bem-vindo ao <strong>Luz, Câmera e Boleto</strong>. A gente te prometeu que ia ser honesto. Esse foi o aquecimento.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════ OUTROS POSTS ═══════ -->
+  <section id="posts">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div>
+          <div class="section-header__eyebrow">Mais no blog</div>
+          <h2 class="section-header__title">Em breve por aqui</h2>
+        </div>
+        <button class="btn btn--outline btn--sm">Ver todos</button>
+      </div>
+
+      <div class="posts-grid">
+
+        <!-- Post 02 -->
+        <article class="card-post anim anim-up anim-d1">
+          <div class="card-post__thumb card-post__thumb--dark">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--highlight">Dinheiro</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">Quanto eu ganho num set? (Spoiler: depende do que você chama de "ganhar")</h3>
+            <p class="card-post__excerpt">PA, diretor de arte, cinegrafista, roteirista... cada função tem uma tabela salarial diferente. A gente vai em cada uma sem dourar a pílula.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Mai 2026</span>
+                <span class="card-post__dot"></span>
+                <span>6 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 03 -->
+        <article class="card-post anim anim-up anim-d2">
+          <div class="card-post__thumb card-post__thumb--accent">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--dark">Formação</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">Faculdade de cinema ou YouTube: qual te prepara mais pro mercado?</h3>
+            <p class="card-post__excerpt">Não é uma pergunta com resposta óbvia, mas a gente vai dar uma resposta de qualquer jeito, porque isso é o que a gente faz.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Jun 2026</span>
+                <span class="card-post__dot"></span>
+                <span>8 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 04 -->
+        <article class="card-post anim anim-up anim-d3">
+          <div class="card-post__thumb" style="background: var(--color-surface-2);">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--default">Sobrevivência</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">O guia de sobrevivência do PA: como não surtar no primeiro set</h3>
+            <p class="card-post__excerpt">Todo mundo começa de baixo. Mas "de baixo" no audiovisual tem nome: Assistente de Produção. Vem entender o que esperar.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Jul 2026</span>
+                <span class="card-post__dot"></span>
+                <span>5 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 05 -->
+        <article class="card-post anim anim-up anim-d1">
+          <div class="card-post__thumb card-post__thumb--highlight">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--dark">Mercado</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">Streaming matou o cinema? A resposta que ninguém quer ouvir</h3>
+            <p class="card-post__excerpt">Não. Mas complicou bastante. A gente fala sobre como o mercado mudou e o que isso significa pra quem quer entrar agora.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Ago 2026</span>
+                <span class="card-post__dot"></span>
+                <span>9 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 06 -->
+        <article class="card-post anim anim-up anim-d2">
+          <div class="card-post__thumb card-post__thumb--dark">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--highlight">Depoimentos</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">"Fui de estagiária a diretora em 5 anos": uma história real (e trabalhosa)</h3>
+            <p class="card-post__excerpt">Conversa com uma profissional do audiovisual brasileiro sobre como foi o começo, os erros, os acertos e o que ela faria diferente.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Set 2026</span>
+                <span class="card-post__dot"></span>
+                <span>10 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 07 -->
+        <article class="card-post anim anim-up anim-d3">
+          <div class="card-post__thumb" style="background: var(--color-surface-2);">
+            <div class="card-post__thumb-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/>
+              </svg>
+              <span>Imagem em breve</span>
+            </div>
+            <div class="card-post__category">
+              <span class="tag tag--accent">Ferramentas</span>
+            </div>
+          </div>
+          <div class="card-post__body">
+            <h3 class="card-post__title">Os softwares que você vai precisar aprender (e os que prometem mais do que entregam)</h3>
+            <p class="card-post__excerpt">Premiere, DaVinci, Celtx, Frame.io, Google Drive do grupo de faculdade com nome de arquivo "versao_final_FINAL_3"... um guia honesto.</p>
+            <div class="card-post__footer">
+              <div class="card-post__meta">
+                <span>Out 2026</span>
+                <span class="card-post__dot"></span>
+                <span>7 min</span>
+              </div>
+              <span class="tag tag--accent">Em breve</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- CTA Banner -->
+      <div class="cta-banner anim anim-up">
+        <div>
+          <div class="cta-banner__eyebrow">✦ Novidades por aí</div>
+          <div class="cta-banner__title">Novo post toda semana. Sem promessa vazia, dessa vez a gente tá comprometida.</div>
+          <div class="cta-banner__sub">Porque escrever sobre cinema é muito mais fácil do que fazer cinema. (Por enquanto.)</div>
+        </div>
+        <button class="btn btn--highlight btn--lg btn--pill">Acompanhar o blog →</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════ SOBRE O BLOG ═══════ -->
+  <section id="sobre">
+    <div class="section-wrap" style="padding-top: 0;">
+      <div class="about-section anim anim-up">
+        <div>
+          <h2 class="about-section__title">
+            O que é o <em>Luz, Câmera e Boleto</em>?
+          </h2>
+          <p class="about-section__text">
+            É um blog sobre o lado prático de trabalhar com audiovisual no Brasil. Nada de romantizar o sofrimento, nada de fingir que é fácil. A ideia é simples: dar informação real pra quem tá começando.
+          </p>
+          <p class="about-section__text">
+            Depoimentos de quem já está no mercado, dicas sobre como entrar, quanto esperar ganhar, quais funções existem e como se preparar. Tudo isso com uma dose honesta de humor, porque se você vai trabalhar com arte no Brasil, vai precisar de senso de humor.
+          </p>
+          <a href="#post01" class="btn btn--primary btn--md" style="margin-top: var(--space-4);">Começar pelo post #01</a>
+        </div>
+        <div class="about-section__visual">
+          <div class="stat-item">
+            <div class="stat-item__num">01</div>
+            <div class="stat-item__label">Post publicado.<br>Mais vindo por aí.</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__num">6+</div>
+            <div class="stat-item__label">Áreas do audiovisual que vamos cobrir: direção, produção, roteiro, montagem, fotografia e mais.</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__num">0</div>
+            <div class="stat-item__label">Promessas de que vai ser fácil. Só verdade por aqui.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="footer" id="contato">
+
+    <!-- Logo masthead gigante -->
+    <div class="footer__masthead">
+      <div class="logo-type logo-type--display footer__masthead-logo">
+        <span class="logo-type__line1">Luz,</span>
+        <span class="logo-type__line2">Câmera</span>
+        <span class="logo-type__line3">e Boleto</span>
+      </div>
+    </div>
+
+    <!-- Links e tagline -->
+    <div class="footer__inner">
+      <div>
+        <p class="footer__tagline">Um blog sobre a vida real de quem escolheu o audiovisual.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Posts</div>
+        <a class="footer__link" href="#post01">Post #01: Cinema e fome</a>
+        <a class="footer__link" href="#posts">Próximos posts</a>
+      </div>
+      <div>
+        <div class="footer__col-title">O blog</div>
+        <a class="footer__link" href="#sobre">Sobre</a>
+        <a class="footer__link" href="#contato">Contato</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer__credit">
+        Feito com carinho e com muito café ☕ &nbsp;·&nbsp;
+        <strong>Luz, Câmera e Boleto</strong>
+      </div>
+      <div class="footer__puc">Primeiro Período · Escrita Criativa PUCPR</div>
+    </div>
+  </footer>
+
+  <script>
+    // ═══════ DARK MODE ═══════
+    const btn = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    const moonPath = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+    const sunPath = `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+
+    let dark = false;
+    btn.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+      icon.innerHTML = dark ? moonPath : sunPath;
+    });
+
+    // ═══════ SCROLL ANIMATIONS ═══════
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
