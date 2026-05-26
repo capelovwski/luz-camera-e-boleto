@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — Luz, Câmera e Boleto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      /* Cores */
+      --color-bg:           #F4EFE6;
+      --color-surface:      #FFFFFF;
+      --color-surface-2:    #EDE8DC;
+      --color-border:       #D6CFC3;
+      --color-border-dark:  #B0A898;
+
+      --color-text-primary:   #1C1917;
+      --color-text-secondary: #78716C;
+      --color-text-muted:     #A8A29E;
+      --color-text-inverse:   #F4EFE6;
+
+      --color-accent:         #A31F34;
+      --color-accent-hover:   #871929;
+      --color-accent-soft:    #F4E0E4;
+
+      --color-highlight:      #EAD84B;
+      --color-highlight-hover:#D4C43A;
+
+      --color-dark:           #1C1917;
+      --color-dark-hover:     #2E2A27;
+
+      /* Tipografia */
+      --font-heading: 'Fraunces', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-logo:    'Bebas Neue', 'Impact', sans-serif;
+
+      --text-xs:   0.75rem;
+      --text-sm:   0.875rem;
+      --text-base: 1rem;
+      --text-lg:   1.125rem;
+      --text-xl:   1.25rem;
+      --text-2xl:  1.5rem;
+      --text-3xl:  1.875rem;
+      --text-4xl:  2.25rem;
+      --text-5xl:  3rem;
+      --text-6xl:  3.75rem;
+
+      --font-light:   300;
+      --font-regular: 400;
+      --font-medium:  500;
+      --font-semibold:600;
+      --font-bold:    700;
+
+      --leading-tight:  1.2;
+      --leading-snug:   1.375;
+      --leading-normal: 1.5;
+      --leading-relaxed:1.625;
+      --leading-loose:  2;
+
+      /* Espaçamento */
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  20px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+
+      /* Bordas */
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   16px;
+      --radius-2xl:  20px;
+      --radius-full: 9999px;
+
+      /* Sombras */
+      --shadow-sm:  0 1px 2px rgba(28,25,23,0.06);
+      --shadow-md:  0 4px 12px rgba(28,25,23,0.08);
+      --shadow-lg:  0 8px 24px rgba(28,25,23,0.10);
+      --shadow-xl:  0 16px 40px rgba(28,25,23,0.12);
+    }
+
+    /* ═══════════════════════════════════════
+       DARK MODE
+    ═══════════════════════════════════════ */
+    [data-theme="dark"] {
+      --color-bg:           #0F0E0D;
+      --color-surface:      #1C1917;
+      --color-surface-2:    #252220;
+      --color-border:       #3C3735;
+      --color-border-dark:  #57534E;
+
+      --color-text-primary:   #F4EFE6;
+      --color-text-secondary: #A8A29E;
+      --color-text-muted:     #57534E;
+      --color-text-inverse:   #1C1917;
+
+      --color-accent:         #D93054;
+      --color-accent-hover:   #B8264A;
+      --color-accent-soft:    #3A0C18;
+
+      --color-highlight:      #EAD84B;
+      --color-highlight-hover:#D4C43A;
+
+      --color-dark:           #F4EFE6;
+      --color-dark-hover:     #EDE8DC;
+
+      --shadow-sm:  0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md:  0 4px 12px rgba(0,0,0,0.35);
+      --shadow-lg:  0 8px 24px rgba(0,0,0,0.40);
+      --shadow-xl:  0 16px 40px rgba(0,0,0,0.45);
+    }
+
+    /* ═══════════════════════════════════════
+       ANIMAÇÕES — KEYFRAMES
+    ═══════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-32px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(32px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes blurIn {
+      from { opacity: 0; filter: blur(10px); transform: translateY(14px); }
+      to   { opacity: 1; filter: blur(0px);  transform: translateY(0); }
+    }
+    @keyframes revealBar {
+      from { transform: scaleX(0); transform-origin: left; }
+      to   { transform: scaleX(1); transform-origin: left; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(16px) scale(0.9); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Animation base — elementos ficam invisíveis até o JS ativar */
+    .anim { opacity: 0; }
+    .anim.in {
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      animation-duration: 0.75s;
+    }
+    .anim-up.in     { animation-name: fadeInUp; }
+    .anim-down.in   { animation-name: fadeInDown; }
+    .anim-left.in   { animation-name: fadeInLeft; }
+    .anim-right.in  { animation-name: fadeInRight; }
+    .anim-scale.in  { animation-name: scaleIn; }
+    .anim-blur.in   { animation-name: blurIn; }
+
+    /* Delays */
+    .anim-d1 { animation-delay: 0.08s; }
+    .anim-d2 { animation-delay: 0.16s; }
+    .anim-d3 { animation-delay: 0.24s; }
+    .anim-d4 { animation-delay: 0.34s; }
+    .anim-d5 { animation-delay: 0.44s; }
+    .anim-d6 { animation-delay: 0.56s; }
+
+    /* Durations */
+    .anim-fast   { animation-duration: 0.4s !important; }
+    .anim-slow   { animation-duration: 1.1s !important; }
+
+    /* ═══════════════════════════════════════
+       PARALLAX
+    ═══════════════════════════════════════ */
+    .parallax-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      min-height: 280px;
+    }
+    .parallax-bg {
+      position: absolute;
+      inset: -80px 0;
+      will-change: transform;
+      background-size: cover;
+      background-position: center;
+    }
+    .parallax-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-12) var(--space-8);
+    }
+    .parallax-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════
+       DARK MODE TOGGLE
+    ═══════════════════════════════════════ */
+    .ds-dark-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-2) var(--space-3);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-4);
+      transition: all 0.15s;
+    }
+    .ds-dark-toggle:hover {
+      background: var(--color-surface-2);
+      color: var(--color-text-primary);
+      border-color: var(--color-border-dark);
+    }
+    .ds-dark-toggle__track {
+      width: 34px;
+      height: 20px;
+      background: var(--color-border-dark);
+      border-radius: var(--radius-full);
+      position: relative;
+      margin-left: auto;
+      transition: background 0.25s;
+      flex-shrink: 0;
+    }
+    [data-theme="dark"] .ds-dark-toggle__track {
+      background: var(--color-accent);
+    }
+    .ds-dark-toggle__thumb {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: var(--radius-full);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    [data-theme="dark"] .ds-dark-toggle__thumb {
+      transform: translateX(14px);
+    }
+
+    /* ═══════════════════════════════════════
+       LOGO
+    ═══════════════════════════════════════ */
+    .logo-type {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      user-select: none;
+    }
+    .logo-type__line1,
+    .logo-type__line2 {
+      font-family: var(--font-logo);
+      letter-spacing: 0.02em;
+      color: var(--color-text-primary);
+      line-height: 0.92;
+    }
+    .logo-type__line3 {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-top: -0.28em;   /* sobreposição sobre "Câmera" */
+      display: block;
+      position: relative;
+    }
+
+    /* Tamanhos do logo */
+    .logo-type--sm .logo-type__line1,
+    .logo-type--sm .logo-type__line2 { font-size: 1.05rem; }
+    .logo-type--sm .logo-type__line3  { font-size: 0.9rem; }
+
+    .logo-type--md .logo-type__line1,
+    .logo-type--md .logo-type__line2 { font-size: 1.6rem; }
+    .logo-type--md .logo-type__line3  { font-size: 1.35rem; }
+
+    .logo-type--lg .logo-type__line1,
+    .logo-type--lg .logo-type__line2 { font-size: 2.8rem; }
+    .logo-type--lg .logo-type__line3  { font-size: 2.3rem; }
+
+    .logo-type--xl .logo-type__line1,
+    .logo-type--xl .logo-type__line2 { font-size: 5rem; }
+    .logo-type--xl .logo-type__line3  { font-size: 4.1rem; }
+
+    /* Variante invertida (pra fundos escuros) */
+    .logo-type--inverse .logo-type__line1,
+    .logo-type--inverse .logo-type__line2 { color: #F4EFE6; }
+    .logo-type--inverse .logo-type__line3 { color: #D93054; }
+
+    /* ── Cursor de digitação ── */
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .logo-cursor {
+      display: inline-block;
+      width: 0.06em;
+      height: 0.82em;
+      background: var(--color-accent);
+      margin-left: 0.06em;
+      vertical-align: middle;
+      border-radius: 1px;
+      animation: cursorBlink 0.55s ease-in-out infinite;
+    }
+    .logo-type--inverse .logo-cursor { background: #D93054; }
+
+    /* ═══════════════════════════════════════
+       DARK SECTION PATTERNS
+    ═══════════════════════════════════════ */
+    .dark-section {
+      background: var(--color-dark);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12) var(--space-10);
+      color: var(--color-text-inverse);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .dark-section {
+      background: #252220;
+      border: 1px solid var(--color-border);
+    }
+    .dark-section--accent {
+      background: var(--color-accent);
+    }
+    .dark-section--highlight {
+      background: var(--color-highlight);
+    }
+
+    /* Demo grid para animações */
+    .anim-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+    .anim-demo-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .anim-demo-card:hover { box-shadow: var(--shadow-md); }
+    .anim-demo-card__label {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      color: var(--color-accent);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+    }
+    .anim-demo-card__desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      line-height: var(--leading-normal);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
+    .ds-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .ds-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      padding: var(--space-8) var(--space-6);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .ds-sidebar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .ds-sidebar__logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-dark);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ds-sidebar__logo-text {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-tight);
+    }
+    .ds-sidebar__logo-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+    .ds-sidebar__section {
+      margin-bottom: var(--space-6);
+    }
+    .ds-sidebar__label {
+      font-size: 10px;
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+      padding: 0 var(--space-2);
+    }
+    .ds-sidebar__link {
+      display: block;
+      padding: var(--space-2) var(--space-2);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .ds-sidebar__link:hover {
+      background: var(--color-surface-2);
+      color: var(--color-text-primary);
+    }
+    .ds-sidebar__link.active {
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+      font-weight: var(--font-medium);
+    }
+
+    /* MAIN */
+    .ds-main {
+      flex: 1;
+      padding: var(--space-12) var(--space-16);
+      max-width: 900px;
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION
+    ═══════════════════════════════════════ */
+    .ds-section {
+      margin-bottom: var(--space-24);
+    }
+    .ds-section__header {
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .ds-section__eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-2);
+    }
+    .ds-section__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-tight);
+    }
+    .ds-section__desc {
+      margin-top: var(--space-3);
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+    }
+    .ds-subsection {
+      margin-bottom: var(--space-10);
+    }
+    .ds-subsection__title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    /* PREVIEW BOX */
+    .ds-preview {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-3);
+    }
+    .ds-preview--dark {
+      background: var(--color-dark);
+    }
+    .ds-preview--grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: flex-start;
+    }
+    .ds-preview--center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    /* TOKEN TAG */
+    .ds-token {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 2px 10px;
+      font-size: var(--text-xs);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: var(--color-text-secondary);
+    }
+
+    /* ═══════════════════════════════════════
+       01 — CORES
+    ═══════════════════════════════════════ */
+    .ds-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-4);
+    }
+    .ds-color-chip {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+    }
+    .ds-color-chip__swatch {
+      height: 72px;
+    }
+    .ds-color-chip__info {
+      background: var(--color-surface);
+      padding: var(--space-3);
+    }
+    .ds-color-chip__name {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-primary);
+    }
+    .ds-color-chip__value {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      margin-top: 2px;
+    }
+    .ds-color-chip__token {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      margin-top: 2px;
+    }
+
+    /* ═══════════════════════════════════════
+       02 — TIPOGRAFIA
+    ═══════════════════════════════════════ */
+    .ds-type-scale { display: flex; flex-direction: column; gap: var(--space-6); }
+    .ds-type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .ds-type-row:last-child { border-bottom: none; }
+    .ds-type-meta {
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+    .ds-type-meta__label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ds-type-meta__info {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 4px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ═══════════════════════════════════════
+       03 — ESPAÇAMENTO
+    ═══════════════════════════════════════ */
+    .ds-space-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .ds-space-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .ds-space-row__label {
+      min-width: 80px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+    .ds-space-row__bar {
+      height: 16px;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm);
+      opacity: 0.7;
+    }
+    .ds-space-row__value {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ═══════════════════════════════════════
+       04 — BOTÕES
+    ═══════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: var(--font-medium);
+      line-height: 1;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn:active { transform: translateY(1px); }
+
+    /* Tamanhos */
+    .btn--sm  { font-size: var(--text-sm);  padding: 8px 14px;  border-radius: var(--radius-md); }
+    .btn--md  { font-size: var(--text-sm);  padding: 10px 18px; border-radius: var(--radius-lg); }
+    .btn--lg  { font-size: var(--text-base); padding: 13px 24px; border-radius: var(--radius-xl); }
+
+    /* Variantes */
+    .btn--primary {
+      background: var(--color-dark);
+      color: var(--color-text-inverse);
+    }
+    .btn--primary:hover { background: var(--color-dark-hover); }
+
+    .btn--accent {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn--accent:hover { background: var(--color-accent-hover); }
+
+    .btn--highlight {
+      background: var(--color-highlight);
+      color: var(--color-dark);
+    }
+    .btn--highlight:hover { background: var(--color-highlight-hover); }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1.5px solid var(--color-border-dark);
+    }
+    .btn--outline:hover { background: var(--color-surface-2); border-color: var(--color-text-secondary); }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+    .btn--ghost:hover { background: var(--color-surface-2); color: var(--color-text-primary); }
+
+    .btn--pill { border-radius: var(--radius-full); }
+
+    /* Disabled */
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════
+       05 — CARDS
+    ═══════════════════════════════════════ */
+    /* Blog Post Card */
+    .card-post {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .card-post:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .card-post__thumb {
+      height: 180px;
+      background: var(--color-surface-2);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-post__thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-post__thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-border-dark);
+    }
+    .card-post__category {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+    }
+    .card-post__body {
+      padding: var(--space-5);
+    }
+    .card-post__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-2);
+    }
+    .card-post__excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-post__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-post__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .card-post__dot {
+      width: 3px; height: 3px;
+      background: var(--color-border-dark);
+      border-radius: var(--radius-full);
+    }
+
+    /* Stat Card */
+    .card-stat {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      min-width: 140px;
+    }
+    .card-stat--dark {
+      background: var(--color-dark);
+      border-color: transparent;
+    }
+    .card-stat__icon {
+      width: 36px; height: 36px;
+      background: var(--color-surface-2);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-3);
+    }
+    .card-stat--dark .card-stat__icon {
+      background: rgba(255,255,255,0.1);
+    }
+    .card-stat__number {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      line-height: var(--leading-tight);
+      color: var(--color-text-primary);
+    }
+    .card-stat--dark .card-stat__number { color: var(--color-text-inverse); }
+    .card-stat__label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .card-stat--dark .card-stat__label { color: rgba(255,255,255,0.5); }
+
+    /* Quote Card */
+    .card-quote {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      position: relative;
+    }
+    .card-quote__mark {
+      font-family: var(--font-heading);
+      font-size: 64px;
+      line-height: 0.6;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+    .card-quote__text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: var(--text-xl);
+      line-height: var(--leading-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+    .card-quote__author {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-secondary);
+    }
+    .card-quote__role {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* ═══════════════════════════════════════
+       06 — TAGS & BADGES
+    ═══════════════════════════════════════ */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .tag--default {
+      background: var(--color-surface-2);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+    }
+    .tag--accent {
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+    }
+    .tag--dark {
+      background: var(--color-dark);
+      color: var(--color-text-inverse);
+    }
+    .tag--highlight {
+      background: var(--color-highlight);
+      color: var(--color-dark);
+    }
+    .tag--outline {
+      background: transparent;
+      border: 1.5px solid var(--color-border-dark);
+      color: var(--color-text-secondary);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: var(--font-semibold);
+      line-height: 1;
+    }
+    .badge--accent { background: var(--color-accent); color: #fff; }
+    .badge--dark   { background: var(--color-dark); color: #fff; }
+    .badge--highlight { background: var(--color-highlight); color: var(--color-dark); }
+
+    /* ═══════════════════════════════════════
+       07 — INPUTS
+    ═══════════════════════════════════════ */
+    .ds-input-wrap { position: relative; }
+    .ds-input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      pointer-events: none;
+    }
+    .input {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .input::placeholder { color: var(--color-text-muted); }
+    .input:focus {
+      border-color: var(--color-text-secondary);
+      box-shadow: 0 0 0 3px rgba(120,113,108,0.12);
+    }
+    .input--search { padding-left: 38px; }
+    .input--error { border-color: var(--color-accent); }
+    .input--error:focus { box-shadow: 0 0 0 3px var(--color-accent-soft); }
+
+    .input-label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      margin-bottom: var(--space-2);
+      color: var(--color-text-primary);
+    }
+    .input-hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .input-error-msg {
+      font-size: var(--text-xs);
+      color: var(--color-accent);
+      margin-top: var(--space-1);
+    }
+
+    /* ═══════════════════════════════════════
+       08 — NAVEGAÇÃO
+    ═══════════════════════════════════════ */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      height: 60px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+    }
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .nav__logo {
+      width: 28px; height: 28px;
+      background: var(--color-dark);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav__name {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      list-style: none;
+    }
+    .nav__link {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .nav__link:hover, .nav__link.active {
+      background: var(--color-surface-2);
+      color: var(--color-text-primary);
+    }
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ═══════════════════════════════════════
+       09 — ÍCONES
+    ═══════════════════════════════════════ */
+    .ds-icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: var(--space-3);
+    }
+    .ds-icon-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-3);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ds-icon-chip:hover {
+      background: var(--color-surface-2);
+      border-color: var(--color-border-dark);
+    }
+    .ds-icon-chip__label {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════
+       10 — BORDAS & SOMBRAS
+    ═══════════════════════════════════════ */
+    .ds-radius-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .ds-radius-chip {
+      width: 80px; height: 80px;
+      background: var(--color-accent-soft);
+      border: 2px solid var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ds-radius-chip__label {
+      text-align: center;
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .ds-shadow-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+    }
+    .ds-shadow-chip {
+      width: 120px; height: 80px;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ═══════════════════════════════════════
+       DIVIDER
+    ═══════════════════════════════════════ */
+    .ds-divider {
+      height: 1px;
+      background: var(--color-border);
+      border: none;
+      margin: var(--space-6) 0;
+    }
+    .ds-divider--accent {
+      background: var(--color-accent);
+      height: 2px;
+    }
+
+    /* ═══════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+
+    /* ═══════════════════════════════════════
+       HERO (top do doc)
+    ═══════════════════════════════════════ */
+    .ds-hero {
+      margin-bottom: var(--space-16);
+    }
+    .ds-hero__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .ds-hero__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-5xl);
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-tight);
+      margin-bottom: var(--space-4);
+    }
+    .ds-hero__title em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+    .ds-hero__desc {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+    .ds-hero__meta {
+      display: flex;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .ds-hero__meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ds-hero__meta-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ds-hero__meta-value {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+    }
+  </style>
+</head>
+<body>
+
+<div class="ds-wrapper">
+
+  <!-- ═══════ SIDEBAR ═══════ -->
+  <aside class="ds-sidebar">
+    <div class="ds-sidebar__logo">
+      <div class="ds-sidebar__logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="2" width="5" height="5" rx="1" fill="#EAD84B"/>
+          <rect x="9" y="2" width="5" height="5" rx="1" fill="#A31F34"/>
+          <rect x="2" y="9" width="5" height="5" rx="1" fill="#A31F34" opacity="0.6"/>
+          <rect x="9" y="9" width="5" height="5" rx="1" fill="#F4EFE6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-type logo-type--sm">
+          <span class="logo-type__line1">Luz,</span>
+          <span class="logo-type__line2">Câmera</span>
+          <span class="logo-type__line3">e Boleto</span>
+        </div>
+        <div class="ds-sidebar__logo-sub" style="margin-top:4px;">Design System v1.0</div>
+      </div>
+    </div>
+
+    <div class="ds-sidebar__section">
+      <div class="ds-sidebar__label">Fundação</div>
+      <a class="ds-sidebar__link" href="#logo">Logo</a>
+      <a class="ds-sidebar__link" href="#cores">Cores</a>
+      <a class="ds-sidebar__link" href="#tipografia">Tipografia</a>
+      <a class="ds-sidebar__link" href="#espacamento">Espaçamento</a>
+      <a class="ds-sidebar__link" href="#bordas">Bordas & Sombras</a>
+    </div>
+
+    <div class="ds-sidebar__section">
+      <div class="ds-sidebar__label">Componentes</div>
+      <a class="ds-sidebar__link" href="#botoes">Botões</a>
+      <a class="ds-sidebar__link" href="#cards">Cards</a>
+      <a class="ds-sidebar__link" href="#tags">Tags & Badges</a>
+      <a class="ds-sidebar__link" href="#inputs">Inputs</a>
+      <a class="ds-sidebar__link" href="#navegacao">Navegação</a>
+      <a class="ds-sidebar__link" href="#icones">Ícones</a>
+    </div>
+
+    <div class="ds-sidebar__section">
+      <div class="ds-sidebar__label">Avançado</div>
+      <a class="ds-sidebar__link" href="#animacoes">Animações</a>
+      <a class="ds-sidebar__link" href="#secoes-escuras">Seções Escuras</a>
+      <a class="ds-sidebar__link" href="#parallax">Parallax</a>
+    </div>
+
+    <button class="ds-dark-toggle" id="darkToggle" onclick="toggleDark()">
+      <svg id="darkIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <span id="darkLabel">Dark mode</span>
+      <div class="ds-dark-toggle__track">
+        <div class="ds-dark-toggle__thumb"></div>
+      </div>
+    </button>
+  </aside>
+
+  <!-- ═══════ MAIN ═══════ -->
+  <main class="ds-main">
+
+    <!-- HERO -->
+    <div class="ds-hero" id="top">
+      <div class="ds-hero__pill">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="3" fill="currentColor"/>
+          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        Versão 1.0 · 2025
+      </div>
+      <div style="margin-bottom:var(--space-6);">
+        <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;">Design System</div>
+        <div class="logo-type logo-type--xl">
+          <span class="logo-type__line1">Luz,</span>
+          <span class="logo-type__line2">Câmera</span>
+          <span class="logo-type__line3">e Boleto</span>
+        </div>
+      </div>
+      <p class="ds-hero__desc">
+        Guia visual completo para o blog sobre audiovisual e cinema no Brasil.
+        Todas as decisões de design em um lugar só — cores, tipografia, componentes e padrões de interface.
+      </p>
+      <div class="ds-hero__meta">
+        <div class="ds-hero__meta-item">
+          <span class="ds-hero__meta-label">Tema</span>
+          <span class="ds-hero__meta-value">Cinema & Audiovisual</span>
+        </div>
+        <div class="ds-hero__meta-item">
+          <span class="ds-hero__meta-label">Tom</span>
+          <span class="ds-hero__meta-value">Descontraído e editorial</span>
+        </div>
+        <div class="ds-hero__meta-item">
+          <span class="ds-hero__meta-label">Componentes</span>
+          <span class="ds-hero__meta-value">10 seções</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 00 — LOGO                        -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="logo">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">00</div>
+        <h2 class="ds-section__title">Logo</h2>
+        <p class="ds-section__desc">Logotipo em três linhas. <strong>Bebas Neue</strong> nas duas primeiras — condensada, impactante, referência direta ao pôster de cinema. <strong>Fraunces itálico</strong> na terceira — mais suave, bem-humorada, que é o punchline do nome.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Display — tamanho máximo</div>
+        <div class="ds-preview" style="padding: var(--space-12);">
+          <div class="logo-type logo-type--xl">
+            <span class="logo-type__line1">Luz,</span>
+            <span class="logo-type__line2">Câmera</span>
+            <span class="logo-type__line3">e Boleto</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variantes de tamanho</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:flex-end; gap:var(--space-10);">
+          <div>
+            <div class="logo-type logo-type--lg">
+              <span class="logo-type__line1">Luz,</span>
+              <span class="logo-type__line2">Câmera</span>
+              <span class="logo-type__line3">e Boleto</span>
+            </div>
+            <div style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted);">lg · hero de página</div>
+          </div>
+          <div>
+            <div class="logo-type logo-type--md">
+              <span class="logo-type__line1">Luz,</span>
+              <span class="logo-type__line2">Câmera</span>
+              <span class="logo-type__line3">e Boleto</span>
+            </div>
+            <div style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted);">md · footer</div>
+          </div>
+          <div>
+            <div class="logo-type logo-type--sm">
+              <span class="logo-type__line1">Luz,</span>
+              <span class="logo-type__line2">Câmera</span>
+              <span class="logo-type__line3">e Boleto</span>
+            </div>
+            <div style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted);">sm · sidebar, nav</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Sobre fundo escuro</div>
+        <div class="ds-preview" style="background:var(--color-dark); padding: var(--space-10);">
+          <div class="ds-preview--grid">
+            <div>
+              <div class="logo-type logo-type--lg logo-type--inverse">
+                <span class="logo-type__line1">Luz,</span>
+                <span class="logo-type__line2">Câmera</span>
+                <span class="logo-type__line3">e Boleto</span>
+              </div>
+            </div>
+            <div>
+              <div class="logo-type logo-type--md logo-type--inverse">
+                <span class="logo-type__line1">Luz,</span>
+                <span class="logo-type__line2">Câmera</span>
+                <span class="logo-type__line3">e Boleto</span>
+              </div>
+            </div>
+            <div>
+              <div class="logo-type logo-type--sm logo-type--inverse">
+                <span class="logo-type__line1">Luz,</span>
+                <span class="logo-type__line2">Câmera</span>
+                <span class="logo-type__line3">e Boleto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Anatomia do logotipo</div>
+        <div class="ds-preview">
+          <div style="display:flex; gap:var(--space-8); align-items:flex-start; flex-wrap:wrap;">
+            <div class="logo-type logo-type--lg">
+              <span class="logo-type__line1">Luz,</span>
+              <span class="logo-type__line2">Câmera</span>
+              <span class="logo-type__line3">e Boleto</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:var(--space-4); justify-content:center; padding-top:var(--space-2);">
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="width:24px;height:2px;background:var(--color-text-primary);flex-shrink:0;"></div>
+                <div>
+                  <div style="font-size:var(--text-xs);font-weight:600;">Bebas Neue</div>
+                  <div style="font-size:var(--text-xs);color:var(--color-text-muted);">Display · maiúsculas · kerning +0.02em</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="width:24px;height:2px;background:var(--color-text-primary);flex-shrink:0;"></div>
+                <div>
+                  <div style="font-size:var(--text-xs);font-weight:600;">Bebas Neue</div>
+                  <div style="font-size:var(--text-xs);color:var(--color-text-muted);">Display · mesmo peso e estilo</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="width:24px;height:2px;background:var(--color-accent);flex-shrink:0;"></div>
+                <div>
+                  <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-accent);">Fraunces Italic</div>
+                  <div style="font-size:var(--text-xs);color:var(--color-text-muted);">Serif · itálico · cor accent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 01 — CORES                       -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="cores">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">01</div>
+        <h2 class="ds-section__title">Cores</h2>
+        <p class="ds-section__desc">Paleta inspirada em película fotográfica envelhecida, luz de marquee de cinema e a atmosfera quente de uma sala escura. Tons orgânicos com acentos expressivos.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Paleta principal</div>
+        <div class="ds-color-grid">
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#F4EFE6;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Background</div>
+              <div class="ds-color-chip__value">#F4EFE6</div>
+              <div class="ds-color-chip__token">--color-bg</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#FFFFFF; border-bottom: 1px solid #D6CFC3;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Surface</div>
+              <div class="ds-color-chip__value">#FFFFFF</div>
+              <div class="ds-color-chip__token">--color-surface</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#EDE8DC;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Surface 2</div>
+              <div class="ds-color-chip__value">#EDE8DC</div>
+              <div class="ds-color-chip__token">--color-surface-2</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#D6CFC3;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Border</div>
+              <div class="ds-color-chip__value">#D6CFC3</div>
+              <div class="ds-color-chip__token">--color-border</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Texto</div>
+        <div class="ds-color-grid">
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#1C1917;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Primary</div>
+              <div class="ds-color-chip__value">#1C1917</div>
+              <div class="ds-color-chip__token">--color-text-primary</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#78716C;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Secondary</div>
+              <div class="ds-color-chip__value">#78716C</div>
+              <div class="ds-color-chip__token">--color-text-secondary</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#A8A29E;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Muted</div>
+              <div class="ds-color-chip__value">#A8A29E</div>
+              <div class="ds-color-chip__token">--color-text-muted</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Acentos</div>
+        <div class="ds-color-grid">
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#A31F34;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Accent</div>
+              <div class="ds-color-chip__value">#A31F34</div>
+              <div class="ds-color-chip__token">--color-accent</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#871929;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Accent Hover</div>
+              <div class="ds-color-chip__value">#871929</div>
+              <div class="ds-color-chip__token">--color-accent-hover</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#F4E0E4;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Accent Soft</div>
+              <div class="ds-color-chip__value">#F4E0E4</div>
+              <div class="ds-color-chip__token">--color-accent-soft</div>
+            </div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip__swatch" style="background:#EAD84B;"></div>
+            <div class="ds-color-chip__info">
+              <div class="ds-color-chip__name">Highlight</div>
+              <div class="ds-color-chip__value">#EAD84B</div>
+              <div class="ds-color-chip__token">--color-highlight</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 02 — TIPOGRAFIA                  -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="tipografia">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">02</div>
+        <h2 class="ds-section__title">Tipografia</h2>
+        <p class="ds-section__desc">Dois typefaces complementares: <strong>Fraunces</strong> nos títulos (serifada, editorial, personalidade cinematográfica) e <strong>Inter</strong> no corpo (sem serifa, limpa, legível).</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Famílias tipográficas</div>
+        <div class="ds-preview">
+          <div style="display:flex; gap: var(--space-8); flex-wrap:wrap;">
+            <div>
+              <div style="font-family:var(--font-heading); font-size: 2rem; font-weight:600; line-height:1.1; margin-bottom: var(--space-2);">Fraunces</div>
+              <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Títulos & Display · Serifada</div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-lg); color:var(--color-text-secondary); margin-top: var(--space-3); font-style:italic;">
+                Aa Bb Cc Dd Ee Ff 0 1 2 3
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-body); font-size: 2rem; font-weight:500; line-height:1.1; margin-bottom: var(--space-2);">Inter</div>
+              <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Corpo & Interface · Sem serifa</div>
+              <div style="font-family:var(--font-body); font-size:var(--text-lg); color:var(--color-text-secondary); margin-top: var(--space-3);">
+                Aa Bb Cc Dd Ee Ff 0 1 2 3
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Escala de tamanhos</div>
+        <div class="ds-preview">
+          <div class="ds-type-scale">
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">Display</div>
+                <div class="ds-type-meta__info">3.75rem / 700<br/>Fraunces</div>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-6xl); font-weight:700; line-height:1.1;">Cinema</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">H1</div>
+                <div class="ds-type-meta__info">3rem / 600<br/>Fraunces</div>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-5xl); font-weight:600; line-height:1.2;">Quero trabalhar com cinema.</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">H2</div>
+                <div class="ds-type-meta__info">2.25rem / 600<br/>Fraunces</div>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-4xl); font-weight:600; line-height:1.2;">Mas o que é audiovisual?</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">H3</div>
+                <div class="ds-type-meta__info">1.875rem / 600<br/>Fraunces</div>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-3xl); font-weight:600; line-height:1.3;">Dicas reais de quem está na área</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">H4</div>
+                <div class="ds-type-meta__info">1.5rem / 600<br/>Fraunces</div>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:var(--text-2xl); font-weight:600;">Depoimentos sinceros</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">Body LG</div>
+                <div class="ds-type-meta__info">1.125rem / 400<br/>Inter</div>
+              </div>
+              <div style="font-family:var(--font-body); font-size:var(--text-lg); line-height:1.625; max-width:480px; color:var(--color-text-secondary);">Acho que todo artista, quando assume o risco de viver da arte, já ouviu alguma piadinha infeliz, né? "Vai morrer de fome."</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">Body</div>
+                <div class="ds-type-meta__info">1rem / 400<br/>Inter</div>
+              </div>
+              <div style="font-family:var(--font-body); font-size:var(--text-base); line-height:1.625; max-width:480px; color:var(--color-text-secondary);">Se você quiser trabalhar com cinema no Brasil, você não vai passar fome. Mas calma — vai ter que correr atrás e se dedicar, como em qualquer outra profissão.</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">Small</div>
+                <div class="ds-type-meta__info">0.875rem / 400<br/>Inter</div>
+              </div>
+              <div style="font-family:var(--font-body); font-size:var(--text-sm); color:var(--color-text-muted);">Publicado em 12 jun 2025 · 6 min de leitura · Direção de arte</div>
+            </div>
+            <div class="ds-type-row">
+              <div class="ds-type-meta">
+                <div class="ds-type-meta__label">Caption</div>
+                <div class="ds-type-meta__info">0.75rem / 500<br/>Inter</div>
+              </div>
+              <div style="font-family:var(--font-body); font-size:var(--text-xs); font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-text-muted);">Categoria · Audiovisual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 03 — ESPAÇAMENTO                 -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="espacamento">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">03</div>
+        <h2 class="ds-section__title">Espaçamento</h2>
+        <p class="ds-section__desc">Escala de espaçamento baseada em múltiplos de 4px. Use os tokens para manter consistência em padding, margin e gap.</p>
+      </div>
+      <div class="ds-preview">
+        <div class="ds-space-list">
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-1</span><div class="ds-space-row__bar" style="width:4px;"></div><span class="ds-space-row__value">4px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-2</span><div class="ds-space-row__bar" style="width:8px;"></div><span class="ds-space-row__value">8px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-3</span><div class="ds-space-row__bar" style="width:12px;"></div><span class="ds-space-row__value">12px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-4</span><div class="ds-space-row__bar" style="width:16px;"></div><span class="ds-space-row__value">16px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-6</span><div class="ds-space-row__bar" style="width:24px;"></div><span class="ds-space-row__value">24px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-8</span><div class="ds-space-row__bar" style="width:32px;"></div><span class="ds-space-row__value">32px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-10</span><div class="ds-space-row__bar" style="width:40px;"></div><span class="ds-space-row__value">40px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-12</span><div class="ds-space-row__bar" style="width:48px;"></div><span class="ds-space-row__value">48px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-16</span><div class="ds-space-row__bar" style="width:64px;"></div><span class="ds-space-row__value">64px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-20</span><div class="ds-space-row__bar" style="width:80px;"></div><span class="ds-space-row__value">80px</span></div>
+          <div class="ds-space-row"><span class="ds-space-row__label">--space-24</span><div class="ds-space-row__bar" style="width:96px;"></div><span class="ds-space-row__value">96px</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 04 — BORDAS & SOMBRAS            -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="bordas">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">04</div>
+        <h2 class="ds-section__title">Bordas & Sombras</h2>
+        <p class="ds-section__desc">Border radius e sombras consistentes para criar profundidade e hierarquia visual.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Border Radius</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:flex-end;">
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:4px;"></div>
+            <div class="ds-radius-chip__label">sm · 4px<br/>--radius-sm</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:8px;"></div>
+            <div class="ds-radius-chip__label">md · 8px<br/>--radius-md</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:12px;"></div>
+            <div class="ds-radius-chip__label">lg · 12px<br/>--radius-lg</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:16px;"></div>
+            <div class="ds-radius-chip__label">xl · 16px<br/>--radius-xl</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:20px;"></div>
+            <div class="ds-radius-chip__label">2xl · 20px<br/>--radius-2xl</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-radius-chip" style="border-radius:9999px;"></div>
+            <div class="ds-radius-chip__label">full · pill<br/>--radius-full</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Sombras</div>
+        <div class="ds-preview ds-preview--grid" style="padding: var(--space-12) var(--space-8);">
+          <div style="text-align:center;">
+            <div class="ds-shadow-chip" style="box-shadow:0 1px 2px rgba(28,25,23,0.06);">shadow-sm</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-shadow-chip" style="box-shadow:0 4px 12px rgba(28,25,23,0.08);">shadow-md</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-shadow-chip" style="box-shadow:0 8px 24px rgba(28,25,23,0.10);">shadow-lg</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="ds-shadow-chip" style="box-shadow:0 16px 40px rgba(28,25,23,0.12);">shadow-xl</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 05 — BOTÕES                      -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="botoes">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">05</div>
+        <h2 class="ds-section__title">Botões</h2>
+        <p class="ds-section__desc">Cinco variantes e três tamanhos. Use <em>Primary</em> para ação principal, <em>Accent</em> para CTAs de destaque e <em>Outline</em> para ações secundárias.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variantes</div>
+        <div class="ds-preview ds-preview--grid">
+          <button class="btn btn--primary btn--md">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Primary
+          </button>
+          <button class="btn btn--accent btn--md">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Accent
+          </button>
+          <button class="btn btn--highlight btn--md">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><polygon points="8,2 10,6 14,6.5 11,9.5 11.5,14 8,12 4.5,14 5,9.5 2,6.5 6,6" fill="currentColor"/></svg>
+            Highlight
+          </button>
+          <button class="btn btn--outline btn--md">Outline</button>
+          <button class="btn btn--ghost btn--md">Ghost</button>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Tamanhos</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:center;">
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary btn--md">Medium</button>
+          <button class="btn btn--primary btn--lg">Large</button>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Pill (arredondado)</div>
+        <div class="ds-preview ds-preview--grid">
+          <button class="btn btn--primary btn--md btn--pill">
+            Ler mais
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn--accent btn--md btn--pill">Assinar newsletter</button>
+          <button class="btn btn--highlight btn--md btn--pill">Começar agora</button>
+          <button class="btn btn--outline btn--md btn--pill">Saiba mais</button>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Estado desabilitado</div>
+        <div class="ds-preview ds-preview--grid">
+          <button class="btn btn--primary btn--md" disabled>Primary</button>
+          <button class="btn btn--accent btn--md" disabled>Accent</button>
+          <button class="btn btn--outline btn--md" disabled>Outline</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 06 — CARDS                       -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="cards">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">06</div>
+        <h2 class="ds-section__title">Cards</h2>
+        <p class="ds-section__desc">Três tipos de card para diferentes contextos do blog: post, estatística e citação.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Card de Post</div>
+        <div class="ds-preview" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:var(--space-4);">
+          <div class="card-post">
+            <div class="card-post__thumb">
+              <div class="card-post__thumb-placeholder">
+                <!-- Ícone câmera -->
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <rect x="6" y="14" width="36" height="26" rx="4" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="24" cy="27" r="7" stroke="currentColor" stroke-width="2"/>
+                  <path d="M16 14l3-5h10l3 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="38" cy="20" r="2" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="card-post__category">
+                <span class="tag tag--dark">Carreira</span>
+              </div>
+            </div>
+            <div class="card-post__body">
+              <h3 class="card-post__title">Quero trabalhar com cinema. Vou morrer de fome?</h3>
+              <p class="card-post__excerpt">Todo artista já ouviu alguma piadinha infeliz. Mas aqui vem uma notícia boa: se você quiser trabalhar com audiovisual no Brasil, você não vai passar fome.</p>
+              <div class="card-post__footer">
+                <div class="card-post__meta">
+                  <span>12 jun 2025</span>
+                  <span class="card-post__dot"></span>
+                  <span>6 min</span>
+                </div>
+                <button class="btn btn--ghost btn--sm">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-post">
+            <div class="card-post__thumb" style="background: linear-gradient(135deg, #A31F3422, #EAD84B22);">
+              <div class="card-post__thumb-placeholder">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+                  <path d="M20 16l12 8-12 8V16z" fill="currentColor" opacity="0.6"/>
+                </svg>
+              </div>
+              <div class="card-post__category">
+                <span class="tag tag--accent">Mercado</span>
+              </div>
+            </div>
+            <div class="card-post__body">
+              <h3 class="card-post__title">As áreas do audiovisual que mais contratam</h3>
+              <p class="card-post__excerpt">Do roteiro à cor final, o mercado audiovisual tem muito mais frentes do que a maioria das pessoas imagina. Conheça as áreas, funções e oportunidades.</p>
+              <div class="card-post__footer">
+                <div class="card-post__meta">
+                  <span>28 jun 2025</span>
+                  <span class="card-post__dot"></span>
+                  <span>8 min</span>
+                </div>
+                <button class="btn btn--ghost btn--sm">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Card de Estatística</div>
+        <div class="ds-preview ds-preview--grid">
+          <div class="card-stat">
+            <div class="card-stat__icon">
+              <!-- ícone filme -->
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="2" width="16" height="16" rx="2" stroke="#A31F34" stroke-width="1.5"/>
+                <path d="M2 6h16M2 14h16M6 2v4M6 14v4M14 2v4M14 14v4" stroke="#A31F34" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="card-stat__number">4k+</div>
+            <div class="card-stat__label">Posts publicados</div>
+          </div>
+          <div class="card-stat card-stat--dark">
+            <div class="card-stat__icon">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="8" stroke="#EAD84B" stroke-width="1.5"/>
+                <path d="M10 6v4l3 3" stroke="#EAD84B" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="card-stat__number">12k</div>
+            <div class="card-stat__label">Leitores mensais</div>
+          </div>
+          <div class="card-stat" style="background:var(--color-highlight);">
+            <div class="card-stat__icon" style="background:rgba(0,0,0,0.08);">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L12.4 7.5H18L13.5 11.1L15.3 17L10 13.4L4.7 17L6.5 11.1L2 7.5H7.6L10 2Z" fill="#1C1917" opacity="0.6"/>
+              </svg>
+            </div>
+            <div class="card-stat__number" style="color:var(--color-dark);">98%</div>
+            <div class="card-stat__label" style="color:rgba(28,25,23,0.6);">Taxa de aprovação</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Card de Citação</div>
+        <div class="ds-preview">
+          <div class="card-quote" style="max-width: 480px;">
+            <span class="card-quote__mark">"</span>
+            <p class="card-quote__text">Você não precisa necessariamente dirigir um longa da Netflix pra viver de audiovisual. Tem espaço pra muita gente, de muitos estilos.</p>
+            <div class="card-quote__author">Fulana de Tal</div>
+            <div class="card-quote__role">Diretora de Arte · Globo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 07 — TAGS & BADGES               -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="tags">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">07</div>
+        <h2 class="ds-section__title">Tags & Badges</h2>
+        <p class="ds-section__desc">Tags para categorias e filtros; badges para contadores e notificações.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Tags</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:center;">
+          <span class="tag tag--default">Carreira</span>
+          <span class="tag tag--accent">Mercado</span>
+          <span class="tag tag--dark">Audiovisual</span>
+          <span class="tag tag--highlight">Destaque</span>
+          <span class="tag tag--outline">Roteiro</span>
+          <span class="tag tag--default">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Direção
+          </span>
+          <span class="tag tag--accent">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/></svg>
+            Novo
+          </span>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Badges</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:center;">
+          <span class="badge badge--accent">3</span>
+          <span class="badge badge--dark">12</span>
+          <span class="badge badge--highlight">99+</span>
+          <div style="display:flex; align-items:center; gap:var(--space-2);">
+            <span style="font-size:var(--text-sm);">Notificações</span>
+            <span class="badge badge--accent">5</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-2);">
+            <span style="font-size:var(--text-sm);">Posts novos</span>
+            <span class="badge badge--highlight">2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 08 — INPUTS                      -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="inputs">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">08</div>
+        <h2 class="ds-section__title">Inputs</h2>
+        <p class="ds-section__desc">Campos de texto para busca, formulários e newsletter.</p>
+      </div>
+
+      <div class="ds-preview" style="display:flex; flex-direction:column; gap:var(--space-6); max-width: 400px;">
+        <!-- Default -->
+        <div>
+          <label class="input-label">Nome completo</label>
+          <input class="input" type="text" placeholder="Ex: Maria Silva" />
+        </div>
+
+        <!-- Search -->
+        <div>
+          <label class="input-label">Buscar no blog</label>
+          <div class="ds-input-wrap">
+            <span class="ds-input-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input class="input input--search" type="text" placeholder="Buscar posts, temas..." />
+          </div>
+        </div>
+
+        <!-- Error state -->
+        <div>
+          <label class="input-label">E-mail</label>
+          <input class="input input--error" type="email" value="email-invalido" />
+          <div class="input-error-msg">Insira um e-mail válido.</div>
+        </div>
+
+        <!-- With hint -->
+        <div>
+          <label class="input-label">Assinar newsletter</label>
+          <div style="display:flex; gap:var(--space-2);">
+            <input class="input" type="email" placeholder="seu@email.com" style="flex:1;" />
+            <button class="btn btn--primary btn--md">Entrar</button>
+          </div>
+          <div class="input-hint">Sem spam. Só os melhores posts da semana.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 09 — NAVEGAÇÃO                   -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="navegacao">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">09</div>
+        <h2 class="ds-section__title">Navegação</h2>
+        <p class="ds-section__desc">Header principal do blog com logo, links e ações.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variante clara (padrão)</div>
+        <div class="ds-preview">
+          <nav class="nav">
+            <div class="nav__brand">
+              <div class="nav__logo">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z" fill="#EAD84B"/>
+                </svg>
+              </div>
+              <div class="logo-type logo-type--sm">
+                <span class="logo-type__line1">Luz,</span>
+                <span class="logo-type__line2">Câmera</span>
+                <span class="logo-type__line3">e Boleto</span>
+              </div>
+            </div>
+            <ul class="nav__links">
+              <li><a class="nav__link active" href="#">Início</a></li>
+              <li><a class="nav__link" href="#">Posts</a></li>
+              <li><a class="nav__link" href="#">Depoimentos</a></li>
+              <li><a class="nav__link" href="#">Sobre</a></li>
+            </ul>
+            <div class="nav__actions">
+              <button class="btn btn--ghost btn--sm">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="btn btn--highlight btn--sm btn--pill">Assinar</button>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variante escura</div>
+        <div class="ds-preview" style="background: var(--color-dark); border-color: #2E2A27;">
+          <nav class="nav" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1);">
+            <div class="nav__brand">
+              <div class="nav__logo" style="background: var(--color-accent);">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z" fill="#fff"/>
+                </svg>
+              </div>
+              <div class="logo-type logo-type--sm logo-type--inverse">
+                <span class="logo-type__line1">Luz,</span>
+                <span class="logo-type__line2">Câmera</span>
+                <span class="logo-type__line3">e Boleto</span>
+              </div>
+            </div>
+            <ul class="nav__links">
+              <li><a class="nav__link" style="color:rgba(255,255,255,0.5);" href="#">Início</a></li>
+              <li><a class="nav__link" style="color:rgba(255,255,255,0.8);" href="#">Posts</a></li>
+              <li><a class="nav__link" style="color:rgba(255,255,255,0.5);" href="#">Depoimentos</a></li>
+              <li><a class="nav__link" style="color:rgba(255,255,255,0.5);" href="#">Sobre</a></li>
+            </ul>
+            <div class="nav__actions">
+              <button class="btn btn--ghost btn--sm" style="color:rgba(255,255,255,0.6);">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="btn btn--accent btn--sm btn--pill">Assinar</button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 10 — ÍCONES                      -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="icones">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">10</div>
+        <h2 class="ds-section__title">Ícones</h2>
+        <p class="ds-section__desc">Ícones temáticos para o universo do audiovisual e cinema. Todos em SVG, tamanho base 20×20px, estilo outline.</p>
+      </div>
+
+      <div class="ds-preview">
+        <div class="ds-icons-grid">
+
+          <!-- Câmera -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 7l-7 5 7 5V7z"/>
+              <rect x="1" y="5" width="15" height="14" rx="2"/>
+            </svg>
+            <span class="ds-icon-chip__label">câmera</span>
+          </div>
+
+          <!-- Filme/Rolo -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18"/>
+              <path d="M7 2v20M17 2v20M2 12h20M2 7h5M17 7h5M2 17h5M17 17h5"/>
+            </svg>
+            <span class="ds-icon-chip__label">filme</span>
+          </div>
+
+          <!-- Claquete -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 3l4 4 4-4 4 4 4-4"/>
+              <rect x="2" y="7" width="20" height="14" rx="2"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+            </svg>
+            <span class="ds-icon-chip__label">claquete</span>
+          </div>
+
+          <!-- Play -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+            </svg>
+            <span class="ds-icon-chip__label">play</span>
+          </div>
+
+          <!-- Microfone -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="2" width="6" height="11" rx="3"/>
+              <path d="M5 10a7 7 0 0 0 14 0M12 19v3M8 22h8"/>
+            </svg>
+            <span class="ds-icon-chip__label">áudio</span>
+          </div>
+
+          <!-- Estrela / Rating -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+            <span class="ds-icon-chip__label">estrela</span>
+          </div>
+
+          <!-- Bookmark -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span class="ds-icon-chip__label">salvar</span>
+          </div>
+
+          <!-- Compartilhar -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            <span class="ds-icon-chip__label">share</span>
+          </div>
+
+          <!-- Seta →  -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            <span class="ds-icon-chip__label">seta →</span>
+          </div>
+
+          <!-- Menu -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
+            </svg>
+            <span class="ds-icon-chip__label">menu</span>
+          </div>
+
+          <!-- Busca -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/>
+            </svg>
+            <span class="ds-icon-chip__label">busca</span>
+          </div>
+
+          <!-- Usuário -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span class="ds-icon-chip__label">perfil</span>
+          </div>
+
+          <!-- Relógio / leitura -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+            <span class="ds-icon-chip__label">leitura</span>
+          </div>
+
+          <!-- Editar / escrever -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            <span class="ds-icon-chip__label">escrever</span>
+          </div>
+
+          <!-- Aspas / citação -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+            </svg>
+            <span class="ds-icon-chip__label">citação</span>
+          </div>
+
+          <!-- Fechar / X -->
+          <div class="ds-icon-chip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            <span class="ds-icon-chip__label">fechar</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="ds-subsection" style="margin-top:var(--space-6);">
+        <div class="ds-subsection__title">Tamanhos de ícone</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:center;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span class="ds-icon-chip__label">16px · xs</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span class="ds-icon-chip__label">20px · sm</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span class="ds-icon-chip__label">24px · md</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span class="ds-icon-chip__label">32px · lg</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span class="ds-icon-chip__label">48px · xl</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 11 — ANIMAÇÕES                   -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="animacoes">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">11</div>
+        <h2 class="ds-section__title">Animações</h2>
+        <p class="ds-section__desc">Sistema de animações por scroll usando Intersection Observer. Basta adicionar as classes <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;">anim</code> + tipo + delay no elemento. Sem bibliotecas externas.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Tipos de animação — clique em "Reanimar" para ver</div>
+        <div class="ds-preview">
+          <div style="display:flex; justify-content:flex-end; margin-bottom:var(--space-4);">
+            <button class="btn btn--outline btn--sm" onclick="replayAnims()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Reanimar
+            </button>
+          </div>
+          <div class="anim-demo-grid">
+            <div class="anim-demo-card anim anim-up" id="demo-up">
+              <div class="anim-demo-card__label">.anim-up</div>
+              <div class="anim-demo-card__desc">Sobe suavemente de baixo para cima</div>
+            </div>
+            <div class="anim-demo-card anim anim-down anim-d1" id="demo-down">
+              <div class="anim-demo-card__label">.anim-down</div>
+              <div class="anim-demo-card__desc">Desce do topo para a posição</div>
+            </div>
+            <div class="anim-demo-card anim anim-left anim-d2" id="demo-left">
+              <div class="anim-demo-card__label">.anim-left</div>
+              <div class="anim-demo-card__desc">Desliza da esquerda</div>
+            </div>
+            <div class="anim-demo-card anim anim-right anim-d3" id="demo-right">
+              <div class="anim-demo-card__label">.anim-right</div>
+              <div class="anim-demo-card__desc">Desliza da direita</div>
+            </div>
+            <div class="anim-demo-card anim anim-scale anim-d4" id="demo-scale">
+              <div class="anim-demo-card__label">.anim-scale</div>
+              <div class="anim-demo-card__desc">Cresce do centro com escala</div>
+            </div>
+            <div class="anim-demo-card anim anim-blur anim-d5" id="demo-blur">
+              <div class="anim-demo-card__label">.anim-blur</div>
+              <div class="anim-demo-card__desc">Desfoca e aparece. Efeito mais suave e cinematográfico</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Delays escalonados — stagger</div>
+        <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-4);">Combine <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;">.anim-d1</code> até <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;">.anim-d6</code> para criar entrada em cascata.</p>
+        <div class="ds-preview">
+          <div style="display:flex; gap:var(--space-3); flex-wrap:wrap; align-items:center;">
+            <div class="anim anim-up" style="background:var(--color-accent);border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div class="anim anim-up anim-d1" style="background:var(--color-accent);opacity:0.8;border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div class="anim anim-up anim-d2" style="background:var(--color-accent);opacity:0.65;border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div class="anim anim-up anim-d3" style="background:var(--color-accent);opacity:0.5;border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div class="anim anim-up anim-d4" style="background:var(--color-accent);opacity:0.35;border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div class="anim anim-up anim-d5" style="background:var(--color-accent);opacity:0.2;border-radius:var(--radius-lg);width:52px;height:52px;"></div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-muted);font-family:monospace;">d0 → d5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Velocidades</div>
+        <div class="ds-preview ds-preview--grid" style="align-items:center;">
+          <div style="text-align:center;">
+            <div class="anim anim-scale anim-fast" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-4);margin-bottom:var(--space-2);">
+              <div style="font-family:monospace;font-size:var(--text-xs);color:var(--color-accent);">.anim-fast</div>
+              <div style="font-size:var(--text-xs);color:var(--color-text-muted);">0.4s · snappy</div>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div class="anim anim-scale" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-4);margin-bottom:var(--space-2);">
+              <div style="font-family:monospace;font-size:var(--text-xs);color:var(--color-accent);">.anim (padrão)</div>
+              <div style="font-size:var(--text-xs);color:var(--color-text-muted);">0.75s · suave</div>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div class="anim anim-scale anim-slow" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-4);margin-bottom:var(--space-2);">
+              <div style="font-family:monospace;font-size:var(--text-xs);color:var(--color-accent);">.anim-slow</div>
+              <div style="font-size:var(--text-xs);color:var(--color-text-muted);">1.1s · cinematográfico</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Exemplo de uso no HTML</div>
+        <div class="ds-preview" style="background:var(--color-dark);border-color:var(--color-dark);">
+          <pre style="font-family:'SF Mono','Fira Code',monospace;font-size:var(--text-xs);color:#A8A29E;line-height:1.8;overflow-x:auto;"><span style="color:#78716C;">/* Elemento que anima ao entrar na tela */</span>
+
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"anim anim-up"</span><span style="color:#EAD84B;">&gt;</span>
+  Meu título
+<span style="color:#EAD84B;">&lt;/div&gt;</span>
+
+<span style="color:#78716C;">/* Com delay e velocidade */</span>
+
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"anim anim-blur anim-d2 anim-slow"</span><span style="color:#EAD84B;">&gt;</span>
+  Aparece em blur cinematográfico
+<span style="color:#EAD84B;">&lt;/div&gt;</span>
+
+<span style="color:#78716C;">/* Stagger em lista */</span>
+
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"anim anim-up"</span><span style="color:#EAD84B;">&gt;</span>Card 1<span style="color:#EAD84B;">&lt;/div&gt;</span>
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"anim anim-up anim-d2"</span><span style="color:#EAD84B;">&gt;</span>Card 2<span style="color:#EAD84B;">&lt;/div&gt;</span>
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"anim anim-up anim-d4"</span><span style="color:#EAD84B;">&gt;</span>Card 3<span style="color:#EAD84B;">&lt;/div&gt;</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 12 — SEÇÕES ESCURAS              -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="secoes-escuras">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">12</div>
+        <h2 class="ds-section__title">Seções Escuras</h2>
+        <p class="ds-section__desc">Contraste e respiração visual. Seções escuras criam ritmo no blog — interrompem o fundo claro e reforçam momentos de impacto.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variante dark (padrão)</div>
+        <div class="dark-section anim anim-up">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--space-6);">
+            <div style="max-width:420px;">
+              <span style="display:inline-block;background:rgba(255,255,255,0.1);color:rgba(244,239,230,0.7);font-size:var(--text-xs);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:var(--space-4);">Depoimento</span>
+              <h3 style="font-family:var(--font-heading);font-size:var(--text-3xl);font-weight:600;color:#F4EFE6;line-height:1.25;margin-bottom:var(--space-4);">"Você não precisa ser o Spielberg pra viver de audiovisual."</h3>
+              <p style="font-size:var(--text-sm);color:rgba(244,239,230,0.6);line-height:1.7;">Diretora de arte, 28 anos, trabalhando há 4 anos no mercado.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div class="card-stat card-stat--dark" style="min-width:130px;">
+                <div class="card-stat__icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.4 7.5H18L13.5 11.1L15.3 17L10 13.4L4.7 17L6.5 11.1L2 7.5H7.6L10 2Z" fill="#EAD84B" opacity="0.8"/></svg></div>
+                <div class="card-stat__number">4k+</div>
+                <div class="card-stat__label">Profissionais</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variante accent (laranja)</div>
+        <div class="dark-section dark-section--accent anim anim-up">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-6);">
+            <div>
+              <h3 style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:1.1;">Assine a newsletter</h3>
+              <p style="color:rgba(255,255,255,0.75);margin-top:var(--space-2);font-size:var(--text-base);">Posts toda semana. Sem spam. Só audiovisual.</p>
+            </div>
+            <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+              <input class="input" type="email" placeholder="seu@email.com" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.25);color:#fff;min-width:220px;" />
+              <button class="btn btn--md btn--pill" style="background:#fff;color:var(--color-accent);font-weight:600;">Entrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Variante highlight (amarelo)</div>
+        <div class="dark-section dark-section--highlight anim anim-up">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-6);">
+            <div>
+              <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(28,25,23,0.6);">Novo post</span>
+              <h3 style="font-family:var(--font-heading);font-size:var(--text-3xl);font-weight:600;color:var(--color-dark);line-height:1.2;margin-top:var(--space-2);">As áreas do audiovisual que mais contratam em 2025</h3>
+            </div>
+            <button class="btn btn--primary btn--lg btn--pill">
+              Ler agora
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Grid misto — claro e escuro</div>
+        <div class="ds-preview" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+          <!-- Card claro -->
+          <div class="card-post anim anim-left">
+            <div class="card-post__thumb" style="background:linear-gradient(135deg,#EDE8DC,#D6CFC3);">
+              <div class="card-post__thumb-placeholder" style="color:var(--color-border-dark);">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M17 7h5M2 17h5M17 17h5"/></svg>
+              </div>
+              <div class="card-post__category"><span class="tag tag--dark">Carreira</span></div>
+            </div>
+            <div class="card-post__body">
+              <h3 class="card-post__title">Vou morrer de fome?</h3>
+              <p class="card-post__excerpt">Spoiler: não. Mas tem que correr atrás.</p>
+              <div class="card-post__footer">
+                <div class="card-post__meta"><span>6 min</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Card escuro -->
+          <div class="anim anim-right" style="background:var(--color-dark);border-radius:var(--radius-xl);padding:var(--space-6);display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <span class="tag tag--accent" style="margin-bottom:var(--space-4);display:inline-block;">Destaque</span>
+              <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;color:#F4EFE6;line-height:1.3;">O que ninguém te conta sobre entrar no audiovisual</h3>
+            </div>
+            <div style="margin-top:var(--space-6);">
+              <button class="btn btn--outline btn--sm btn--pill" style="color:#F4EFE6;border-color:rgba(244,239,230,0.25);">Ler agora →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════ -->
+    <!-- 13 — PARALLAX                    -->
+    <!-- ════════════════════════════════ -->
+    <section class="ds-section" id="parallax">
+      <div class="ds-section__header">
+        <div class="ds-section__eyebrow">13</div>
+        <h2 class="ds-section__title">Parallax</h2>
+        <p class="ds-section__desc">Efeito de profundidade por scroll — o fundo se move em velocidade diferente do conteúdo, criando a sensação de camadas. Role a página para ver o efeito.</p>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Parallax escuro — hero de seção</div>
+        <div class="parallax-wrap" id="parallax1">
+          <div class="parallax-bg" id="parallax1-bg" style="background: linear-gradient(135deg, #1C1917 0%, #3A0C18 50%, #1C1917 100%);">
+            <!-- Grain texture effect com SVG -->
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;" xmlns="http://www.w3.org/2000/svg">
+              <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+              <rect width="100%" height="100%" filter="url(#grain)"/>
+            </svg>
+            <!-- Circles decorativos -->
+            <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(163,31,52,0.2),transparent 70%);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(234,216,75,0.1),transparent 70%);pointer-events:none;"></div>
+          </div>
+          <div class="parallax-overlay" style="background:rgba(15,14,13,0.45);"></div>
+          <div class="parallax-content anim anim-up">
+            <span style="display:inline-block;background:rgba(163,31,52,0.25);color:#D93054;border:1px solid rgba(163,31,52,0.3);font-size:var(--text-xs);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 14px;border-radius:9999px;margin-bottom:var(--space-4);">Cinema · Audiovisual · Brasil</span>
+            <h2 style="font-family:var(--font-heading);font-size:var(--text-5xl);font-weight:700;color:#F4EFE6;line-height:1.1;max-width:560px;margin-bottom:var(--space-4);">Trabalhar com cinema <em style="color:#EAD84B;">é possível.</em></h2>
+            <p style="color:rgba(244,239,230,0.65);font-size:var(--text-lg);max-width:440px;line-height:1.65;margin-bottom:var(--space-8);">Relatos reais, dicas práticas e tudo que você precisa pra entrar nessa área sem passar fome.</p>
+            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+              <button class="btn btn--accent btn--lg btn--pill">Começar a ler →</button>
+              <button class="btn btn--md btn--pill" style="background:rgba(255,255,255,0.1);color:#F4EFE6;border:1px solid rgba(255,255,255,0.2);">Sobre o blog</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Parallax com cor de acento</div>
+        <div class="parallax-wrap" id="parallax2" style="min-height:220px;">
+          <div class="parallax-bg" id="parallax2-bg" style="background: linear-gradient(135deg, #871929 0%, #A31F34 40%, #D93054 100%);">
+            <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 40px);"></div>
+          </div>
+          <div class="parallax-overlay" style="background:rgba(180,60,30,0.15);"></div>
+          <div class="parallax-content" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-4);">
+            <h3 class="anim anim-left" style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:1.1;max-width:360px;">Sua história começa aqui.</h3>
+            <button class="btn btn--lg btn--pill anim anim-right" style="background:#fff;color:var(--color-accent);font-weight:600;">Explorar posts</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection__title">Como implementar</div>
+        <div class="ds-preview" style="background:var(--color-dark);border-color:var(--color-dark);">
+          <pre style="font-family:'SF Mono','Fira Code',monospace;font-size:var(--text-xs);color:#A8A29E;line-height:1.8;overflow-x:auto;"><span style="color:#78716C;">/* HTML */</span>
+
+<span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"parallax-wrap"</span> <span style="color:#D93054;">id=</span><span style="color:#F4EFE6;">"mySection"</span><span style="color:#EAD84B;">&gt;</span>
+  <span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"parallax-bg"</span> <span style="color:#D93054;">id=</span><span style="color:#F4EFE6;">"mySection-bg"</span><span style="color:#EAD84B;">&gt;&lt;/div&gt;</span>
+  <span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"parallax-overlay"</span><span style="color:#EAD84B;">&gt;&lt;/div&gt;</span>
+  <span style="color:#EAD84B;">&lt;div</span> <span style="color:#D93054;">class=</span><span style="color:#F4EFE6;">"parallax-content"</span><span style="color:#EAD84B;">&gt;</span>
+    Seu conteúdo aqui
+  <span style="color:#EAD84B;">&lt;/div&gt;</span>
+<span style="color:#EAD84B;">&lt;/div&gt;</span>
+
+<span style="color:#78716C;">/* JS — já incluído neste design system */</span>
+
+<span style="color:#A8A29E;">initParallax</span><span style="color:#F4EFE6;">(</span><span style="color:#F4EFE6;">'mySection'</span><span style="color:#F4EFE6;">, </span><span style="color:#EAD84B;">0.4</span><span style="color:#F4EFE6;">)</span><span style="color:#78716C;">; // velocidade 0.1–0.6</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER DO DOC -->
+    <div style="padding: var(--space-12) 0 var(--space-16); border-top: 1px solid var(--color-border);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:var(--space-6); margin-bottom:var(--space-8);">
+        <div>
+          <div class="logo-type logo-type--md">
+            <span class="logo-type__line1">Luz,</span>
+            <span class="logo-type__line2">Câmera</span>
+            <span class="logo-type__line3">e Boleto</span>
+          </div>
+          <div style="font-size:var(--text-sm); color:var(--color-text-muted); margin-top:6px;">Design System v1.0 · 2025</div>
+        </div>
+        <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+          <span class="tag tag--default">Cores</span>
+          <span class="tag tag--default">Tipografia</span>
+          <span class="tag tag--default">Componentes</span>
+          <span class="tag tag--accent">Cinema & Audiovisual</span>
+        </div>
+      </div>
+      <div style="padding-top:var(--space-6); border-top:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-4);">
+        <div style="display:flex; align-items:center; gap:var(--space-3);">
+          <div style="width:32px;height:32px;background:var(--color-accent);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="#fff" stroke-width="1.5"/><path d="M2 6h12M6 2v4M10 2v4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size:var(--text-sm);font-weight:var(--font-semibold);">Matéria: Escrita Criativa</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;">Trabalho acadêmico · 2025</div>
+          </div>
+        </div>
+        <span class="tag tag--default" style="font-size:12px;padding:5px 14px;">Murilo Capelo</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  /* ─── 1. ACTIVE SIDEBAR LINK ─── */
+  const links    = document.querySelectorAll('.ds-sidebar__link');
+  const sections = document.querySelectorAll('.ds-section');
+
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.ds-sidebar__link[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.25 });
+  sections.forEach(s => navObserver.observe(s));
+
+  /* ─── 2. DARK MODE ─── */
+  let isDark = false;
+
+  function toggleDark() {
+    isDark = !isDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+    const icon = document.getElementById('darkIcon');
+    const label = document.getElementById('darkLabel');
+    if (isDark) {
+      icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/>';
+      label.textContent = 'Light mode';
+    } else {
+      icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+      label.textContent = 'Dark mode';
+    }
+  }
+
+  /* ─── 3. SCROLL ANIMATIONS ─── */
+  const animObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        animObserver.unobserve(entry.target); // anima só uma vez
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.anim').forEach(el => animObserver.observe(el));
+
+  /* ─── 4. PARALLAX ─── */
+  function initParallax(id, speed = 0.35) {
+    const wrap = document.getElementById(id);
+    const bg   = document.getElementById(id + '-bg');
+    if (!wrap || !bg) return;
+
+    function update() {
+      const rect   = wrap.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      bg.style.transform = `translateY(${center * speed}px)`;
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  initParallax('parallax1', 0.38);
+  initParallax('parallax2', 0.28);
+
+  /* ─── 5. TYPEWRITER — "e Boleto" ─── */
+  function typewriterLogo() {
+    const TEXT    = 'e Boleto';
+    const SPEED   = 72;    // ms por caractere
+    const DELAY   = 420;   // ms antes de começar
+
+    document.querySelectorAll('.logo-type__line3').forEach((el, i) => {
+      // Prepara estrutura
+      el.innerHTML = '<span class="logo-text-content"></span><span class="logo-cursor"></span>';
+      const content = el.querySelector('.logo-text-content');
+      const cursor  = el.querySelector('.logo-cursor');
+
+      let idx = 0;
+      setTimeout(() => {
+        const tick = setInterval(() => {
+          content.textContent += TEXT[idx++];
+          if (idx === TEXT.length) {
+            clearInterval(tick);
+            // pisca mais um pouco, para a animação e some
+            setTimeout(() => {
+              cursor.style.animation = 'none'; // para o blink
+              cursor.style.opacity   = '1';    // garante visível
+              // frame seguinte: fade out + remove
+              setTimeout(() => {
+                cursor.style.transition = 'opacity 0.35s ease';
+                cursor.style.opacity    = '0';
+                setTimeout(() => cursor.remove(), 400);
+              }, 50);
+            }, 850);
+          }
+        }, SPEED);
+      }, DELAY + i * 80); // leve stagger entre instâncias
+    });
+  }
+
+  typewriterLogo();
+
+  /* ─── 6. REPLAY ANIMS BUTTON ─── */
+  function replayAnims() {
+    const demos = document.querySelectorAll('[id^="demo-"]');
+    demos.forEach(el => {
+      el.classList.remove('in');
+      void el.offsetWidth; // força reflow
+    });
+    setTimeout(() => {
+      demos.forEach(el => el.classList.add('in'));
+    }, 50);
+  }
+</script>
+
+</body>
+</html>
