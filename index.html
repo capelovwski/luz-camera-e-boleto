@@ -1290,21 +1290,21 @@
 
     .podcast-section__mic-deco {
       position: absolute;
-      right: -50px;
-      bottom: -60px;
-      width: 380px;
-      height: 380px;
+      right: -40px;
+      bottom: -40px;
+      width: 260px;
+      height: auto;
       pointer-events: none;
       z-index: 1;
-      color: rgba(163,31,52,.12);
-    }
-    [data-theme="dark"] .podcast-section__mic-deco {
-      color: rgba(244,239,230,.06);
     }
     .podcast-section__mic-deco svg {
       width: 100%;
-      height: 100%;
+      height: auto;
     }
+    .podcast-section__mic-deco .cls-1 { fill: rgba(163,31,52,.18); }
+    .podcast-section__mic-deco .cls-2 { fill: rgba(163,31,52,.08); }
+    [data-theme="dark"] .podcast-section__mic-deco .cls-1 { fill: rgba(244,239,230,.12); }
+    [data-theme="dark"] .podcast-section__mic-deco .cls-2 { fill: rgba(244,239,230,.05); }
     .podcast-section__actions {
       display: flex;
       gap: var(--space-3);
@@ -2030,14 +2030,26 @@
       const nextBtn  = document.getElementById('arcNext');
       const dotsWrap = document.getElementById('arcDots');
       const total    = cards.length;
-      let current    = 0;
+      let current    = 1;
       let animating  = false;
+      let autoTimer  = null;
+
+      function startAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+          goTo((current + 1) % total);
+        }, 5000);
+      }
+
+      function resetAuto() {
+        startAuto();
+      }
 
       // Dots
       cards.forEach((_, i) => {
         const d = document.createElement('div');
         d.className = 'arc-dot';
-        d.addEventListener('click', () => goTo(i));
+        d.addEventListener('click', () => { goTo(i); resetAuto(); });
         dotsWrap.appendChild(d);
       });
 
@@ -2077,6 +2089,7 @@
       }
 
       function goTo(idx, dir) {
+        idx = ((idx % total) + total) % total; // infinite loop
         if (animating || idx === current) return;
         animating = true;
         const prev = current;
@@ -2109,22 +2122,22 @@
       }
 
       function updateButtons() {
-        prevBtn.disabled = current === 0;
-        nextBtn.disabled = current === total - 1;
+        prevBtn.disabled = false;
+        nextBtn.disabled = false;
       }
 
       // click lateral cards → navegar
       cards.forEach((card, i) => {
         card.addEventListener('click', () => {
           const diff = i - current;
-          if (diff === -1) goTo(current - 1);
-          else if (diff === 1) goTo(current + 1);
+          if (diff === -1) { goTo(current - 1); resetAuto(); }
+          else if (diff === 1) { goTo(current + 1); resetAuto(); }
           else if (diff === 0 && card.dataset.href) window.location.href = card.dataset.href;
         });
       });
 
-      prevBtn.addEventListener('click', () => goTo(current - 1));
-      nextBtn.addEventListener('click', () => goTo(current + 1));
+      prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+      nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
 
       // drag / swipe
       let dragStart = null;
@@ -2134,26 +2147,27 @@
         const delta = e.clientX - dragStart;
         stage.classList.remove('is-dragging');
         dragStart = null;
-        if (Math.abs(delta) > 50) delta < 0 ? goTo(current + 1) : goTo(current - 1);
+        if (Math.abs(delta) > 50) { delta < 0 ? goTo(current + 1) : goTo(current - 1); resetAuto(); }
       });
       stage.addEventListener('touchstart', e => { dragStart = e.touches[0].clientX; }, { passive: true });
       stage.addEventListener('touchend', e => {
         if (dragStart === null) return;
         const delta = e.changedTouches[0].clientX - dragStart;
         dragStart = null;
-        if (Math.abs(delta) > 50) delta < 0 ? goTo(current + 1) : goTo(current - 1);
+        if (Math.abs(delta) > 50) { delta < 0 ? goTo(current + 1) : goTo(current - 1); resetAuto(); }
       });
 
       // keyboard
       document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowLeft')  goTo(current - 1);
-        if (e.key === 'ArrowRight') goTo(current + 1);
+        if (e.key === 'ArrowLeft')  { goTo(current - 1); resetAuto(); }
+        if (e.key === 'ArrowRight') { goTo(current + 1); resetAuto(); }
       });
 
       // init
       applyNoAnim();
       updateButtons();
       updateDots();
+      startAuto();
     })();
 
     // ═══════ DARK MODE ═══════
