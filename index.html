@@ -1197,10 +1197,7 @@
       border-radius: var(--radius-2xl);
       padding: var(--space-12);
       margin-bottom: var(--space-16);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--space-10);
-      align-items: center;
+      display: block;
       position: relative;
       overflow: hidden;
       border: 1.5px solid rgba(163,31,52,.18);
@@ -1291,24 +1288,22 @@
     }
     [data-theme="dark"] .podcast-section__ep-title { color: #F4EFE6; }
 
-    .podcast-section__cover {
-      position: relative;
-      z-index: 2;
-      width: 160px;
-      height: 160px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, #A31F34 0%, #6b1020 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 8px 32px rgba(163,31,52,.35), 0 2px 8px rgba(0,0,0,.2);
-      border: 1.5px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.85);
+    .podcast-section__mic-deco {
+      position: absolute;
+      right: -30px;
+      bottom: -40px;
+      width: 260px;
+      height: 260px;
+      pointer-events: none;
+      z-index: 1;
+      color: rgba(163,31,52,.13);
     }
-    [data-theme="dark"] .podcast-section__cover {
-      box-shadow: 0 12px 40px rgba(0,0,0,.55);
-      border-color: rgba(255,255,255,.08);
+    [data-theme="dark"] .podcast-section__mic-deco {
+      color: rgba(244,239,230,.07);
+    }
+    .podcast-section__mic-deco svg {
+      width: 100%;
+      height: 100%;
     }
     .podcast-section__actions {
       display: flex;
@@ -1928,22 +1923,16 @@
             <a href="podcast.html" class="btn--podcast-outline">Ver todos os episódios →</a>
           </div>
         </div>
-        <div class="podcast-section__cover">
-          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <!-- corpo do microfone -->
-            <rect x="22" y="6" width="20" height="32" rx="10" stroke-width="2.2"/>
-            <!-- grade interna -->
-            <line x1="22" y1="22" x2="42" y2="22" stroke-width="1.2" stroke-opacity=".5"/>
-            <line x1="22" y1="28" x2="42" y2="28" stroke-width="1.2" stroke-opacity=".5"/>
-            <line x1="22" y1="16" x2="42" y2="16" stroke-width="1.2" stroke-opacity=".5"/>
-            <!-- arco externo -->
-            <path d="M14 30a18 18 0 0 0 36 0" stroke-width="2.2"/>
-            <!-- haste -->
-            <line x1="32" y1="48" x2="32" y2="56" stroke-width="2.2"/>
-            <!-- base -->
-            <line x1="22" y1="56" x2="42" y2="56" stroke-width="2.5"/>
-            <!-- detalhe no topo da cápsula -->
-            <circle cx="32" cy="11" r="2.5" fill="currentColor" stroke="none" opacity=".4"/>
+        <div class="podcast-section__mic-deco" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="22" y="6" width="20" height="32" rx="10" stroke-width="1.6"/>
+            <line x1="22" y1="16" x2="42" y2="16" stroke-width="1" stroke-opacity=".45"/>
+            <line x1="22" y1="22" x2="42" y2="22" stroke-width="1" stroke-opacity=".45"/>
+            <line x1="22" y1="28" x2="42" y2="28" stroke-width="1" stroke-opacity=".45"/>
+            <path d="M14 30a18 18 0 0 0 36 0" stroke-width="1.6"/>
+            <line x1="32" y1="48" x2="32" y2="58" stroke-width="1.8"/>
+            <line x1="20" y1="58" x2="44" y2="58" stroke-width="2"/>
+            <circle cx="32" cy="11" r="3" fill="currentColor" stroke="none" opacity=".3"/>
           </svg>
         </div>
       </div>
