@@ -995,7 +995,7 @@
        BANNER CTA
     ═══════════════════════════════════════ */
     .cta-banner {
-      background: linear-gradient(135deg, #1C1917 0%, #2a1a1f 60%, #1C1917 100%);
+      background: linear-gradient(135deg, #2a2320 0%, #3a1e28 60%, #2a2320 100%);
       border-radius: var(--radius-2xl);
       padding: var(--space-12) var(--space-12);
       margin-bottom: var(--space-16);
@@ -1006,17 +1006,17 @@
       flex-wrap: wrap;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(163, 31, 52, 0.25);
+      border: 1.5px solid rgba(163, 31, 52, 0.38);
       box-shadow:
         0 2px 0 rgba(255,255,255,0.04) inset,
-        0 -1px 0 rgba(0,0,0,0.4) inset,
-        0 20px 60px rgba(0,0,0,0.45),
-        0 6px 20px rgba(163, 31, 52, 0.12);
+        0 -1px 0 rgba(0,0,0,0.3) inset,
+        0 20px 60px rgba(0,0,0,0.3),
+        0 6px 20px rgba(163, 31, 52, 0.1);
     }
     [data-theme="dark"] .cta-banner {
-      background: linear-gradient(135deg, #2a2522 0%, #3a1e26 60%, #2a2522 100%);
-      border-color: rgba(217,48,84,.3);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 20px 50px rgba(0,0,0,.5);
+      background: linear-gradient(135deg, #1C1917 0%, #2a1a1f 60%, #1C1917 100%);
+      border-color: rgba(217,48,84,.38);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 20px 50px rgba(0,0,0,.55);
     }
     .cta-banner::before { display: none; }
     .cta-banner::after {
@@ -1079,7 +1079,7 @@
     /* ── ABOUT / "O QUE É" ── */
     /* ── ABOUT: modo claro (padrão) ── */
     .about-section {
-      background: #FFFFFF;
+      background: #F7F4F0;
       border-radius: var(--radius-2xl);
       margin-bottom: var(--space-16);
       display: grid;
@@ -1087,24 +1087,13 @@
       overflow: hidden;
       position: relative;
       box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 32px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.06);
+      border: 1.5px solid rgba(0,0,0,.10);
     }
-    .about-section::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: #D93054;
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform .9s cubic-bezier(.16,1,.3,1) .25s;
-      z-index: 5;
-    }
-    .about-section.in::before { transform: scaleY(1); }
+    .about-section::before { display: none; }
 
     .about-section__left {
       padding: var(--space-12) var(--space-10) var(--space-12) var(--space-12);
-      border-right: 1px solid rgba(0,0,0,.07);
+      border-right: 1.5px solid rgba(0,0,0,.08);
     }
     .about-section__eyebrow {
       font-size: var(--text-xs);
@@ -1137,7 +1126,7 @@
       justify-content: center;
       gap: var(--space-2);
       padding: var(--space-10) 0;
-      background: #FAFAF9;
+      background: #EDE9E3;
     }
     .about-stat {
       padding: var(--space-5) var(--space-10);
@@ -1184,8 +1173,8 @@
     /* ── ABOUT: modo escuro ── */
     [data-theme="dark"] .about-section {
       background: #2a2624;
-      border-color: rgba(255,255,255,.06);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.12);
+      box-shadow: 0 0 0 1.5px rgba(255,255,255,.08);
     }
     [data-theme="dark"] .about-section__left {
       border-right-color: rgba(255,255,255,.06);
@@ -1204,7 +1193,7 @@
        PODCAST SECTION
     ═══════════════════════════════════════ */
     .podcast-section {
-      background: linear-gradient(135deg, #1C1917 0%, #2a1520 55%, #1C1917 100%);
+      background: #F0EBE3;
       border-radius: var(--radius-2xl);
       padding: var(--space-12);
       margin-bottom: var(--space-16);
@@ -1214,14 +1203,22 @@
       align-items: center;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(163,31,52,.25);
-      box-shadow: 0 20px 60px rgba(0,0,0,.4), 0 6px 20px rgba(163,31,52,.12);
+      border: 1.5px solid rgba(163,31,52,.18);
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 32px rgba(0,0,0,.07);
+    }
+    [data-theme="dark"] .podcast-section {
+      background: linear-gradient(135deg, #1C1917 0%, #2a1520 55%, #1C1917 100%);
+      border-color: rgba(217,48,84,.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 6px 20px rgba(163,31,52,.18);
     }
     .podcast-section::after {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 75% 50%, rgba(163,31,52,.13) 0%, transparent 65%);
+      background: radial-gradient(ellipse at 75% 50%, rgba(163,31,52,.06) 0%, transparent 65%);
       pointer-events: none;
+    }
+    [data-theme="dark"] .podcast-section::after {
+      background: radial-gradient(ellipse at 75% 50%, rgba(163,31,52,.13) 0%, transparent 65%);
     }
     .podcast-section__left { position: relative; z-index: 2; }
     .podcast-section__eyebrow {
@@ -1236,64 +1233,82 @@
       font-family: var(--font-heading);
       font-size: var(--text-3xl);
       font-weight: var(--font-bold);
-      color: #F4EFE6;
+      color: #1C1917;
       line-height: var(--leading-snug);
       margin-bottom: var(--space-4);
     }
+    [data-theme="dark"] .podcast-section__title { color: #F4EFE6; }
+
     .podcast-section__desc {
       font-size: var(--text-base);
-      color: rgba(244,239,230,.55);
+      color: #6B6460;
       line-height: var(--leading-relaxed);
       max-width: 480px;
       margin-bottom: var(--space-6);
     }
+    [data-theme="dark"] .podcast-section__desc { color: rgba(244,239,230,.55); }
+
     .podcast-section__ep {
       display: flex;
       align-items: center;
       gap: var(--space-4);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.05);
+      border: 1px solid rgba(0,0,0,.08);
       border-radius: var(--radius-xl);
       padding: var(--space-4) var(--space-5);
       margin-bottom: var(--space-6);
       max-width: 480px;
     }
+    [data-theme="dark"] .podcast-section__ep {
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.08);
+    }
     .podcast-section__ep-num {
       font-family: var(--font-logo);
       font-size: 1.8rem;
-      color: var(--color-highlight);
+      color: #D93054;
       line-height: 1;
       min-width: 36px;
     }
+    [data-theme="dark"] .podcast-section__ep-num { color: var(--color-highlight); }
+
     .podcast-section__ep-info {}
     .podcast-section__ep-label {
       font-size: var(--text-xs);
       text-transform: uppercase;
       letter-spacing: .08em;
-      color: rgba(244,239,230,.35);
+      color: #9E9590;
       margin-bottom: 2px;
     }
+    [data-theme="dark"] .podcast-section__ep-label { color: rgba(244,239,230,.35); }
+
     .podcast-section__ep-title {
       font-family: var(--font-heading);
       font-size: var(--text-base);
       font-weight: var(--font-semibold);
-      color: #F4EFE6;
+      color: #1C1917;
       line-height: var(--leading-snug);
     }
+    [data-theme="dark"] .podcast-section__ep-title { color: #F4EFE6; }
+
     .podcast-section__cover {
       position: relative;
       z-index: 2;
       width: 160px;
       height: 160px;
       border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, #A31F34 0%, #1C1917 100%);
+      background: linear-gradient(135deg, #A31F34 0%, #6b1020 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
       flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(163,31,52,.35), 0 2px 8px rgba(0,0,0,.2);
+      border: 1.5px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.85);
+    }
+    [data-theme="dark"] .podcast-section__cover {
       box-shadow: 0 12px 40px rgba(0,0,0,.55);
-      border: 1px solid rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.08);
     }
     .podcast-section__actions {
       display: flex;
@@ -1301,8 +1316,8 @@
       flex-wrap: wrap;
     }
     .btn--podcast-primary {
-      background: #F4EFE6;
-      color: #1C1917;
+      background: #1C1917;
+      color: #F4EFE6;
       font-size: var(--text-sm);
       padding: 11px 22px;
       border-radius: var(--radius-xl);
@@ -1315,16 +1330,18 @@
       transition: background .15s, transform .1s;
       text-decoration: none;
     }
-    .btn--podcast-primary:hover { background: #EDE8DC; }
+    .btn--podcast-primary:hover { background: #2d2826; }
+    [data-theme="dark"] .btn--podcast-primary { background: #F4EFE6; color: #1C1917; }
+    [data-theme="dark"] .btn--podcast-primary:hover { background: #EDE8DC; }
     .btn--podcast-primary:active { transform: translateY(1px); }
     .btn--podcast-outline {
       background: transparent;
-      color: rgba(244,239,230,.65);
+      color: #6B6460;
       font-size: var(--text-sm);
       padding: 11px 22px;
       border-radius: var(--radius-xl);
       font-weight: var(--font-medium);
-      border: 1.5px solid rgba(244,239,230,.2);
+      border: 1.5px solid rgba(28,25,23,.18);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -1332,7 +1349,9 @@
       transition: border-color .15s, color .15s;
       text-decoration: none;
     }
-    .btn--podcast-outline:hover { border-color: rgba(244,239,230,.45); color: #F4EFE6; }
+    .btn--podcast-outline:hover { border-color: rgba(28,25,23,.4); color: #1C1917; }
+    [data-theme="dark"] .btn--podcast-outline { color: rgba(244,239,230,.65); border-color: rgba(244,239,230,.2); }
+    [data-theme="dark"] .btn--podcast-outline:hover { border-color: rgba(244,239,230,.45); color: #F4EFE6; }
 
     @media(max-width:700px) {
       .podcast-section { grid-template-columns: 1fr; padding: var(--space-8); }
@@ -1888,7 +1907,10 @@
     <div class="section-wrap" style="padding-top: 0;">
       <div class="podcast-section anim anim-up">
         <div class="podcast-section__left">
-          <div class="podcast-section__eyebrow">🎙️ Podcast</div>
+          <div class="podcast-section__eyebrow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            Podcast
+          </div>
           <h2 class="podcast-section__title">O blog também tem voz</h2>
           <p class="podcast-section__desc">As mesmas histórias honestas, agora em áudio. Para ouvir no set, no ônibus ou enquanto o render não termina.</p>
           <div class="podcast-section__ep">
@@ -1906,7 +1928,24 @@
             <a href="podcast.html" class="btn--podcast-outline">Ver todos os episódios →</a>
           </div>
         </div>
-        <div class="podcast-section__cover">🎙️</div>
+        <div class="podcast-section__cover">
+          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <!-- corpo do microfone -->
+            <rect x="22" y="6" width="20" height="32" rx="10" stroke-width="2.2"/>
+            <!-- grade interna -->
+            <line x1="22" y1="22" x2="42" y2="22" stroke-width="1.2" stroke-opacity=".5"/>
+            <line x1="22" y1="28" x2="42" y2="28" stroke-width="1.2" stroke-opacity=".5"/>
+            <line x1="22" y1="16" x2="42" y2="16" stroke-width="1.2" stroke-opacity=".5"/>
+            <!-- arco externo -->
+            <path d="M14 30a18 18 0 0 0 36 0" stroke-width="2.2"/>
+            <!-- haste -->
+            <line x1="32" y1="48" x2="32" y2="56" stroke-width="2.2"/>
+            <!-- base -->
+            <line x1="22" y1="56" x2="42" y2="56" stroke-width="2.5"/>
+            <!-- detalhe no topo da cápsula -->
+            <circle cx="32" cy="11" r="2.5" fill="currentColor" stroke="none" opacity=".4"/>
+          </svg>
+        </div>
       </div>
     </div>
   </section>
@@ -1965,7 +2004,7 @@
       const SIDE_OP  = 0.72;
       const HIDE_OP  = 0;
       const DUR      = 0.72; // duração da animação (GSAP seconds)
-      const EASE     = 'power2.out';
+      const EASE     = 'power3.inOut';
 
       const stage    = document.getElementById('arcStage');
       const cards    = Array.from(stage.querySelectorAll('.arc-card'));
