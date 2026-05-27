@@ -135,6 +135,10 @@
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+    @keyframes tickerFwd { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes tickerRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    @keyframes statCount { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes glowPulse { 0%,100% { opacity: .12; } 50% { opacity: .28; } }
 
     .anim { opacity: 0; }
     .anim.in {
@@ -412,35 +416,62 @@
     /* ═══════════════════════════════════════
        FILM STRIP TICKER
     ═══════════════════════════════════════ */
+    /* ── TICKER ── */
     .ticker-wrap {
-      background: var(--color-dark);
-      padding: var(--space-3) 0;
+      background: #0F0E0D;
       overflow: hidden;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      border-top: 2px solid var(--color-accent);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      padding: 14px 0;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      cursor: default;
     }
-    .ticker-track {
-      display: flex;
-      gap: var(--space-10);
-      animation: filmStrip 28s linear infinite;
-      width: max-content;
+    [data-theme="dark"] .ticker-wrap {
+      background: #1a1715;
+      border-top-color: #D93054;
+      border-bottom-color: rgba(255,255,255,.08);
     }
-    .ticker-item {
+    [data-theme="dark"] .ticker-item {
+      color: rgba(244,239,230,.35);
+    }
+    [data-theme="dark"] .ticker-item:hover { color: rgba(244,239,230,.9); }
+    [data-theme="dark"] .ticker-item--lit    { color: rgba(244,239,230,.7); }
+    [data-theme="dark"] .ticker-item--accent { color: #e8485e; }
+    [data-theme="dark"] .ticker-item--yellow { color: #f0e060; }
+    [data-theme="dark"] .ticker-sep { color: rgba(220,60,80,.5); }
+    .ticker-row {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
+      width: max-content;
+      animation: tickerFwd 38s linear infinite;
+    }
+    .ticker-row:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-family: var(--font-logo);
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      color: rgba(244,239,230,0.5);
+      font-size: .82rem;
+      letter-spacing: .14em;
+      color: rgba(244,239,230,.28);
       white-space: nowrap;
+      padding: 0 32px;
+      transition: color .25s;
     }
-    .ticker-item strong {
-      color: var(--color-highlight);
-    }
+    .ticker-item:hover { color: rgba(244,239,230,.85); }
+    .ticker-item--lit    { color: rgba(244,239,230,.65); }
+    .ticker-item--accent { color: #D93054; }
+    .ticker-item--yellow { color: #EAD84B; }
+    .ticker-item svg { opacity: .55; flex-shrink: 0; transition: opacity .25s; }
+    .ticker-item:hover svg { opacity: 1; }
     .ticker-sep {
-      color: var(--color-accent);
-      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 4px;
+      color: rgba(163,31,52,.45);
+      flex-shrink: 0;
     }
 
     /* ═══════════════════════════════════════
@@ -600,14 +631,196 @@
     }
 
     /* ═══════════════════════════════════════
-       GRID DE POSTS
+       ARC CAROUSEL
     ═══════════════════════════════════════ */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
+    .arc-carousel {
+      position: relative;
       margin-bottom: var(--space-16);
     }
+    .arc-carousel__stage {
+      position: relative;
+      height: 560px;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .arc-card {
+      position: absolute;
+      width: 340px;
+      height: 520px;
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+      overflow: hidden;
+      cursor: pointer;
+      will-change: transform, opacity;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .3s;
+      border: 1px solid rgba(0,0,0,.05);
+      user-select: none;
+    }
+    [data-theme="dark"] .arc-card {
+      background: #2a2624;
+      border-color: rgba(255,255,255,.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+    }
+    .arc-card[data-pos="center"] {
+      box-shadow: 0 12px 48px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.06);
+      cursor: default;
+    }
+    .arc-card[data-pos="center"]:hover { box-shadow: 0 16px 56px rgba(0,0,0,.16), 0 2px 8px rgba(0,0,0,.06); }
+    .arc-card[data-pos="left"],
+    .arc-card[data-pos="right"] { cursor: pointer; }
+    .arc-card[data-pos="hidden-left"],
+    .arc-card[data-pos="hidden-right"] { pointer-events: none; }
+
+    .arc-card__thumb {
+      width: 100%;
+      height: 315px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      background: #1C1917;
+      border-radius: 20px 20px 0 0;
+    }
+    .arc-card__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s cubic-bezier(.25,1,.5,1);
+    }
+    .arc-card[data-pos="center"]:hover .arc-card__thumb img { transform: scale(1.04); }
+    .arc-card__thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(244,239,230,.25);
+      font-size: .7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .arc-card__category {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+    }
+    .arc-card__body {
+      flex: 1;
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .arc-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: var(--font-semibold);
+      line-height: var(--leading-snug);
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .arc-card__excerpt {
+      font-size: .82rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .arc-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .arc-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      color: var(--color-text-muted);
+    }
+    .arc-card__meta-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--color-border-dark);
+    }
+    .arc-card__link {
+      font-size: .75rem;
+      font-weight: var(--font-medium);
+      color: #D93054;
+      text-decoration: none;
+      letter-spacing: .02em;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .arc-card[data-pos="center"] .arc-card__link { opacity: 1; }
+    .arc-card__link:hover { text-decoration: underline; }
+
+    /* setas */
+    .arc-carousel__nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .arc-nav-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(28,25,23,.15);
+      background: rgba(28,25,23,.04);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s, transform .15s;
+      color: var(--color-text-primary);
+    }
+    [data-theme="dark"] .arc-nav-btn {
+      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+    }
+    .arc-nav-btn:hover:not(:disabled) {
+      background: rgba(217,48,84,.08);
+      border-color: rgba(217,48,84,.35);
+      transform: scale(1.07);
+    }
+    .arc-nav-btn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+
+    /* dots indicadores */
+    .arc-carousel__dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .arc-dot {
+      width: 6px; height: 6px;
+      border-radius: 3px;
+      background: var(--color-border-dark);
+      transition: width .3s cubic-bezier(.25,1,.5,1), background .3s;
+    }
+    .arc-dot.active {
+      width: 22px;
+      background: #D93054;
+    }
+
+    /* drag cursor */
+    .arc-carousel__stage.is-dragging { cursor: grabbing; }
+    .arc-carousel__stage { cursor: grab; }
 
     /* Card de post */
     .card-post {
@@ -800,6 +1013,11 @@
         0 20px 60px rgba(0,0,0,0.45),
         0 6px 20px rgba(163, 31, 52, 0.12);
     }
+    [data-theme="dark"] .cta-banner {
+      background: linear-gradient(135deg, #2a2522 0%, #3a1e26 60%, #2a2522 100%);
+      border-color: rgba(217,48,84,.3);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 20px 50px rgba(0,0,0,.5);
+    }
     .cta-banner::before { display: none; }
     .cta-banner::after {
       content: '';
@@ -820,7 +1038,7 @@
       font-family: var(--font-heading);
       font-size: var(--text-2xl);
       font-weight: var(--font-semibold);
-      color: var(--color-text-inverse);
+      color: #F4EFE6;
       line-height: var(--leading-snug);
       max-width: 440px;
     }
@@ -833,64 +1051,154 @@
     /* ═══════════════════════════════════════
        SOBRE O BLOG
     ═══════════════════════════════════════ */
+    /* ── CURSOR ── */
+    .cur-dot, .cur-ring {
+      position: fixed; top: 0; left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform;
+    }
+    .cur-dot {
+      width: 6px; height: 6px;
+      background: #D93054;
+      transform: translate(-50%,-50%);
+      transition: width .15s, height .15s, opacity .2s;
+    }
+    .cur-ring {
+      width: 30px; height: 30px;
+      border: 1.5px solid rgba(217,48,84,.45);
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, border-color .2s, opacity .2s;
+    }
+    body.cursor-hover .cur-dot  { width: 10px; height: 10px; opacity: .6; }
+    body.cursor-hover .cur-ring { width: 44px; height: 44px; border-color: rgba(217,48,84,.25); }
+    body.cursor-click .cur-dot  { width: 14px; height: 14px; }
+    @media (hover: none) { .cur-dot, .cur-ring { display: none; } }
+
+    /* ── ABOUT / "O QUE É" ── */
+    /* ── ABOUT: modo claro (padrão) ── */
     .about-section {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: #FFFFFF;
       border-radius: var(--radius-2xl);
-      padding: var(--space-10) var(--space-12);
       margin-bottom: var(--space-16);
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
-      align-items: center;
+      grid-template-columns: 1.15fr .85fr;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 32px rgba(0,0,0,.07);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .about-section::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: #D93054;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform .9s cubic-bezier(.16,1,.3,1) .25s;
+      z-index: 5;
+    }
+    .about-section.in::before { transform: scaleY(1); }
+
+    .about-section__left {
+      padding: var(--space-12) var(--space-10) var(--space-12) var(--space-12);
+      border-right: 1px solid rgba(0,0,0,.07);
+    }
+    .about-section__eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #D93054;
+      margin-bottom: var(--space-5);
     }
     .about-section__title {
       font-family: var(--font-heading);
-      font-size: var(--text-3xl);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
       font-weight: var(--font-semibold);
       line-height: var(--leading-snug);
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-5);
+      color: #1C1917;
     }
-    .about-section__title em {
-      font-style: italic;
-      color: var(--color-accent);
-    }
+    .about-section__title em { font-style: italic; color: #D93054; }
     .about-section__text {
-      font-size: var(--text-base);
-      color: var(--color-text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
+      font-size: var(--text-sm);
+      color: #6B6460;
+      line-height: 1.75;
+      margin-bottom: var(--space-2);
     }
-    .about-section__visual {
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
+
+    /* stats direita */
+    .about-section__right {
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-10) 0;
+      background: #FAFAF9;
     }
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-3) 0;
-      border-bottom: 1px solid var(--color-border);
+    .about-stat {
+      padding: var(--space-5) var(--space-10);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background .2s, transform .22s cubic-bezier(.16,1,.3,1);
     }
-    .stat-item:last-child { border-bottom: none; }
-    .stat-item__num {
+    .about-stat::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: #D93054;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .about-stat:hover::after  { transform: scaleY(1); }
+    .about-stat:hover         { background: rgba(217,48,84,.04); transform: translateX(5px); }
+
+    .about-stat__num {
       font-family: var(--font-heading);
-      font-size: var(--text-3xl);
-      font-weight: var(--font-bold);
-      color: var(--color-accent);
-      min-width: 60px;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 700;
+      font-style: italic;
       line-height: 1;
+      color: #1C1917;
+      margin-bottom: var(--space-1);
+      transition: color .2s;
     }
-    .stat-item__label {
-      font-size: var(--text-sm);
-      color: var(--color-text-secondary);
+    .about-stat:nth-child(1):hover .about-stat__num { color: #D93054; }
+    .about-stat:nth-child(2):hover .about-stat__num { color: #b8900a; }
+    .about-stat:nth-child(3):hover .about-stat__num { color: #6B6460; }
+
+    .about-stat__label {
+      font-size: var(--text-xs);
+      color: #9E9590;
       line-height: var(--leading-snug);
+      transition: color .2s;
     }
+    .about-stat:hover .about-stat__label { color: #6B6460; }
+
+    /* ── ABOUT: modo escuro ── */
+    [data-theme="dark"] .about-section {
+      background: #2a2624;
+      border-color: rgba(255,255,255,.06);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+    }
+    [data-theme="dark"] .about-section__left {
+      border-right-color: rgba(255,255,255,.06);
+    }
+    [data-theme="dark"] .about-section__title { color: #F4EFE6; }
+    [data-theme="dark"] .about-section__text  { color: rgba(244,239,230,.42); }
+    [data-theme="dark"] .about-section__right { background: #242120; }
+    [data-theme="dark"] .about-stat:hover     { background: rgba(255,255,255,.03); }
+    [data-theme="dark"] .about-stat__num      { color: #F4EFE6; }
+    [data-theme="dark"] .about-stat:nth-child(2):hover .about-stat__num { color: #EAD84B; }
+    [data-theme="dark"] .about-stat:nth-child(3):hover .about-stat__num { color: rgba(244,239,230,.65); }
+    [data-theme="dark"] .about-stat__label    { color: rgba(244,239,230,.32); }
+    [data-theme="dark"] .about-stat:hover .about-stat__label { color: rgba(244,239,230,.55); }
 
     /* ═══════════════════════════════════════
        PODCAST SECTION
@@ -1115,6 +1423,23 @@
       text-transform: uppercase;
     }
 
+    /* ── SPOTLIGHT MOUSE ── */
+    .about-section,
+    .podcast-section,
+    .cta-banner {
+      --mx: 50%; --my: 50%;
+    }
+    .about-section::after,
+    .podcast-section::after,
+    .cta-banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle 280px at var(--mx) var(--my), rgba(217,48,84,.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transition: background .05s;
+    }
+
     /* ═══════════════════════════════════════
        RESPONSIVO
     ═══════════════════════════════════════ */
@@ -1129,6 +1454,20 @@
       .about-section {
         grid-template-columns: 1fr;
       }
+      .about-section__left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+      }
+      .about-section__right {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .about-stat {
+        flex: 1 1 30%;
+        border-bottom: none;
+        border-right: 1px solid rgba(255,255,255,.06);
+      }
+      .about-stat:last-child { border-right: none; }
       .post-full__header,
       .post-full__body {
         padding-left: var(--space-8);
@@ -1164,6 +1503,8 @@
 </head>
 
 <body>
+  <div class="cur-dot"  id="curDot"></div>
+  <div class="cur-ring" id="curRing"></div>
 
   <!-- ═══════ NAVBAR ═══════ -->
   <div class="nav-wrapper">
@@ -1241,45 +1582,147 @@
 
   <!-- ═══════ TICKER / FILM STRIP ═══════ -->
   <div class="ticker-wrap">
-    <div class="ticker-track">
-      <div class="ticker-item">🎬 <span>AUDIOVISUAL</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>CINEMA</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">🎥 <span>DOCUMENTÁRIO</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>VIDEOCLIPE</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">📺 <span>STREAMING</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>ROTEIRO</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">🎞️ <span>SET DE FILMAGEM</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>PRODUÇÃO</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">🎬 <span>AUDIOVISUAL</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>CINEMA</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">🎥 <span>DOCUMENTÁRIO</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>VIDEOCLIPE</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">📺 <span>STREAMING</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>ROTEIRO</strong></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item">🎞️ <span>SET DE FILMAGEM</span></div>
-      <div class="ticker-sep">✦</div>
-      <div class="ticker-item"><strong>PRODUÇÃO</strong></div>
-      <div class="ticker-sep">✦</div>
+    <div class="ticker-row">
+      <!-- bloco A -->
+      <div class="ticker-item ticker-item--lit">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        AUDIOVISUAL
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">CINEMA</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        DOCUMENTÁRIO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">VIDEOCLIPE</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6L3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1-.3 2.1.3 2.4 1.3L20.2 6z"/><path d="M6.2 5.3l2 5.1m3-6l2 5.1"/><rect x="2" y="11" width="20" height="11" rx="2"/></svg>
+        DIREÇÃO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--lit">ROTEIRO</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        PRODUÇÃO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">MONTAGEM</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>
+        FOTOGRAFIA
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--lit">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        PODCAST
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">STREAMING</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">CARREIRA</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        CACHÊ
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">SET DE FILMAGEM</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <!-- bloco B — duplicado para loop contínuo -->
+      <div class="ticker-item ticker-item--lit">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        AUDIOVISUAL
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">CINEMA</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        DOCUMENTÁRIO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">VIDEOCLIPE</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6L3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1-.3 2.1.3 2.4 1.3L20.2 6z"/><path d="M6.2 5.3l2 5.1m3-6l2 5.1"/><rect x="2" y="11" width="20" height="11" rx="2"/></svg>
+        DIREÇÃO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--lit">ROTEIRO</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        PRODUÇÃO
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">MONTAGEM</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>
+        FOTOGRAFIA
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--lit">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        PODCAST
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">STREAMING</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--accent">CARREIRA</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        CACHÊ
+      </div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
+      <div class="ticker-item ticker-item--yellow">SET DE FILMAGEM</div>
+      <div class="ticker-sep"><svg width="5" height="5" viewBox="0 0 5 5"><circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/></svg></div>
     </div>
   </div>
 
+  <!-- ═══════ SOBRE O BLOG ═══════ -->
+  <section id="sobre">
+    <div class="section-wrap" style="padding-top: var(--space-10); padding-bottom: var(--space-10);">
+      <div class="about-section anim anim-up">
+
+        <!-- Esquerda: texto -->
+        <div class="about-section__left">
+          <div class="about-section__eyebrow">Sobre o blog</div>
+          <h2 class="about-section__title">O que é o<br><em>Luz, Câmera<br>e Boleto</em>?</h2>
+          <p class="about-section__text">Um blog sobre o lado real de trabalhar com audiovisual no Brasil. Sem romantizar o sofrimento, sem fingir que é fácil.</p>
+          <p class="about-section__text">Informação honesta sobre carreira, funções, cachês e como entrar nesse mercado — com uma dose de humor, porque vai precisar.</p>
+          <a href="post-01.html" class="btn btn--primary btn--md" style="margin-top:var(--space-7);background:#D93054;border-color:#D93054;">Começar pelo post #01 →</a>
+        </div>
+
+        <!-- Direita: stats com contador animado -->
+        <div class="about-section__right">
+          <div class="about-stat">
+            <div class="about-stat__num" data-count="5">0</div>
+            <div class="about-stat__label">posts publicados — e mais vindo por aí</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat__num" data-count="6" data-suffix="+">0</div>
+            <div class="about-stat__label">áreas cobertas: direção, roteiro, fotografia e mais</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat__num">0</div>
+            <div class="about-stat__label">promessas de que vai ser fácil — só verdade por aqui</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════ POSTS ═══════ -->
-  <section id="posts">
-    <div class="section-wrap">
+  <section id="posts" style="overflow: visible;">
+    <div class="section-wrap" style="padding-top: var(--space-12); overflow: visible;">
       <div class="section-header">
         <div>
           <div class="section-header__eyebrow">Todos os posts</div>
@@ -1288,179 +1731,144 @@
         <span class="tag tag--default">5 publicados</span>
       </div>
 
-      <div class="posts-grid">
+      <!-- ARC CAROUSEL -->
+      <div class="arc-carousel anim anim-up">
+        <div class="arc-carousel__stage" id="arcStage">
 
-        <!-- Post 01 -->
-        <article class="card-post anim anim-up anim-d1" onclick="window.location='post-01.html'" style="cursor:pointer;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <img src="img/post-01-cover.webp" alt="Quero trabalhar com cinema. Vou morrer de fome?">
-            <div class="card-post__category">
-              <span class="tag tag--accent">Carreira</span>
+          <!-- Card 0 — Post 01 -->
+          <article class="arc-card" data-index="0" data-href="post-01.html">
+            <div class="arc-card__thumb">
+              <img src="img/post-01-cover.webp" alt="Quero trabalhar com cinema. Vou morrer de fome?">
+              <div class="arc-card__category"><span class="tag tag--accent">Carreira</span></div>
             </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">Quero trabalhar com cinema. Vou morrer de fome?</h3>
-            <p class="card-post__excerpt">Spoiler: não. Mas calma, não é só querer. A gente explica o que significa de verdade trabalhar com audiovisual no Brasil.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Abr 2026</span>
-                <span class="card-post__dot"></span>
-                <span>7 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">Quero trabalhar com cinema. Vou morrer de fome?</h3>
+              <p class="arc-card__excerpt">Spoiler: não. Mas calma, não é só querer. A gente explica o que significa de verdade trabalhar com audiovisual no Brasil.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Abr 2026</span><span class="arc-card__meta-dot"></span><span>7 min</span></div>
+                <a href="post-01.html" class="arc-card__link">Ler agora →</a>
               </div>
-              <a href="post-01.html" class="tag tag--highlight" style="text-decoration:none;">Ler agora →</a>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Post 02 -->
-        <article class="card-post anim anim-up anim-d1" onclick="window.location='post-02.html'" style="cursor:pointer;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <img src="img/post-02-cover.webp" alt="As profissões do audiovisual que ninguém te explica">
-            <div class="card-post__category">
-              <span class="tag tag--dark">Profissões</span>
+          <!-- Card 1 — Post 02 -->
+          <article class="arc-card" data-index="1" data-href="post-02.html">
+            <div class="arc-card__thumb">
+              <img src="img/post-02-cover.webp" alt="As profissões do audiovisual que ninguém te explica">
+              <div class="arc-card__category"><span class="tag tag--dark">Profissões</span></div>
             </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">As profissões do audiovisual que ninguém te explica pt.1</h3>
-            <p class="card-post__excerpt">O audiovisual é uma mini cidade funcionando ao mesmo tempo. Vem conhecer os cargos de produção que mantêm esse caos organizado.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Mai 2026</span>
-                <span class="card-post__dot"></span>
-                <span>6 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">As profissões do audiovisual que ninguém te explica pt.1</h3>
+              <p class="arc-card__excerpt">O audiovisual é uma mini cidade funcionando ao mesmo tempo. Vem conhecer os cargos de produção que mantêm esse caos organizado.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Mai 2026</span><span class="arc-card__meta-dot"></span><span>6 min</span></div>
+                <a href="post-02.html" class="arc-card__link">Ler agora →</a>
               </div>
-              <a href="post-02.html" class="tag tag--highlight" style="text-decoration:none;">Ler agora →</a>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Post 03 -->
-        <article class="card-post anim anim-up anim-d3" onclick="window.location='post-03.html'" style="cursor:pointer;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <img src="img/post-03-cover.webp" alt="Top 10 ferramentas para o audiovisual">
-            <div class="card-post__category">
-              <span class="tag tag--highlight">Ferramentas</span>
+          <!-- Card 2 — Post 03 -->
+          <article class="arc-card" data-index="2" data-href="post-03.html">
+            <div class="arc-card__thumb">
+              <img src="img/post-03-cover.webp" alt="Top 10 ferramentas para o audiovisual">
+              <div class="arc-card__category"><span class="tag tag--highlight">Ferramentas</span></div>
             </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">Top 10 produtos e serviços para quem quer trabalhar com audiovisual</h3>
-            <p class="card-post__excerpt">10 coisas que podem salvar a vida de quem quer viver de audiovisual sem vender um rim. Canva, DaVinci, HD externo e mais.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Mai 2026</span>
-                <span class="card-post__dot"></span>
-                <span>6 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">Top 10 produtos e serviços para quem quer trabalhar com audiovisual</h3>
+              <p class="arc-card__excerpt">10 coisas que podem salvar a vida de quem quer viver de audiovisual sem vender um rim. Canva, DaVinci, HD externo e mais.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Mai 2026</span><span class="arc-card__meta-dot"></span><span>6 min</span></div>
+                <a href="post-03.html" class="arc-card__link">Ler agora →</a>
               </div>
-              <a href="post-03.html" class="tag tag--highlight" style="text-decoration:none;">Ler agora →</a>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Post 04 -->
-        <article class="card-post anim anim-up anim-d1" onclick="window.location='post-04.html'" style="cursor:pointer;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <div class="card-post__thumb-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-              <span>Imagem em breve</span>
+          <!-- Card 3 — Post 04 -->
+          <article class="arc-card" data-index="3" data-href="post-04.html">
+            <div class="arc-card__thumb">
+              <img src="img/post-04-cover.webp" alt="Carta aberta para quem também quer aparecer nos créditos">
+              <div class="arc-card__category"><span class="tag tag--accent">Diversidade</span></div>
             </div>
-            <div class="card-post__category">
-              <span class="tag tag--accent">Diversidade</span>
-            </div>
-          </div>
-          <!-- post-04-cover.webp ainda não criado -->
-          <div class="card-post__body">
-            <h3 class="card-post__title">Carta aberta para quem também quer aparecer nos créditos</h3>
-            <p class="card-post__excerpt">Para a comunidade LGBTQIAP+ que quer entrar no audiovisual: sua história não é nicho, sua presença não é cota.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Jun 2026</span>
-                <span class="card-post__dot"></span>
-                <span>5 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">Carta aberta para quem também quer aparecer nos créditos</h3>
+              <p class="arc-card__excerpt">Para a comunidade LGBTQIAP+ que quer entrar no audiovisual: sua história não é nicho, sua presença não é cota.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Jun 2026</span><span class="arc-card__meta-dot"></span><span>5 min</span></div>
+                <a href="post-04.html" class="arc-card__link">Ler agora →</a>
               </div>
-              <a href="post-04.html" class="tag tag--highlight" style="text-decoration:none;">Ler agora →</a>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Post 05 -->
-        <article class="card-post anim anim-up anim-d2" onclick="window.location='post-05.html'" style="cursor:pointer;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <img src="img/post-05-cover.webp" alt="5 autores brasileiros contemporâneos">
-            <div class="card-post__category">
-              <span class="tag tag--dark">Literatura</span>
+          <!-- Card 4 — Post 05 -->
+          <article class="arc-card" data-index="4" data-href="post-05.html">
+            <div class="arc-card__thumb">
+              <img src="img/post-05-cover.webp" alt="5 autores brasileiros contemporâneos">
+              <div class="arc-card__category"><span class="tag tag--dark">Literatura</span></div>
             </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">5 autores brasileiros contemporâneos para quem gosta de histórias</h3>
-            <p class="card-post__excerpt">Natália Borges Polesso, Aline Bei, Jeferson Tenório e mais. Leitura que treina o olhar — e não precisa de equipamento.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Jun 2026</span>
-                <span class="card-post__dot"></span>
-                <span>7 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">5 autores brasileiros contemporâneos para quem gosta de histórias</h3>
+              <p class="arc-card__excerpt">Natália Borges Polesso, Aline Bei, Jeferson Tenório e mais. Leitura que treina o olhar — e não precisa de equipamento.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Jun 2026</span><span class="arc-card__meta-dot"></span><span>7 min</span></div>
+                <a href="post-05.html" class="arc-card__link">Ler agora →</a>
               </div>
-              <a href="post-05.html" class="tag tag--highlight" style="text-decoration:none;">Ler agora →</a>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Em breve A -->
-        <article class="card-post anim anim-up anim-d3" style="opacity:.6;">
-          <div class="card-post__thumb card-post__thumb--dark">
-            <div class="card-post__thumb-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-              <span>Imagem em breve</span>
-            </div>
-            <div class="card-post__category">
-              <span class="tag tag--default">Mercado</span>
-            </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">Streaming matou o cinema? A resposta que ninguém quer ouvir</h3>
-            <p class="card-post__excerpt">Não. Mas complicou bastante. A gente fala sobre como o mercado mudou e o que isso significa pra quem quer entrar agora.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Ago 2026</span>
-                <span class="card-post__dot"></span>
-                <span>9 min</span>
+          <!-- Card 5 — Em breve A -->
+          <article class="arc-card" data-index="5" data-href="">
+            <div class="arc-card__thumb" style="background:#1C1917;">
+              <div class="arc-card__thumb-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Em breve</span>
               </div>
-              <span class="tag tag--accent">Em breve</span>
+              <div class="arc-card__category"><span class="tag tag--default">Mercado</span></div>
             </div>
-          </div>
-        </article>
-
-        <!-- Em breve B -->
-        <article class="card-post anim anim-up anim-d1" style="opacity:.6;">
-          <div class="card-post__thumb card-post__thumb--accent">
-            <div class="card-post__thumb-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              <span>Imagem em breve</span>
-            </div>
-            <div class="card-post__category">
-              <span class="tag tag--highlight">Depoimentos</span>
-            </div>
-          </div>
-          <div class="card-post__body">
-            <h3 class="card-post__title">"Fui de estagiária a diretora em 5 anos": uma história real (e trabalhosa)</h3>
-            <p class="card-post__excerpt">Conversa com uma profissional do audiovisual brasileiro sobre como foi o começo, os erros, os acertos e o que ela faria diferente.</p>
-            <div class="card-post__footer">
-              <div class="card-post__meta">
-                <span>Set 2026</span>
-                <span class="card-post__dot"></span>
-                <span>10 min</span>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">Streaming matou o cinema? A resposta que ninguém quer ouvir</h3>
+              <p class="arc-card__excerpt">Não. Mas complicou bastante. A gente fala sobre como o mercado mudou e o que isso significa pra quem quer entrar agora.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Ago 2026</span><span class="arc-card__meta-dot"></span><span>9 min</span></div>
+                <span class="tag tag--accent" style="font-size:.7rem;">Em breve</span>
               </div>
-              <span class="tag tag--accent">Em breve</span>
             </div>
-          </div>
-        </article>
+          </article>
 
-      </div>
+          <!-- Card 6 — Em breve B -->
+          <article class="arc-card" data-index="6" data-href="">
+            <div class="arc-card__thumb" style="background:#D93054;">
+              <div class="arc-card__thumb-placeholder" style="color:rgba(255,255,255,.4);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Em breve</span>
+              </div>
+              <div class="arc-card__category"><span class="tag tag--highlight">Depoimentos</span></div>
+            </div>
+            <div class="arc-card__body">
+              <h3 class="arc-card__title">"Fui de estagiária a diretora em 5 anos": uma história real</h3>
+              <p class="arc-card__excerpt">Conversa com uma profissional do audiovisual sobre o começo, os erros, os acertos e o que ela faria diferente.</p>
+              <div class="arc-card__footer">
+                <div class="arc-card__meta"><span>Set 2026</span><span class="arc-card__meta-dot"></span><span>10 min</span></div>
+                <span class="tag tag--accent" style="font-size:.7rem;">Em breve</span>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /stage -->
+
+        <!-- Navegação -->
+        <div class="arc-carousel__nav">
+          <button class="arc-nav-btn" id="arcPrev" aria-label="Post anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="arc-nav-btn" id="arcNext" aria-label="Próximo post">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <!-- Dots -->
+        <div class="arc-carousel__dots" id="arcDots"></div>
+
+      </div><!-- /arc-carousel -->
 
       <!-- CTA Banner -->
       <div class="cta-banner anim anim-up">
@@ -1472,40 +1880,6 @@
         <button class="btn btn--highlight btn--lg btn--pill">Acompanhar o blog →</button>
       </div>
 
-    </div>
-  </section>
-
-  <!-- ═══════ SOBRE O BLOG ═══════ -->
-  <section id="sobre">
-    <div class="section-wrap" style="padding-top: 0;">
-      <div class="about-section anim anim-up">
-        <div>
-          <h2 class="about-section__title">
-            O que é o <em>Luz, Câmera e Boleto</em>?
-          </h2>
-          <p class="about-section__text">
-            É um blog sobre o lado prático de trabalhar com audiovisual no Brasil. Nada de romantizar o sofrimento, nada de fingir que é fácil. A ideia é simples: dar informação real pra quem tá começando.
-          </p>
-          <p class="about-section__text">
-            Depoimentos de quem já está no mercado, dicas sobre como entrar, quanto esperar ganhar, quais funções existem e como se preparar. Tudo isso com uma dose honesta de humor, porque se você vai trabalhar com arte no Brasil, vai precisar de senso de humor.
-          </p>
-          <a href="#post01" class="btn btn--primary btn--md" style="margin-top: var(--space-4);">Começar pelo post #01</a>
-        </div>
-        <div class="about-section__visual">
-          <div class="stat-item">
-            <div class="stat-item__num">05</div>
-            <div class="stat-item__label">Posts publicados.<br>Mais vindo por aí.</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-item__num">6+</div>
-            <div class="stat-item__label">Áreas do audiovisual que vamos cobrir: direção, produção, roteiro, montagem, fotografia e mais.</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-item__num">0</div>
-            <div class="stat-item__label">Promessas de que vai ser fácil. Só verdade por aqui.</div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1578,7 +1952,153 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script>
+    // ═══════ ARC CAROUSEL ═══════
+    (function () {
+      const CARD_W   = 340;
+      const GAP      = 52;   // distância centro→lateral (centro do card central ao centro do lateral)
+      const SIDE_X   = CARD_W + GAP;  // deslocamento horizontal lateral
+      const SIDE_ROT = 6;    // graus de rotação
+      const SIDE_SCL = 0.88; // escala lateral
+      const SIDE_Y   = -28;  // arco: laterais sobem (negativo = para cima)
+      const SIDE_OP  = 0.72;
+      const HIDE_OP  = 0;
+      const DUR      = 0.72; // duração da animação (GSAP seconds)
+      const EASE     = 'power2.out';
+
+      const stage    = document.getElementById('arcStage');
+      const cards    = Array.from(stage.querySelectorAll('.arc-card'));
+      const prevBtn  = document.getElementById('arcPrev');
+      const nextBtn  = document.getElementById('arcNext');
+      const dotsWrap = document.getElementById('arcDots');
+      const total    = cards.length;
+      let current    = 0;
+      let animating  = false;
+
+      // Dots
+      cards.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'arc-dot';
+        d.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(d);
+      });
+
+      function updateDots() {
+        dotsWrap.querySelectorAll('.arc-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      function positionOf(idx) {
+        // returns offset index relative to current: -1, 0, 1, or ±hidden
+        const diff = idx - current;
+        return diff; // negative = left, 0 = center, positive = right
+      }
+
+      function applyNoAnim() {
+        cards.forEach((card, i) => {
+          const diff = i - current;
+          let x, y, rot, scl, op, zIndex;
+          if (diff === 0) {
+            x = 0; y = 0; rot = 0; scl = 1; op = 1; zIndex = 10;
+            card.dataset.pos = 'center';
+          } else if (diff === -1) {
+            x = -SIDE_X; y = SIDE_Y; rot = -SIDE_ROT; scl = SIDE_SCL; op = SIDE_OP; zIndex = 5;
+            card.dataset.pos = 'left';
+          } else if (diff === 1) {
+            x = SIDE_X; y = SIDE_Y; rot = SIDE_ROT; scl = SIDE_SCL; op = SIDE_OP; zIndex = 5;
+            card.dataset.pos = 'right';
+          } else {
+            x = diff < 0 ? -SIDE_X * 2.2 : SIDE_X * 2.2;
+            y = SIDE_Y; rot = diff < 0 ? -SIDE_ROT * 1.5 : SIDE_ROT * 1.5;
+            scl = SIDE_SCL * 0.7; op = HIDE_OP; zIndex = 1;
+            card.dataset.pos = diff < 0 ? 'hidden-left' : 'hidden-right';
+          }
+          gsap.set(card, { x, y, rotation: rot, scale: scl, opacity: op, zIndex });
+        });
+      }
+
+      function goTo(idx, dir) {
+        if (animating || idx === current) return;
+        animating = true;
+        const prev = current;
+        current = idx;
+        updateButtons();
+        updateDots();
+
+        cards.forEach((card, i) => {
+          const diff = i - current;
+          let x, y, rot, scl, op, zIndex;
+          if (diff === 0) {
+            x = 0; y = 0; rot = 0; scl = 1; op = 1; zIndex = 10;
+            card.dataset.pos = 'center';
+          } else if (diff === -1) {
+            x = -SIDE_X; y = SIDE_Y; rot = -SIDE_ROT; scl = SIDE_SCL; op = SIDE_OP; zIndex = 5;
+            card.dataset.pos = 'left';
+          } else if (diff === 1) {
+            x = SIDE_X; y = SIDE_Y; rot = SIDE_ROT; scl = SIDE_SCL; op = SIDE_OP; zIndex = 5;
+            card.dataset.pos = 'right';
+          } else {
+            x = diff < 0 ? -SIDE_X * 2.2 : SIDE_X * 2.2;
+            y = SIDE_Y; rot = diff < 0 ? -SIDE_ROT * 1.5 : SIDE_ROT * 1.5;
+            scl = SIDE_SCL * 0.7; op = HIDE_OP; zIndex = 1;
+            card.dataset.pos = diff < 0 ? 'hidden-left' : 'hidden-right';
+          }
+          gsap.to(card, { x, y, rotation: rot, scale: scl, opacity: op, zIndex, duration: DUR, ease: EASE,
+            onComplete: i === current ? () => { animating = false; } : undefined
+          });
+        });
+      }
+
+      function updateButtons() {
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === total - 1;
+      }
+
+      // click lateral cards → navegar
+      cards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+          const diff = i - current;
+          if (diff === -1) goTo(current - 1);
+          else if (diff === 1) goTo(current + 1);
+          else if (diff === 0 && card.dataset.href) window.location.href = card.dataset.href;
+        });
+      });
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      // drag / swipe
+      let dragStart = null;
+      stage.addEventListener('mousedown', e => { dragStart = e.clientX; stage.classList.add('is-dragging'); });
+      window.addEventListener('mouseup', e => {
+        if (dragStart === null) return;
+        const delta = e.clientX - dragStart;
+        stage.classList.remove('is-dragging');
+        dragStart = null;
+        if (Math.abs(delta) > 50) delta < 0 ? goTo(current + 1) : goTo(current - 1);
+      });
+      stage.addEventListener('touchstart', e => { dragStart = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener('touchend', e => {
+        if (dragStart === null) return;
+        const delta = e.changedTouches[0].clientX - dragStart;
+        dragStart = null;
+        if (Math.abs(delta) > 50) delta < 0 ? goTo(current + 1) : goTo(current - 1);
+      });
+
+      // keyboard
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+
+      // init
+      applyNoAnim();
+      updateButtons();
+      updateDots();
+    })();
+
     // ═══════ DARK MODE ═══════
     const btn = document.getElementById('themeToggle');
     const icon = document.getElementById('themeIcon');
@@ -1595,13 +2115,88 @@
     // ═══════ SCROLL ANIMATIONS ═══════
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('in');
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
     document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+    // ═══════ CONTADOR ANIMADO (about stats) ═══════
+    function animCount(el, target, suffix, dur) {
+      let start = null;
+      const tick = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('[data-count]').forEach(el => {
+          animCount(el, +el.dataset.count, el.dataset.suffix || '', 1400);
+        });
+        counterObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.4 });
+    const aboutEl = document.querySelector('.about-section');
+    if (aboutEl) counterObs.observe(aboutEl);
+
+    // ═══════ CURSOR CUSTOM ═══════
+    const curDot  = document.getElementById('curDot');
+    const curRing = document.getElementById('curRing');
+    let mx = -100, my = -100, rx = -100, ry = -100;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      curDot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    });
+
+    // anel com inércia suave
+    (function animRing() {
+      rx += (mx - rx) * .11;
+      ry += (my - ry) * .11;
+      curRing.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(animRing);
+    })();
+
+    // reação em elementos interativos
+    document.querySelectorAll('a, button, .card-post, .stat-hero, .stat-mini, .player-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+
+    // ═══════ TILT 3D NOS CARDS ═══════
+    document.querySelectorAll('.card-post').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transition = 'transform .08s ease, box-shadow .08s ease';
+        card.style.transform  = `perspective(700px) rotateY(${x*7}deg) rotateX(${-y*7}deg) scale(1.02)`;
+        card.style.boxShadow  = `${-x*12}px ${-y*12}px 30px rgba(0,0,0,.15)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s';
+        card.style.transform  = '';
+        card.style.boxShadow  = '';
+      });
+    });
+
+    // ═══════ SPOTLIGHT NAS SEÇÕES ESCURAS ═══════
+    document.querySelectorAll('.about-section, .podcast-section, .cta-banner').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+        const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+        el.style.setProperty('--mx', x + '%');
+        el.style.setProperty('--my', y + '%');
+      });
+    });
   </script>
 </body>
 </html>
