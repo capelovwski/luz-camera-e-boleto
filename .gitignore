@@ -1,0 +1,20 @@
+# Arquivos de trabalho que não fazem parte do site publicado
+
+# Material de aula (PDFs pesados de referência)
+aulas-pdfs/
+aulas-pdf-2/
+
+# Cronograma da disciplina
+Cronograma Blogs_2026.pdf
+Cronograma+Final+Blogs_2026.pdf
+
+# Vídeo bruto (pesado, pode estourar o limite de 100 MB do GitHub)
+*.MP4
+*.mp4
+
+# Áudio que não é usado no site (o episódio 02 usa podcast/fama-não-se-paga.mp3)
+Fama_no_streaming_não_paga_boleto.mp3
+
+# Notas de trabalho (remova estas linhas se quiser versioná-las)
+prompts-capas-imagens.md
+arquivo-verbetes-e-interrogativo.md

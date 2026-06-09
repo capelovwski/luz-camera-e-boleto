@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exercício de IA: o conto e a revisão — Luz, Câmera e Boleto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-bg:#F4EFE6;--color-surface:#FFFFFF;--color-surface-2:#EDE8DC;
+      --color-border:#D6CFC3;--color-border-dark:#B0A898;
+      --color-text-primary:#1C1917;--color-text-secondary:#78716C;
+      --color-text-muted:#A8A29E;--color-text-inverse:#F4EFE6;
+      --color-accent:#A31F34;--color-accent-soft:#F4E0E4;
+      --color-highlight:#EAD84B;--color-dark:#1C1917;
+      --font-heading:'Fraunces',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;
+      --font-logo:'Bebas Neue','Impact',sans-serif;
+      --text-xs:.75rem;--text-sm:.875rem;--text-base:1rem;--text-lg:1.125rem;
+      --text-xl:1.25rem;--text-2xl:1.5rem;--text-3xl:1.875rem;--text-4xl:2.25rem;
+      --font-medium:500;--font-semibold:600;--font-bold:700;
+      --leading-tight:1.2;--leading-snug:1.375;--leading-normal:1.5;--leading-relaxed:1.625;
+      --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+      --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+      --radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-2xl:20px;--radius-full:9999px;
+      --shadow-md:0 4px 12px rgba(28,25,23,.08);--shadow-lg:0 8px 24px rgba(28,25,23,.10);
+    }
+    [data-theme="dark"] {
+      --color-bg:#0F0E0D;--color-surface:#1C1917;--color-surface-2:#252220;
+      --color-border:#3C3735;--color-border-dark:#57534E;
+      --color-text-primary:#F4EFE6;--color-text-secondary:#A8A29E;
+      --color-text-muted:#57534E;--color-text-inverse:#1C1917;
+      --color-accent:#D93054;--color-accent-soft:#3A0C18;
+      --color-dark:#F4EFE6;--shadow-md:0 4px 12px rgba(0,0,0,.35);
+    }
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes cursorBlink{0%,80%{opacity:1}40%,100%{opacity:0}}
+    .anim{opacity:0}.anim.in{animation-fill-mode:both;animation-timing-function:cubic-bezier(.16,1,.3,1);animation-duration:.75s}
+    .anim-up.in{animation-name:fadeInUp}.anim-down.in{animation-name:fadeInDown}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text-primary);background:var(--color-bg);line-height:var(--leading-normal);transition:background .3s,color .3s}
+    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+
+    .logo-type{display:flex;flex-direction:column;line-height:1;user-select:none}
+    .logo-type__line1,.logo-type__line2{font-family:var(--font-logo);letter-spacing:.02em;color:var(--color-text-primary);line-height:.92}
+    .logo-type__line3{font-family:var(--font-heading);font-style:italic;font-weight:400;color:var(--color-accent);line-height:1;margin-top:-.22em;display:block}
+    .logo-type--sm .logo-type__line1,.logo-type--sm .logo-type__line2{font-size:1.05rem}
+    .logo-type--sm .logo-type__line3{font-size:.9rem}
+    .logo-type--display .logo-type__line1,.logo-type--display .logo-type__line2{font-size:clamp(5rem,13vw,13rem);line-height:.88;color:#F4EFE6}
+    .logo-type--display .logo-type__line3{font-size:clamp(4rem,10.5vw,10.5rem);color:#D93054}
+    .logo-cursor{display:inline-block;width:.06em;height:.82em;background:var(--color-accent);margin-left:.06em;vertical-align:middle;border-radius:1px;animation:cursorBlink .55s ease-in-out 4;animation-fill-mode:forwards}
+
+    .nav-wrapper{position:sticky;top:0;z-index:100;padding:var(--space-3) var(--space-6);background:var(--color-bg);border-bottom:1px solid var(--color-border);backdrop-filter:blur(12px)}
+    .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+    .nav__links{display:flex;align-items:center;gap:var(--space-1)}
+    .nav__link{font-size:var(--text-sm);font-weight:var(--font-medium);color:var(--color-text-secondary);padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);transition:background .15s,color .15s;cursor:pointer}
+    .nav__link:hover{background:var(--color-surface-2);color:var(--color-text-primary)}
+    .nav__actions{display:flex;align-items:center;gap:var(--space-2)}
+    .theme-btn{background:transparent;border:1.5px solid var(--color-border);border-radius:var(--radius-md);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);transition:background .15s,color .15s}
+    .theme-btn:hover{background:var(--color-surface-2);color:var(--color-text-primary)}
+
+    .tag{display:inline-flex;align-items:center;font-size:var(--text-xs);font-weight:var(--font-medium);padding:4px 10px;border-radius:var(--radius-full);line-height:1;white-space:nowrap}
+    .tag--default{background:var(--color-surface-2);color:var(--color-text-secondary);border:1px solid var(--color-border)}
+    .tag--accent{background:var(--color-accent-soft);color:var(--color-accent)}
+    .tag--dark{background:var(--color-dark);color:var(--color-text-inverse)}
+    .tag--highlight{background:var(--color-highlight);color:var(--color-dark)}
+
+    .back-bar{max-width:1100px;margin:0 auto;padding:var(--space-6) var(--space-6) 0}
+    .back-link{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--color-text-secondary);transition:color .15s}
+    .back-link:hover{color:var(--color-text-primary)}
+
+    .post-wrap{max-width:1100px;margin:0 auto;padding:var(--space-8) var(--space-6) var(--space-16)}
+    .post-full{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);overflow:hidden;box-shadow:var(--shadow-md)}
+    .post-full__cover{height:380px;background:var(--color-dark);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .post-full__cover-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.6}
+    .post-full__cover-content{position:relative;z-index:2;text-align:center;padding:var(--space-8)}
+    .post-full__cover-icon{font-size:4rem;margin-bottom:var(--space-4);opacity:.6}
+    .post-full__cover-label{font-family:var(--font-logo);font-size:var(--text-sm);letter-spacing:.15em;color:rgba(244,239,230,.3);text-transform:uppercase}
+
+    .post-full__header{padding:var(--space-10) var(--space-12) var(--space-6);border-bottom:1px solid var(--color-border)}
+    .post-full__meta-top{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-5);flex-wrap:wrap}
+    .post-full__title{font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:var(--font-bold);line-height:var(--leading-tight);margin-bottom:var(--space-4)}
+    .post-full__lead{font-family:var(--font-heading);font-size:var(--text-xl);font-style:italic;color:var(--color-text-secondary);line-height:var(--leading-relaxed)}
+    .post-full__info{display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-5);font-size:var(--text-xs);color:var(--color-text-muted);flex-wrap:wrap}
+
+    .post-full__body{padding:var(--space-10) var(--space-12) var(--space-12);max-width:720px}
+    .post-full__body p{font-size:var(--text-lg);line-height:var(--leading-relaxed);color:var(--color-text-primary);margin-bottom:var(--space-6)}
+    .post-full__body h2{font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:var(--font-semibold);line-height:var(--leading-snug);margin-top:var(--space-10);margin-bottom:var(--space-4)}
+    .post-full__body .highlight-box{background:var(--color-highlight);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-8) 0}
+    .post-full__body .highlight-box p{font-family:var(--font-heading);font-size:var(--text-xl);font-style:italic;font-weight:var(--font-semibold);color:var(--color-dark);margin:0}
+
+    /* Exercício de IA */
+    .prompt-box{background:#1C1917;color:#EDE8DC;border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-6) 0;font-family:'Courier New',monospace}
+    [data-theme="dark"] .prompt-box{background:#000;border:1px solid var(--color-border)}
+    .prompt-box .pl{display:block;font-size:var(--text-xs);letter-spacing:.12em;text-transform:uppercase;color:#EAD84B;margin-bottom:var(--space-3)}
+    .prompt-box p{font-size:var(--text-base);line-height:var(--leading-relaxed);color:#EDE8DC;margin:0}
+    .version{border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-6) 0}
+    .version--ai{background:var(--color-surface-2)}
+    .version--human{background:var(--color-accent-soft);border-color:var(--color-accent)}
+    [data-theme="dark"] .version--human{background:#2a1118}
+    .version__label{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);font-weight:var(--font-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent);margin-bottom:var(--space-4)}
+    .version p{font-size:var(--text-base);line-height:var(--leading-relaxed)}
+    .version p:last-child{margin-bottom:0}
+    .changes{list-style:none;padding:0;margin:var(--space-4) 0}
+    .changes li{position:relative;padding:var(--space-3) 0 var(--space-3) var(--space-10);border-bottom:1px solid var(--color-border);font-size:var(--text-base);line-height:var(--leading-relaxed);color:var(--color-text-secondary)}
+    .changes li:last-child{border-bottom:none}
+    .changes li b{color:var(--color-text-primary)}
+    .changes li::before{content:"✓";position:absolute;left:var(--space-3);top:var(--space-3);color:#fff;background:var(--color-accent);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--text-sm);font-weight:var(--font-bold)}
+
+    .post-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-8) var(--space-12);border-top:1px solid var(--color-border);flex-wrap:wrap}
+    .post-nav__label{font-size:var(--text-xs);font-weight:var(--font-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-1)}
+    .post-nav__title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:var(--font-semibold);color:var(--color-text-primary);transition:color .15s}
+    .post-nav__item:hover .post-nav__title{color:var(--color-accent)}
+    .post-nav__item--next{text-align:right}
+
+    .footer{background:var(--color-dark);margin-top:var(--space-8);overflow:hidden}
+    .footer__masthead{padding:var(--space-16) var(--space-6) 0;max-width:1100px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:var(--space-8)}
+    .footer__inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-10);flex-wrap:wrap;padding:var(--space-8) var(--space-6) var(--space-10);border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer__tagline{font-family:var(--font-heading);font-size:var(--text-base);font-style:italic;color:rgba(244,239,230,.45);margin-top:var(--space-2);max-width:300px;line-height:var(--leading-relaxed)}
+    .footer__col-title{font-size:var(--text-xs);font-weight:var(--font-semibold);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.35);margin-bottom:var(--space-4)}
+    .footer__link{display:block;font-size:var(--text-sm);color:rgba(244,239,230,.55);padding:var(--space-1) 0;transition:color .15s}
+    .footer__link:hover{color:rgba(244,239,230,.9)}
+    .footer__bottom{max-width:1100px;margin:0 auto;padding:var(--space-6);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-3)}
+    .footer__credit{font-size:var(--text-xs);color:rgba(244,239,230,.3);line-height:var(--leading-relaxed)}
+    .footer__credit strong{color:rgba(244,239,230,.55);font-weight:var(--font-medium)}
+    .footer__puc{font-size:var(--text-xs);font-weight:var(--font-semibold);color:rgba(244,239,230,.45);letter-spacing:.06em;text-transform:uppercase}
+
+    @media(max-width:900px){.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-8);padding-right:var(--space-8)}.post-full__title{font-size:var(--text-3xl)}}
+    @media(max-width:600px){.post-full__cover{height:240px}.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-5);padding-right:var(--space-5)}.post-full__title{font-size:var(--text-2xl)}.nav__links{display:none}}
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrapper">
+    <nav class="nav">
+      <a href="index.html">
+        <div class="logo-type logo-type--sm">
+          <span class="logo-type__line1">Luz,</span>
+          <span class="logo-type__line2">Câmera</span>
+          <span class="logo-type__line3">e Boleto<span class="logo-cursor"></span></span>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="index.html#posts">Posts</a>
+        <a class="nav__link" href="podcast.html">Podcast</a>
+        <a class="nav__link" href="index.html#sobre">Sobre</a>
+        <a class="nav__link" href="index.html#contato">Contato</a>
+      </div>
+      <div class="nav__actions">
+        <button class="theme-btn" id="themeToggle" aria-label="Alternar modo escuro">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="back-bar anim anim-down">
+    <a href="index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Voltar para o blog
+    </a>
+  </div>
+
+  <div class="post-wrap">
+    <article class="post-full anim anim-up">
+
+      <div class="post-full__cover">
+        <div class="post-full__cover-noise"></div>
+        <div class="post-full__cover-content">
+          <div class="post-full__cover-icon">🤖</div>
+          <div class="post-full__cover-label">Luz, Câmera e Boleto: Post #13</div>
+        </div>
+      </div>
+
+      <div class="post-full__header">
+        <div class="post-full__meta-top">
+          <span class="tag tag--dark">Exercício de IA</span>
+          <span class="tag tag--default">Revisão autoral</span>
+          <span class="tag tag--default">Bastidores</span>
+        </div>
+        <h1 class="post-full__title">Pedimos um conto para a inteligência artificial e depois colocamos a mão na massa</h1>
+        <p class="post-full__lead">A proposta era simples e meio assustadora: gerar um conto com um chat de IA e, em vez de aceitar o resultado, brigar com ele. Cortar, reescrever, tirar clichê, trazer corpo para o texto. Aqui está tudo, sem esconder o feio.</p>
+        <div class="post-full__info">
+          <span>📅 Maio de 2026</span>
+          <span>·</span>
+          <span>⏱️ 7 min de leitura</span>
+          <span>·</span>
+          <span>✍️ Luz, Câmera e Boleto</span>
+        </div>
+      </div>
+
+      <div class="post-full__body">
+        <p>
+          A inteligência artificial escreve rápido, mas escreve morno. Ela acerta a estrutura e erra a alma. Para entender isso na prática, demos a ela um prompt, recebemos um conto e depois fizemos o trabalho que importa: a revisão autoral. Abaixo estão o prompt, a versão crua da máquina, a nossa versão revisada e a lista do que mudamos e por quê.
+        </p>
+
+        <h2>1. O prompt que usamos</h2>
+        <div class="prompt-box">
+          <span class="pl">Prompt enviado ao chat</span>
+          <p>"Escreva um conto curto, de cerca de 300 palavras, sobre uma jovem que sonha em trabalhar com cinema e vive seu primeiro dia em um set de filmagem. Tom emotivo."</p>
+        </div>
+
+        <h2>2. A versão da IA, sem editar</h2>
+        <div class="version version--ai">
+          <span class="version__label">Texto gerado pela inteligência artificial</span>
+          <p>Maria sempre sonhou em trabalhar com cinema. Desde pequena, ela amava filmes com todo o seu coração e sabia que um dia realizaria seu grande sonho. Naquele dia especial, ela finalmente chegou ao set de filmagem, com o coração batendo forte de emoção.</p>
+          <p>Tudo era incrível e mágico. As pessoas trabalhavam com paixão e dedicação, e Maria sentia que estava exatamente onde deveria estar. Ela observava tudo com olhos brilhando de felicidade, cheia de esperança no futuro que a aguardava.</p>
+          <p>"Que lugar maravilhoso", pensou Maria, emocionada. Ela sabia que aquele era apenas o começo de uma jornada incrível. Com determinação e força de vontade, ela tinha certeza de que conquistaria todos os seus sonhos. No fim do dia, Maria sorriu, sabendo que nunca desistiria. O cinema era a sua vida, e nada poderia detê-la.</p>
+        </div>
+
+        <h2>3. A nossa versão, revisada</h2>
+        <div class="version version--human">
+          <span class="version__label">Texto editado pela equipe</span>
+          <p>Cheguei ao set às seis da manhã, antes do sol e antes da coragem. Ninguém olhou para mim. Um homem de colete cinza empurrou um carrinho de cabos contra a minha perna e disse, sem parar, que eu estava no caminho. Pedi desculpa para as costas dele.</p>
+          <p>Fiquei encostada numa parede fria, segurando um copo de café que não pedi e que esfriou na minha mão. O cheiro era de fumaça de máquina e de pão na chapa do lanche da equipe. Alguém gritou um nome que não era o meu. Outro gritou silêncio, e o set inteiro parou, como se prendesse a respiração junto comigo.</p>
+          <p>Foi então que a luz acendeu sobre o cenário e a cena começou. Não senti mágica. Senti frio nos pés, medo de fazer algo errado e uma vontade absurda de ficar. Acho que é isso que ninguém conta: a gente não se apaixona pelo cinema no dia em que ele é bonito. A gente se apaixona no dia em que ele é difícil e mesmo assim você não quer ir embora.</p>
+        </div>
+
+        <h2>4. O que mudamos, e por quê</h2>
+        <ul class="changes">
+          <li><b>Cortamos cerca de 30% do texto.</b> A versão da IA repetia a mesma ideia ("sonho", "incrível", "determinação") várias vezes. Tiramos a repetição e o conto ficou mais enxuto e mais forte.</li>
+          <li><b>Trocamos o tipo de narrador.</b> Saímos do narrador em terceira pessoa, distante, e passamos para a primeira pessoa. Em vez de observar Maria de fora, passamos a viver o dia com ela, de dentro.</li>
+          <li><b>Eliminamos os clichês.</b> Foram embora "coração batendo forte", "olhos brilhando", "tudo era mágico" e "nada poderia detê-la". Clichê é o jeito preguiçoso de dizer uma emoção sem fazer o leitor senti-la.</li>
+          <li><b>Inserimos experiências sensoriais.</b> Acrescentamos o café que esfria na mão, o cheiro de fumaça e de pão na chapa, o frio nos pés, o carrinho batendo na perna. A emoção agora chega pelo corpo, não pelo aviso de que existe emoção.</li>
+          <li><b>Reciclamos os diálogos.</b> A fala genérica "Que lugar maravilhoso" sumiu. No lugar, entraram falas reais de set, ditas por gente apressada, que tratam a protagonista como qualquer iniciante: alguém no caminho.</li>
+        </ul>
+
+        <div class="highlight-box">
+          <p>
+            A IA entrega um rascunho em segundos. O texto vira nosso no momento em que a gente discorda dele. Revisar é onde mora a autoria.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="post-nav">
+        <a href="post-12.html" class="post-nav__item">
+          <div class="post-nav__label">← Post anterior</div>
+          <div class="post-nav__title">Memória de infância</div>
+        </a>
+        <a href="post-14.html" class="post-nav__item post-nav__item--next">
+          <div class="post-nav__label">Próximo post →</div>
+          <div class="post-nav__title">Minicontos individuais</div>
+        </a>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__masthead">
+      <div class="logo-type logo-type--display">
+        <span class="logo-type__line1">Luz,</span>
+        <span class="logo-type__line2">Câmera</span>
+        <span class="logo-type__line3">e Boleto</span>
+      </div>
+    </div>
+    <div class="footer__inner">
+      <div><p class="footer__tagline">Um blog sobre a vida real de quem escolheu o audiovisual.</p></div>
+      <div>
+        <div class="footer__col-title">Posts</div>
+        <a class="footer__link" href="post-01.html">Post #01: Cinema e fome</a>
+        <a class="footer__link" href="post-02.html">Post #02: Profissões do audiovisual</a>
+        <a class="footer__link" href="post-03.html">Post #03: Top 10 ferramentas</a>
+        <a class="footer__link" href="post-04.html">Post #04: Carta aberta LGBTQIAP+</a>
+        <a class="footer__link" href="post-05.html">Post #05: 5 autores brasileiros</a>
+      </div>
+      <div>
+        <div class="footer__col-title">O blog</div>
+        <a class="footer__link" href="index.html#sobre">Sobre</a>
+        <a class="footer__link" href="index.html#contato">Contato</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__credit">Feito com carinho e com muito café ☕ &nbsp;·&nbsp; <strong>Luz, Câmera e Boleto</strong></div>
+      <div class="footer__puc">Primeiro Período · Escrita Criativa PUCPR</div>
+    </div>
+  </footer>
+
+  <script>
+    const btn=document.getElementById('themeToggle'),icon=document.getElementById('themeIcon');
+    const moon=`<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+    const sun=`<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+    let dark=false;
+    btn.addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');icon.innerHTML=dark?moon:sun});
+    const obs=new IntersectionObserver(e=>e.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
