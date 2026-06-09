@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Top 10 produtos e serviços para quem quer trabalhar com audiovisual — Luz, Câmera e Boleto</title>
+  <title>Pequeno Dicionário Não Oficial do Audiovisual Brasileiro — Luz, Câmera e Boleto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -13,9 +13,8 @@
       --color-border:#D6CFC3;--color-border-dark:#B0A898;
       --color-text-primary:#1C1917;--color-text-secondary:#78716C;
       --color-text-muted:#A8A29E;--color-text-inverse:#F4EFE6;
-      --color-accent:#A31F34;--color-accent-hover:#871929;--color-accent-soft:#F4E0E4;
-      --color-highlight:#EAD84B;--color-highlight-hover:#D4C43A;
-      --color-dark:#1C1917;--color-dark-hover:#2E2A27;
+      --color-accent:#A31F34;--color-accent-soft:#F4E0E4;
+      --color-highlight:#EAD84B;--color-dark:#1C1917;
       --font-heading:'Fraunces',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;
       --font-logo:'Bebas Neue','Impact',sans-serif;
       --text-xs:.75rem;--text-sm:.875rem;--text-base:1rem;--text-lg:1.125rem;
@@ -25,8 +24,7 @@
       --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
       --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
       --radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-2xl:20px;--radius-full:9999px;
-      --shadow-sm:0 1px 2px rgba(28,25,23,.06);--shadow-md:0 4px 12px rgba(28,25,23,.08);
-      --shadow-lg:0 8px 24px rgba(28,25,23,.10);
+      --shadow-md:0 4px 12px rgba(28,25,23,.08);--shadow-lg:0 8px 24px rgba(28,25,23,.10);
     }
     [data-theme="dark"] {
       --color-bg:#0F0E0D;--color-surface:#1C1917;--color-surface-2:#252220;
@@ -34,8 +32,7 @@
       --color-text-primary:#F4EFE6;--color-text-secondary:#A8A29E;
       --color-text-muted:#57534E;--color-text-inverse:#1C1917;
       --color-accent:#D93054;--color-accent-soft:#3A0C18;
-      --color-dark:#F4EFE6;--color-dark-hover:#EDE8DC;
-      --shadow-md:0 4px 12px rgba(0,0,0,.35);--shadow-lg:0 8px 24px rgba(0,0,0,.40);
+      --color-dark:#F4EFE6;--shadow-md:0 4px 12px rgba(0,0,0,.35);
     }
     @keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
     @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
@@ -65,7 +62,7 @@
     .theme-btn{background:transparent;border:1.5px solid var(--color-border);border-radius:var(--radius-md);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary);transition:background .15s,color .15s}
     .theme-btn:hover{background:var(--color-surface-2);color:var(--color-text-primary)}
 
-    .tag{display:inline-flex;align-items:center;gap:var(--space-1);font-size:var(--text-xs);font-weight:var(--font-medium);padding:4px 10px;border-radius:var(--radius-full);line-height:1;white-space:nowrap}
+    .tag{display:inline-flex;align-items:center;font-size:var(--text-xs);font-weight:var(--font-medium);padding:4px 10px;border-radius:var(--radius-full);line-height:1;white-space:nowrap}
     .tag--default{background:var(--color-surface-2);color:var(--color-text-secondary);border:1px solid var(--color-border)}
     .tag--accent{background:var(--color-accent-soft);color:var(--color-accent)}
     .tag--dark{background:var(--color-dark);color:var(--color-text-inverse)}
@@ -82,24 +79,32 @@
     .post-full__cover-content{position:relative;z-index:2;text-align:center;padding:var(--space-8)}
     .post-full__cover-icon{font-size:4rem;margin-bottom:var(--space-4);opacity:.6}
     .post-full__cover-label{font-family:var(--font-logo);font-size:var(--text-sm);letter-spacing:.15em;color:rgba(244,239,230,.3);text-transform:uppercase}
+
     .post-full__header{padding:var(--space-10) var(--space-12) var(--space-6);border-bottom:1px solid var(--color-border)}
     .post-full__meta-top{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-5);flex-wrap:wrap}
     .post-full__title{font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:var(--font-bold);line-height:var(--leading-tight);margin-bottom:var(--space-4)}
     .post-full__lead{font-family:var(--font-heading);font-size:var(--text-xl);font-style:italic;color:var(--color-text-secondary);line-height:var(--leading-relaxed)}
     .post-full__info{display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-5);font-size:var(--text-xs);color:var(--color-text-muted);flex-wrap:wrap}
+
     .post-full__body{padding:var(--space-10) var(--space-12) var(--space-12);max-width:720px}
     .post-full__body p{font-size:var(--text-lg);line-height:var(--leading-relaxed);color:var(--color-text-primary);margin-bottom:var(--space-6)}
+    .post-full__body h2{font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:var(--font-semibold);line-height:var(--leading-snug);margin-top:var(--space-10);margin-bottom:var(--space-4)}
     .post-full__body .highlight-box{background:var(--color-highlight);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-8) 0}
     .post-full__body .highlight-box p{font-family:var(--font-heading);font-size:var(--text-xl);font-style:italic;font-weight:var(--font-semibold);color:var(--color-dark);margin:0}
     .post-full__body .aside-note{border-left:3px solid var(--color-accent);padding-left:var(--space-6);margin:var(--space-8) 0}
     .post-full__body .aside-note p{font-size:var(--text-base);color:var(--color-text-secondary);font-style:italic;margin:0}
 
-    /* Lista numerada de ferramentas */
-    .tool-list{list-style:none;margin:var(--space-6) 0;display:flex;flex-direction:column;gap:var(--space-4)}
-    .tool-item{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-6);display:grid;grid-template-columns:48px 1fr;gap:var(--space-4);align-items:start}
-    .tool-item__num{font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--color-accent);line-height:1;margin-top:2px}
-    .tool-item__title{font-family:var(--font-heading);font-size:var(--text-lg);font-weight:var(--font-semibold);margin-bottom:var(--space-2);color:var(--color-text-primary)}
-    .tool-item__desc{font-size:var(--text-sm);color:var(--color-text-secondary);line-height:var(--leading-relaxed);margin:0}
+    /* Verbetes de dicionário */
+    .verbete{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-6) 0;transition:box-shadow .2s,border-color .2s}
+    .verbete:hover{box-shadow:var(--shadow-lg);border-color:var(--color-border-dark)}
+    .verbete__head{display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-3)}
+    .verbete__word{font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--color-text-primary)}
+    .verbete__class{font-style:italic;font-size:var(--text-sm);color:var(--color-accent)}
+    .verbete__pron{font-size:var(--text-sm);color:var(--color-text-muted)}
+    .verbete__def{font-size:var(--text-base);color:var(--color-text-secondary);line-height:var(--leading-relaxed);margin:0 0 var(--space-3)}
+    .verbete__def b{color:var(--color-text-primary);font-weight:var(--font-semibold)}
+    .verbete__ex{font-style:italic;font-size:var(--text-sm);color:var(--color-text-secondary);border-left:3px solid var(--color-highlight);padding-left:var(--space-4);margin:var(--space-3) 0}
+    .verbete__etim{font-size:var(--text-xs);color:var(--color-text-muted)}
 
     .post-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-8) var(--space-12);border-top:1px solid var(--color-border);flex-wrap:wrap}
     .post-nav__label{font-size:var(--text-xs);font-weight:var(--font-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-1)}
@@ -119,8 +124,8 @@
     .footer__credit strong{color:rgba(244,239,230,.55);font-weight:var(--font-medium)}
     .footer__puc{font-size:var(--text-xs);font-weight:var(--font-semibold);color:rgba(244,239,230,.45);letter-spacing:.06em;text-transform:uppercase}
 
-    @media(max-width:900px){.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-8);padding-right:var(--space-8)}.post-full__title{font-size:var(--text-3xl)}.tool-item{grid-template-columns:36px 1fr}}
-    @media(max-width:600px){.post-full__cover{height:240px}.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-5);padding-right:var(--space-5)}.post-full__title{font-size:var(--text-2xl)}.nav__links{display:none}.tool-item{grid-template-columns:1fr}.tool-item__num{font-size:var(--text-xl)}}
+    @media(max-width:900px){.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-8);padding-right:var(--space-8)}.post-full__title{font-size:var(--text-3xl)}}
+    @media(max-width:600px){.post-full__cover{height:240px}.post-full__header,.post-full__body,.post-nav{padding-left:var(--space-5);padding-right:var(--space-5)}.post-full__title{font-size:var(--text-2xl)}.nav__links{display:none}}
   </style>
 </head>
 <body>
@@ -166,7 +171,7 @@
     <article class="post-full anim anim-up">
 
       <div class="post-full__cover">
-        <img src="img/post-03-cover.webp" alt="Top 10 ferramentas para o audiovisual" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img src="img/post-16-cover.png" alt="Pequeno Dicionário Não Oficial do Audiovisual Brasileiro" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div style="position:absolute;inset:0;background:rgba(28,25,23,0.45);"></div>
         <div class="post-full__cover-content">
           <div class="post-full__cover-label">Luz, Câmera e Boleto: Post #03</div>
@@ -175,16 +180,16 @@
 
       <div class="post-full__header">
         <div class="post-full__meta-top">
-          <span class="tag tag--highlight">Ferramentas</span>
-          <span class="tag tag--default">Dicas</span>
-          <span class="tag tag--default">Sobrevivência</span>
+          <span class="tag tag--highlight">Glossário</span>
+          <span class="tag tag--default">Verbetes</span>
+          <span class="tag tag--default">Humor</span>
         </div>
-        <h1 class="post-full__title">Top 10 produtos e serviços para quem quer trabalhar com audiovisual</h1>
-        <p class="post-full__lead">10 coisas que podem salvar a vida de quem quer viver de audiovisual sem vender um rim.</p>
+        <h1 class="post-full__title">Pequeno Dicionário Não Oficial do Audiovisual Brasileiro</h1>
+        <p class="post-full__lead">Mais seis expressões e verbetes indispensáveis para entender a vida no set de filmagem brasileiro, da setalgia ao foco-doce.</p>
         <div class="post-full__info">
-          <span>📅 Maio de 2026</span>
+          <span>📅 Junho de 2026</span>
           <span>·</span>
-          <span>⏱️ 6 min de leitura</span>
+          <span>⏱️ 5 min de leitura</span>
           <span>·</span>
           <span>✍️ Luz, Câmera e Boleto</span>
         </div>
@@ -192,85 +197,85 @@
 
       <div class="post-full__body">
         <p>
-          Trabalhar com audiovisual no Brasil exige talento, paciência, criatividade e, infelizmente, uma capacidade quase sobrenatural de fazer mil coisas ao mesmo tempo. Por isso, algumas ferramentas podem ajudar bastante quem está começando e ainda não tem uma equipe enorme, um orçamento de cinema ou um tio investidor.
+          Se o português oficial falha em dar nome às nossas maiores felicidades e tragédias cotidianas, o set de filmagem brasileiro dá um jeito. Reunimos mais seis verbetes e expressões indispensáveis que nasceram nas trincheiras da produção nacional — porque tem coisa que só quem passa catorze horas de diária com café morno consegue entender.
         </p>
 
-        <ul class="tool-list">
-          <li class="tool-item">
-            <span class="tool-item__num">01</span>
-            <div>
-              <div class="tool-item__title">Canva</div>
-              <p class="tool-item__desc">Para quem precisa montar apresentação de projeto, currículo visual, portfólio, posts de divulgação ou até um cartaz improvisado, o Canva é praticamente um assistente de arte para iniciantes. Não substitui um designer profissional, mas ajuda muito quando o boleto ainda não permite contratar um.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">02</span>
-            <div>
-              <div class="tool-item__title">CapCut</div>
-              <p class="tool-item__desc">Ideal para quem está começando a editar vídeos curtos, principalmente para redes sociais. É simples, intuitivo e ajuda a entender ritmo, corte, legenda, trilha e linguagem digital sem precisar entrar em pânico na primeira tela.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">03</span>
-            <div>
-              <div class="tool-item__title">DaVinci Resolve</div>
-              <p class="tool-item__desc">Para quem quer aprender edição com uma ferramenta mais profissional, o DaVinci Resolve é uma ótima opção. Ele pode parecer assustador no começo, mas é muito usado por quem quer sair do básico e entender melhor edição, cor e finalização.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">04</span>
-            <div>
-              <div class="tool-item__title">Google Drive</div>
-              <p class="tool-item__desc">No audiovisual, arquivo some, HD dá problema, link expira e alguém sempre pergunta "tem como mandar de novo?". O Drive ajuda a organizar roteiros, contratos, referências, vídeos, fotos e tudo aquilo que uma produção precisa para não virar um caos completo.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">05</span>
-            <div>
-              <div class="tool-item__title">Trello ou Notion</div>
-              <p class="tool-item__desc">Essas ferramentas ajudam a organizar tarefas, ideias, prazos e etapas de produção. Para quem trabalha com audiovisual, isso é essencial, porque uma gravação nunca é só "gravar". Tem pré-produção, roteiro, equipe, locação, autorização, edição, revisão e mais umas cinquenta pequenas crises no caminho.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">06</span>
-            <div>
-              <div class="tool-item__title">Banco de imagens e vídeos gratuitos</div>
-              <p class="tool-item__desc">Sites de banco de imagem e vídeo podem ajudar muito em apresentações, estudos visuais, referências e materiais de apoio. Só é importante prestar atenção nas licenças de uso, porque trabalhar com imagem também significa entender direitos autorais.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">07</span>
-            <div>
-              <div class="tool-item__title">LinkedIn</div>
-              <p class="tool-item__desc">Muita gente associa o LinkedIn só a escritório e reunião corporativa, mas ele também pode ser útil para quem trabalha com audiovisual. É um espaço para mostrar projetos, fazer contatos, acompanhar produtoras, divulgar portfólio e lembrar ao mundo que você existe profissionalmente.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">08</span>
-            <div>
-              <div class="tool-item__title">Sympla ou eventos culturais locais</div>
-              <p class="tool-item__desc">Eventos, oficinas, festivais e palestras são ótimos para conhecer gente da área. No audiovisual, networking não é só "puxar saco". Às vezes é simplesmente estar no lugar certo, conversar com alguém e descobrir uma oportunidade que nunca apareceria em uma vaga tradicional.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">09</span>
-            <div>
-              <div class="tool-item__title">Sebrae ou orientação para MEI</div>
-              <p class="tool-item__desc">Quem trabalha com audiovisual como freelancer provavelmente vai esbarrar em nota fiscal, orçamento, contrato e imposto. Ninguém entra na arte sonhando com burocracia, mas entender o mínimo disso evita muito perrengue.</p>
-            </div>
-          </li>
-          <li class="tool-item">
-            <span class="tool-item__num">10</span>
-            <div>
-              <div class="tool-item__title">Um bom HD externo ou armazenamento seguro</div>
-              <p class="tool-item__desc">Pode parecer básico, mas perder arquivo é um evento traumático na vida de qualquer pessoa do audiovisual. Ter onde salvar os materiais com segurança é uma forma de proteger seu trabalho, seu tempo e sua sanidade mental.</p>
-            </div>
-          </li>
-        </ul>
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Foco-doce</span>
+            <span class="verbete__class">s. m.</span>
+            <span class="verbete__pron">[fo.ko.dó.se]</span>
+          </div>
+          <p class="verbete__def">Condição óptica na qual um elemento da imagem encontra-se levemente fora de foco, mas não o suficiente para causar preocupação imediata. Frequentemente utilizado como estratégia emocional para evitar a expressão "está desfocado".</p>
+          <p class="verbete__ex">"E o foco tá como? Ah, achei que tá meio doce."</p>
+          <p class="verbete__etim">Etimologia: Da necessidade coletiva de suavizar tragédias técnicas.</p>
+        </div>
+
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Gostosinho</span>
+            <span class="verbete__class">s. m.</span>
+            <span class="verbete__pron">[gos.to.zĩ.ɲo]</span>
+          </div>
+          <p class="verbete__def">Pequeno detalhe de iluminação que ninguém percebe conscientemente, mas cuja ausência faz toda a diferença. Pode ser um brilho no olhar, um recorte de luz, um reflexo discreto ou qualquer elemento visual responsável por transformar uma cena de "boa" para "nossa, que bonito".</p>
+          <p class="verbete__ex">"A cena estava funcionando, mas faltava um gostosinho. Depois daquele contra-luz, tudo fez sentido."</p>
+          <p class="verbete__etim">Observação: Diz a lenda que toda fotografia bonita possui pelo menos um gostosinho escondido em algum lugar.</p>
+        </div>
+
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Tamo por Quem?</span>
+            <span class="verbete__class">expr. int.</span>
+            <span class="verbete__pron">[tã.mo.poʁ.kẽ]</span>
+          </div>
+          <p class="verbete__def">Pergunta utilizada para identificar qual departamento ainda não está pronto para iniciar uma gravação. Também pode servir para confirmar que todas as equipes finalizaram suas respectivas demandas e que o set está pronto para rodar.</p>
+          <p class="verbete__ex">
+            <b>Exemplo 1:</b><br>
+            — Tamo por quem?<br>
+            — Cinco minutinhos pro som resolver uma coisa.<br><br>
+            <b>Exemplo 2:</b><br>
+            — Tamo por quem?<br>
+            — Ninguém. Bora rodar.
+          </p>
+          <p class="verbete__etim">Observação: Considerada uma das frases mais repetidas em qualquer produção audiovisual brasileira.</p>
+        </div>
+
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Coringado</span>
+            <span class="verbete__class">adj.</span>
+            <span class="verbete__pron">[ko.ʁĩ.gá.du]</span>
+          </div>
+          <p class="verbete__def">Estado avançado de exaustão física e mental provocado por excesso de horas trabalhadas, poucas horas dormidas e café em quantidades questionáveis.</p>
+          <p class="verbete__ex">"Depois da décima quarta hora de diária, a equipe inteira já estava coringada."</p>
+          <p class="verbete__etim">Sintomas: Rir de situações sem graça, esquecer palavras simples, conversar com equipamentos e achar que montar mais uma luz parece uma excelente ideia.</p>
+        </div>
+
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Setalgia</span>
+            <span class="verbete__class">s. f.</span>
+            <span class="verbete__pron">[se.taw.gí.a]</span>
+          </div>
+          <p class="verbete__def">Estado emocional caracterizado pela saudade de um set recém-encerrado. Surge quando o profissional percebe que sentirá falta das conversas, dos perrengues, das refeições compartilhadas, das piadas internas e da sensação coletiva de criar algo junto.</p>
+          <p class="verbete__ex">"Passei um mês reclamando da diária, mas bastaram dois dias para a setalgia aparecer."</p>
+          <p class="verbete__etim">Observação: Costuma atingir seus níveis mais elevados quando fotos e vídeos dos bastidores começam a aparecer nas redes sociais.</p>
+        </div>
+
+        <div class="verbete">
+          <div class="verbete__head">
+            <span class="verbete__word">Rodada Final</span>
+            <span class="verbete__class">s. f.</span>
+            <span class="verbete__pron">[ʁo.dá.da.fi.náw]</span>
+          </div>
+          <p class="verbete__def">Ritual social que frequentemente ocorre após o encerramento de uma gravação, caracterizado pelo consumo de cerveja, refrigerante ou qualquer bebida disponível, independentemente do horário, do nível de cansaço ou da necessidade de acordar cedo no dia seguinte.</p>
+          <p class="verbete__ex">"Terminamos às quatro da manhã, mas ninguém foi embora antes da rodada final."</p>
+          <p class="verbete__etim">Observação: Embora não seja uma etapa obrigatória da produção, a rodada final acontece com frequência surpreendente. Possui propriedades misteriosas capazes de convencer profissionais exaustos a permanecerem acordados por mais uma hora discutindo cenas, equipamentos, histórias de bastidor e planos para futuros projetos.<br><br>Etimologia: Referência à última rodada de conversa e confraternização que costuma marcar o encerramento de uma diária ou produção audiovisual, celebrando o fato de que, apesar dos imprevistos, o filme sobreviveu.</p>
+        </div>
 
         <div class="highlight-box">
           <p>
-            No fim, essas ferramentas não fazem milagre. Mas ajudam a começar com mais organização, menos desespero e talvez com um pouco mais de chance de entregar o projeto antes do computador travar.
+            No set de filmagem, a pressa e a falta de sono inventam termos técnicos sentimentais. Quem trabalha com imagem sabe que rir dos próprios perrengues é o melhor contra-luz que existe.
           </p>
         </div>
 
@@ -304,7 +309,7 @@
         <div class="footer__col-title">Posts</div>
         <a class="footer__link" href="post-01.html">Post #01: Cinema e fome</a>
         <a class="footer__link" href="post-02.html">Post #02: Profissões do audiovisual</a>
-        <a class="footer__link" href="post-03.html">Post #03: Top 10 ferramentas</a>
+        <a class="footer__link" href="post-03.html">Post #03: Pequeno Dicionário Não Oficial</a>
         <a class="footer__link" href="post-04.html">Post #04: Carta aberta LGBTQIAP+</a>
         <a class="footer__link" href="post-05.html">Post #05: 5 autores brasileiros</a>
       </div>
