@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quem faz a música de um filme: collab com Lado P(op) — Luz, Câmera e Boleto</title>
+  <title>Mini Conto: Yasmin Andrade — Luz, Câmera e Boleto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -88,20 +88,17 @@
 
     .post-full__body{padding:var(--space-10) var(--space-12) var(--space-12);max-width:720px}
     .post-full__body p{font-size:var(--text-lg);line-height:var(--leading-relaxed);color:var(--color-text-primary);margin-bottom:var(--space-6)}
-    .post-full__body h2{font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:var(--font-semibold);line-height:var(--leading-snug);margin-top:var(--space-10);margin-bottom:var(--space-4)}
     .post-full__body .highlight-box{background:var(--color-highlight);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-8) 0}
     .post-full__body .highlight-box p{font-family:var(--font-heading);font-size:var(--text-xl);font-style:italic;font-weight:var(--font-semibold);color:var(--color-dark);margin:0}
-    .post-full__body ul.cl{list-style:none;padding:0;margin:0 0 var(--space-6)}
-    .post-full__body ul.cl li{position:relative;padding:var(--space-3) 0 var(--space-3) var(--space-8);font-size:var(--text-lg);line-height:var(--leading-relaxed);color:var(--color-text-primary);border-bottom:1px dashed var(--color-border)}
-    .post-full__body ul.cl li:last-child{border-bottom:none}
-    .post-full__body ul.cl li::before{content:"\266A";position:absolute;left:var(--space-2);color:var(--color-accent);font-size:var(--text-lg)}
-    .post-full__body ul.cl li b{color:var(--color-text-primary);font-weight:var(--font-semibold)}
+    .post-full__body .aside-note{border-left:3px solid var(--color-accent);padding-left:var(--space-6);margin:var(--space-8) 0}
+    .post-full__body .aside-note p{font-size:var(--text-base);color:var(--color-text-secondary);font-style:italic;margin:0}
 
-    /* Collab */
-    .collab-brands{display:flex;align-items:center;justify-content:center;gap:var(--space-5);flex-wrap:wrap;background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin:var(--space-2) 0 var(--space-8)}
-    .collab-brand{font-family:var(--font-heading);font-weight:var(--font-bold);font-size:var(--text-xl);color:var(--color-text-primary);text-align:center}
-    .collab-brand span{display:block;font-family:var(--font-body);font-weight:var(--font-medium);font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.08em}
-    .collab-x{font-family:var(--font-heading);font-size:var(--text-3xl);color:var(--color-accent);font-style:italic}
+    /* Minicontos */
+    .minicard{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin:var(--space-6) 0;transition:box-shadow .2s,transform .2s}
+    .minicard:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+    .minicard__title{font-family:var(--font-heading);font-size:var(--text-xl);font-weight:var(--font-semibold);color:var(--color-text-primary);margin-bottom:var(--space-3)}
+    .minicard__text{font-size:var(--text-lg);line-height:var(--leading-relaxed);color:var(--color-text-primary);margin:0 0 var(--space-3)}
+    .minicard__sign{font-family:var(--font-heading);font-style:italic;font-size:var(--text-base);color:var(--color-accent);text-align:right;margin:0}
 
     .post-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-8) var(--space-12);border-top:1px solid var(--color-border);flex-wrap:wrap}
     .post-nav__label{font-size:var(--text-xs);font-weight:var(--font-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-1)}
@@ -168,94 +165,106 @@
     <article class="post-full anim anim-up">
 
       <div class="post-full__cover">
-        <img src="img/retro-monochrome-music-microphone-concept/1213.jpg" alt="Microfone retrô" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img src="img/post-16-cover.png" alt="Mini Conto: Yasmin Andrade" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div style="position:absolute;inset:0;background:rgba(28,25,23,0.45);"></div>
         <div class="post-full__cover-content">
-          <div class="post-full__cover-label">Luz, Câmera e Boleto: Collab</div>
+          <div class="post-full__cover-label">Luz, Câmera e Boleto: Post #16</div>
         </div>
       </div>
 
       <div class="post-full__header">
         <div class="post-full__meta-top">
-          <span class="tag tag--accent">Collab</span>
-          <span class="tag tag--default">Música</span>
-          <span class="tag tag--default">Parceria</span>
+          <span class="tag tag--dark">Miniconto</span>
+          <span class="tag tag--default">Texto individual</span>
+          <span class="tag tag--default">Reflexão</span>
         </div>
-        <h1 class="post-full__title">Quem faz a música de um filme e por que isso é mais complicado do que parece</h1>
-        <p class="post-full__lead">Um texto em parceria com o blog Lado P(op). Você abre o Shazam, salva a música e fica com ela na cabeça por três dias. Parece simples, mas tem dois mundos inteiros por trás daquela cena.</p>
+        <h1 class="post-full__title">Mini Conto: Yasmin Andrade</h1>
+        <p class="post-full__lead">Um texto reflexivo de perguntas sem respostas sobre a rotina real, exaustiva e apaixonante no set de filmagem.</p>
         <div class="post-full__info">
           <span>📅 Junho de 2026</span>
           <span>·</span>
-          <span>⏱️ 7 min de leitura</span>
+          <span>⏱️ 3 min de leitura</span>
           <span>·</span>
-          <span>✍️ Luz, Câmera e Boleto × Lado P(op)</span>
+          <span>✍️ Yasmin Andrade</span>
         </div>
       </div>
 
       <div class="post-full__body">
+        <p>
+          Trabalhar com cinema é um eterno jogo de perguntas que a gente só responde fazendo. Esse é um miniconto em formato de dúvidas diárias — aquelas que passam pela cabeça de quem está no set de gravação e se pergunta, a cada cinco minutos, o que está fazendo ali.
+        </p>
 
-        <div class="collab-brands">
-          <div class="collab-brand">Luz, Câmera e Boleto<span>audiovisual</span></div>
-          <div class="collab-x">×</div>
-          <div class="collab-brand">Lado P(op)<span>música pop</span></div>
+        <div class="minicard">
+          <div class="minicard__title">Quero Trabalhar com Audiovisual. Tenho Certeza?</div>
+          <p class="minicard__text" style="line-height: 1.8; font-style: italic;">
+            São seis da manhã ou três da manhã?<br>
+            Eu dormi ou apenas fechei os olhos por algumas horas?<br>
+            Por que o despertador toca quando eu acabei de deitar?<br>
+            Quem inventou que a diária começaria às sete?<br>
+            Por que estou acordando às cinco então?<br>
+            O café da produção conta como café ou como combustível industrial?<br>
+            O caminhão sempre parece mais pesado às sete da manhã ou é impressão minha?<br>
+            Por que o equipamento que eu preciso está sempre no fundo do carro?<br>
+            Quem foi a pessoa que escreveu o cronograma?<br>
+            Ela acreditava mesmo que daria tempo?<br>
+            Quantos "só cinco minutinhos" cabem em uma diária?<br>
+            Por que toda gravação externa decide acontecer justamente no dia mais quente ou mais frio do ano?<br>
+            O sol está no lugar errado ou nós estamos?<br>
+            Tamo por quem?<br>
+            Cinco minutos para o som?<br>
+            Dez minutos para a arte?<br>
+            Figurino já liberou?<br>
+            Maquiagem terminou?<br>
+            Agora vai?<br>
+            Agora vai mesmo?<br>
+            Por que sempre existe mais uma coisa para ajustar?<br>
+            Como uma luz pode demorar vinte minutos para ser montada e apenas três segundos para cair?<br>
+            Quem mexeu no enquadramento?<br>
+            Quem mudou a marcação?<br>
+            Onde está a claquete?<br>
+            Onde está o cabo?<br>
+            Onde está o cartão de memória?<br>
+            Onde está minha vontade de viver?<br>
+            Isso é foco-doce ou está desfocado?<br>
+            Está faltando um gostosinho ou estou imaginando coisas?<br>
+            Alguém mais está coringado ou sou só eu?<br>
+            Por que estamos rindo de coisas que nem são engraçadas?<br>
+            Que horas são?<br>
+            Importa?<br>
+            Hoje é terça-feira?<br>
+            Ainda estamos na terça-feira?<br>
+            Será que o almoço chega antes do pôr do sol?<br>
+            Será que o pôr do sol chega antes do almoço?<br>
+            Por que cinema parece uma péssima ideia durante a gravação?<br>
+            Por que parece a melhor profissão do mundo quando a cena fica pronta?<br>
+            Por que a gente reclama tanto?<br>
+            Por que a gente sente tanta falta quando acaba?<br>
+            O que é pior: a diária de quinze horas ou a setalgia depois dela?<br>
+            O filme vai ficar bom?<br>
+            Valeu a pena?<br>
+            A gente faria tudo de novo?<br>
+            Quando é a próxima gravação?
+          </p>
+          <p class="minicard__sign">Yasmin Andrade</p>
         </div>
-
-        <p>Você está assistindo uma série, aparece uma cena, e de repente uma música começa. Você pega o celular, abre o Shazam, salva a música no Spotify e fica com ela na cabeça por três dias. Parece uma coisa simples. Parece que alguém só escolheu uma música boa e colocou no lugar certo.</p>
-
-        <p>Não é bem assim.</p>
-
-        <p>Por trás daquele momento tem um processo inteiro que envolve dois mundos: o audiovisual e o pop.</p>
-
-        <h2>Primeiro: de onde vem a música de um filme ou série?</h2>
-        <p>Existem basicamente dois caminhos. O primeiro é a trilha original: uma música ou instrumental composta especificamente para aquela produção, por um compositor contratado. O segundo é o licenciamento: quando a produção paga pra usar uma música que já existe.</p>
-        <p>E é no licenciamento que as coisas ficam interessantes. Quando uma série quer usar uma música pop conhecida, ela precisa de duas licenças separadas:</p>
-        <ul class="cl">
-          <li><b>Licença da composição:</b> paga aos compositores e editoras, cobre a letra e a melodia.</li>
-          <li><b>Licença do master:</b> paga a quem detém a gravação original, geralmente a gravadora.</li>
-        </ul>
-        <p>As duas precisam ser negociadas. As duas custam dinheiro. E dependendo do artista, podem custar muito dinheiro.</p>
-
-        <h2>O caso Kate Bush: quando o pop e o audiovisual mudam um ao outro</h2>
-        <p>Em 2022, Stranger Things usou Running Up That Hill numa cena icônica. A música de 1985 voltou ao top 1 em mais de 30 países. Kate Bush, que raramente dá entrevistas, saiu para falar sobre isso. Foi o maior hit da carreira dela, quase 40 anos depois do lançamento.</p>
-        <p>Do lado do audiovisual, a decisão de usar aquela música específica não foi aleatória. Os irmãos Duffer disseram que a cena foi construída em torno dela. Isso muda tudo na produção: quando a música é o centro, o corte, o ritmo e o timing visual precisam servir a ela, não o contrário.</p>
-        <p>Do lado do pop, o impacto foi imediato: uma artista que tinha ficado fora do mainstream por décadas voltou a se popularizar. O streaming mostrou que uma música, quando é boa mesmo, só precisa do contexto certo para chegar em quem ainda não conhecia.</p>
-
-        <h2>O que rola nos bastidores de uma supervisão musical</h2>
-        <p>Existe uma função dentro do audiovisual que a maioria das pessoas nunca ouviu falar: o supervisor musical. É ele quem conecta os dois mundos.</p>
-        <p>O trabalho envolve:</p>
-        <ul class="cl">
-          <li>Pesquisar e sugerir músicas que sirvam emocionalmente para cada cena.</li>
-          <li>Negociar os direitos com gravadoras, editoras e artistas.</li>
-          <li>Gerenciar o orçamento, porque nem sempre dá pra pagar pelo que você quer.</li>
-          <li>Criar alternativas quando a música ideal é inacessível financeiramente.</li>
-        </ul>
-        <p>Esse último ponto é mais comum do que parece. Muita produção chega com a música dos sonhos na referência e sai com outra, porque o orçamento não alcança, porque a gravadora não liberou, porque o artista simplesmente disse não.</p>
-        <p>Os Beatles, por exemplo, são historicamente difíceis de licenciar e custam caro. Já houve produção que construiu cena inteira em torno de uma música e teve que remontar do zero quando o licenciamento não saiu.</p>
-
-        <h2>E o artista pop, o que ele ganha com isso?</h2>
-        <p>Financeiramente, o licenciamento pode ser uma fonte relevante de renda, especialmente pra artistas independentes ou de catálogo. O valor varia dependendo do projeto, da janela de distribuição e da relevância da música, pode ir de algumas centenas de dólares até centenas de milhares.</p>
-        <p>Mas além do dinheiro, o impacto de aparecer numa trilha pode ser maior do que qualquer campanha de marketing. Fleetwood Mac voltou às paradas depois de um vídeo no TikTok com Dreams. A Mitski ganhou uma geração inteira de ouvintes depois de Beef, série da Netflix. Phoebe Bridgers ficou conhecida no Brasil em parte por trilhas de séries.</p>
 
         <div class="highlight-box">
-          <p>O audiovisual descobriu que música pop antiga é um atalho emocional. O pop descobriu que séries e filmes são o melhor algoritmo que existe.</p>
+          <p>
+            No fim das contas, a resposta para a última pergunta é sempre a mesma: a gente sempre faz tudo de novo.
+          </p>
         </div>
-
-        <h2>Fechando pelos dois lados</h2>
-        <p>Do lado do pop: a próxima vez que uma música ficar na sua cabeça por causa de uma cena, vale lembrar que alguém passou semanas escolhendo exatamente aquela, negociando o direito de usá-la e encaixando ela na cena certa.</p>
-        <p>Do lado do audiovisual: e se você quer entrar nessa área, supervisão musical é uma das funções mais subvalorizadas e mais fascinantes do setor. Fica a dica!</p>
-        <p>Obrigado ao Lado P(op) pela parceria. Se você ainda não conhece o blog deles, vai lá!</p>
 
       </div>
 
       <div class="post-nav">
-        <a href="post-14.html" class="post-nav__item">
+        <a href="post-15.html" class="post-nav__item">
           <div class="post-nav__label">← Post anterior</div>
-          <div class="post-nav__title">Mini Conto: Murilo Capelo</div>
+          <div class="post-nav__title">Quem faz a música de um filme</div>
         </a>
-        <a href="post-16.html" class="post-nav__item post-nav__item--next">
+        <div class="post-nav__item post-nav__item--next" style="opacity: 0.4; cursor: default;">
           <div class="post-nav__label">Próximo post →</div>
-          <div class="post-nav__title">Mini Conto: Yasmin Andrade</div>
-        </a>
+          <div class="post-nav__title">Em breve...</div>
+        </div>
       </div>
 
     </article>
